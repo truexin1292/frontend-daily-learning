@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript高阶函数 reduce方法的应用和原理分析</title>
+</head>
+<body>
+
+参考链接：
+<a href="https://blog.csdn.net/u014634869/article/details/77985694" target="_blank">
+    JavaScript高阶函数 reduce方法的应用和原理分析
+</a>
+<script>
+    Array.prototype.myReduce = function (fn, initialValue) {
+        if (this.length === 0) { // 当数组为空时
+            if (initialValue === undefined) {// [].reduce(fn);
+                console.error('reduce of empty array with no initialValue');
+            } else {
+                return initialValue;
+            }
+        } else {
+            let prev = initialValue !== undefined ? initialValue : this[0];
+            let startIndex = initialValue !== undefined ? 0 : 1;
+            for (let i = startIndex; i < this.length; i++) {
+                prev = fn(prev, this[i]);
+            }
+            return prev;
+        }
+    }
+
+    let arr = [
+        { name: 'Alex', age: 25 },
+        { name: 'Tom', age: 21 },
+        { name: 'Alice', age: 24 },
+        { name: 'Tony', age: 30 },
+    ];
+    let arr1 = [];
+    let arr2 = [1, 4, 6, 2, 8, 9];
+
+    let result = arr.myReduce(function (prev, current) { // initialValue = 0
+        return prev + current.age;
+    }, 0);
+    console.log(result);  // 0 + 25 + 21 + 24 + 30 = 100;
+
+    let result1 = arr.myReduce(function (prev, current) { // initialValue = { name: 'Alex', age: 25 }
+        return prev + current.age;
+    });
+    console.log(result1);
+    // { name: 'Alex', age: 25 }.toString() + 21 + 24 + 30 = [object Object]212430
+    console.log({ name: 'Alex', age: 25 }.toString());
+
+    let result2 = arr1.myReduce(function (prev, current) { // this.length = 0; initialValue = undefined
+        return prev + current.age;
+    });
+    //console.error('reduce of empty array with no initialValue');
+
+    let result3 = arr2.myReduce(function (prev, current) { // initialValue = undefined
+        return prev + current;
+    });
+    let result4 = arr2.myReduce(function (prev, current) { // initialValue = 10
+        return prev + current;
+    }, 10);
+    console.log(result3); // 1 + 4 + 6 + 2 + 8 + 9 = 30
+    console.log(result4); // 10 + 1 + 4 + 6 + 2 + 8 + 9 = 40
+
+
+</script>
+</body>
+</html>
