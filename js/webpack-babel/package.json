@@ -1,0 +1,15 @@
+{
+    "name": "webpack-babel",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "webpack",
+        "node": "node ./src/app.js",
+        "babel": "babel-node ./src/app-es6.js"
+    },
+    "dependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.5",
+        "babel-preset-es2015": "^6.24.1"
+    },
+    "devDependencies": {}
+}
