@@ -1,5 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-/js/graphql/node_modules
-/js/webpack-babel/node_modules
-/js/babel/node_modules
+*/node_modules
+*/*/node_modules
+#/js/graphql/node_modules
+#/js/webpack-babel/node_modules
+#/js/babel/node_modules
