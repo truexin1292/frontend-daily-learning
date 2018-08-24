@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style type="text/css">
+        ul {
+            /*不要margin否则滚动 会有缝隙*/
+            margin: 0;
+        }
+
+        div {
+            /*overflow hidden? 宽度，高度一定要设置 否则无法滚动 ，或者无法盖住下面的内容*/
+            overflow: hidden;
+            width: 75px;
+            height: 100px;
+            margin-left: 29%;
+            margin-top: 10%;
+            background: aqua;
+            border-top: 1px solid red;
+            border-bottom: 1px solid red;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>无缝滚动</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+
+</head>
+<body>
+<div id="ca">
+    <ul id="c1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+
+    </ul>
+    <ul id="c2"></ul>
+</div>
+</body>
+<script language="javascript" type="text/javascript">
+    var c1 = document.getElementById("c1");
+    var c2 = document.getElementById("c2");
+    var ca = document.getElementById("ca");
+    /*将第一个ul的值赋值给第二个  当第一个头部消失时 由第二个来显示*/
+    c2.innerHTML = c1.innerHTML;
+    var cas = null;
+    window.onload = function () {
+        st();
+    }
+    cas = setInterval('st()', 50);
+
+    function st() {
+        //clearInterval(cas);
+        /*如果滚动长度大于第一个ul的高度  就需要将第一个ul回到原处 */
+        if (ca.scrollTop >= c1.offsetHeight) {
+            ca.scrollTop = 0;
+        } else {
+            ca.scrollTop++;
+        }
+        ca.onmouseover = function () {
+            clearInterval(cas);
+        }
+        ca.onmouseout = function () {
+            cas = setInterval('st()', 50);
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

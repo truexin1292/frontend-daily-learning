@@ -1,0 +1,10 @@
+.render-props {
+    height: 100vh;
+    background: aqua;
+
+}
+
+h1 {
+    font-size: 20px;
+    color: #222222;
+}

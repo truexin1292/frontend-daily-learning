@@ -1,119 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.js"></script>
 </head>
+
 <body>
-<a href="./head1.jpeg"
-   class="img1" download="./head1.jpeg">
-    ./head1.jpeg
-</a>
-<span onclick="downloadIamge('.img1','1.jpg')">下载 </span>
-<br>
-<span onclick="SaveAs5('./head1.jpeg')">下载2 </span>
-<br>
-<span id="#downedfile">downedfile</span>
-<br>
-<span id="#downed">downedfile1</span>
-<script>
-    function downloadIamge(selector, name) {
-        // 通过选择器获取img元素，
-        var img = document.querySelector(selector)
-        // 将图片的src属性作为URL地址
-        var url = img.href
-        var a = document.createElement('a')
-        var event = new MouseEvent('click')
+    <a href="./head1.jpeg" class="img1" download="./head1.jpeg">
+        ./head1.jpeg
+    </a>
+    <span onclick="downloadIamge('.img1','1.jpg')">下载 </span>
+    <br>
+    <span onclick="SaveAs5('./head1.jpeg')">下载2 </span>
+    <br>
+    <span id="#downedfile">downedfile</span>
+    <br>
+    <span id="#downed">downedfile1</span>
+    <script>
+        function downloadIamge(selector, name) {
+            // 通过选择器获取img元素，B
+            var img = document.querySelector(selector)
+            // 将图片的src属性作为URL地址
+            var url = img.href
+            var a = document.createElement('a')
+            var event = new MouseEvent('click')
 
-        a.download = name || '下载图片名称'
-        a.href = url
+            a.download = name || '下载图片名称'
+            a.href = url
 
-        a.dispatchEvent(event)
-    }
-
-    function SaveAs5(imgURL) {
-        var oPop = window.open(imgURL, "", "width=1, height=1, top=5000, left=5000");
-        for (; oPop.document.readyState != "complete";) {
-            if (oPop.document.readyState == "complete") break;
+            a.dispatchEvent(event)
         }
-        oPop.execCommand("SaveAs");
-        oPop.close();
-    }
 
-    var e = new Event("keydown");
-    e.keyCode = 74;
-    e.ctrlKey = true;
-    var button = document.getElementById('count')
-    Event.listen(e, function (e) {
-        if (e.keyCode == 74 && e.ctrlKey) {
-            // e.preventDefault();
-            alert("按下了ctrl+S`````");
+        function SaveAs5(imgURL) {
+            var oPop = window.open(imgURL, "", "width=1, height=1, top=5000, left=5000");
+            for (; oPop.document.readyState != "complete";) {
+                if (oPop.document.readyState == "complete") break;
+            }
+            oPop.execCommand("SaveAs");
+            oPop.close();
         }
-    });
-    $("#downedfile").click(function () {
-        document.trigger(e);
-    });
-</script>
 
-<button id="count">点我</button>
-<div id="show"></div>
-<script type="text/JavaScript">
-    var Event = (function () {
-        var clientList = {},
-            listen,
-            trigger,
-            remove;
-        listen = function (key, fn) {
-            if (!clientList[key]) {
-                clientList[key] = [];
+        var e = new Event("keydown");
+        e.keyCode = 74;
+        e.ctrlKey = true;
+        var button = document.getElementById('count')
+        Event.listen(e, function (e) {
+            if (e.keyCode == 74 && e.ctrlKey) {
+                // e.preventDefault();
+                alert("按下了ctrl+S`````");
             }
-            clientList[key].push(fn);
-        };
-        trigger = function () {
-            var key = Array.prototype.shift.call(arguments),
-                fns = clientList[key];
-            if (!fns || fns.length === 0) {
-                return false;
-            }
-            for (var i = 0, fn; fn = fns[i++];) {
-                fn.apply(this, arguments);
-            }
-        };
-        remove = function (key, fn) {
-            var fns = clientList[key];
-            if (!fns) {
-                return false;
-            }
-            if (!fn) {
-                fns && (fns.length = 0);
-            } else {
-                for (var l = fns.length - 1; l >= 0; l--) {
-                    var _fn = fns[l];
-                    if (_fn === fn) {
-                        fns.splice(l, 1);
-                    }
-                }
-            }
-        };
-        return {
-            listen: listen,
-            trigger: trigger,
-            remove: remove
-        }
-    })();
+        });
+        $("#downedfile").click(function () {
+            document.trigger(e);
+        });
+    </script>
 
-    var count = 0;
-    var button = document.getElementById('count');
-    button.onclick = function () {
-        Event.trigger('add', count++);
-    }
+    <button id="count">点我</button>
+    <div id="show"></div>
+    <script type="text/JavaScript">
+        var Event = (function () { var clientList = {}, listen, trigger, remove; listen = function (key, fn) { if (!clientList[key])
+        { clientList[key] = []; } clientList[key].push(fn); }; trigger = function () { var key = Array.prototype.shift.call(arguments),
+        fns = clientList[key]; if (!fns || fns.length === 0) { return false; } for (var i = 0, fn; fn = fns[i++];) { fn.apply(this,
+        arguments); } }; remove = function (key, fn) { var fns = clientList[key]; if (!fns) { return false; } if (!fn) {
+        fns && (fns.length = 0); } else { for (var l = fns.length - 1; l >= 0; l--) { var _fn = fns[l]; if (_fn === fn) {
+        fns.splice(l, 1); } } } }; return { listen: listen, trigger: trigger, remove: remove } })(); var count = 0; var button
+        = document.getElementById('count'); button.onclick = function () { Event.trigger('add', count++); } var div = document.getElementById('show');
+        Event.listen('add', function (count) { div.innerHTML = count; });
 
-    var div = document.getElementById('show');
-    Event.listen('add', function (count) {
-        div.innerHTML = count;
-    });
-
-</script>
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            margin: 50px;
+        }
+
+        #small {
+            width: 229px;
+            height: 250px;
+            border: 1px solid black;
+            text-align: center;
+            position: relative;
+            float: left;
+        }
+
+        #mask {
+            width: 100px;
+            height: 100px;
+            background-color: rgba(214, 111, 193, 0.3);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        #big {
+            margin-left: 20px;
+            width: 229px;
+            height: 250px;
+            float: left;
+            overflow: hidden;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+<div id="box">
+    <div id="small">
+        <img src="../img/nba-new1.jpg" width="229" height="249" alt="" />
+        <div id="mask"></div>
+    </div>
+    <div id="big">
+        <img src="../img/nba-new.jpg" width="549" height="600" alt="" />
+    </div>
+</div>
+
+<script>
+    //首先或许要操作的元素
+    function getId(tag) {
+        return document.getElementById(tag);
+    }
+
+    var box = getId("box");
+    var small = getId("small");
+    var mask = getId("mask");
+    var big = getId("big");
+    var pic = big.children[0];
+
+    //鼠标移动到图片上出现两个效果
+    small.onmouseover = function () {
+        mask.style.display = "block";
+        big.style.display = "block";
+    }
+    small.onmouseout = function () {
+        mask.style.display = "none";
+        big.style.display = "none"
+    }
+    //设置小图的焦点框，跟随鼠标；
+    small.onmousemove = function (e) {
+
+        var marginL = box.offsetLeft;//50
+        var marginT = box.offsetTop;//50
+
+        var currentX = e.clientX;//鼠标x轴位置，动态变化
+        var currentY = e.clientY;//鼠标y轴位置，动态变化
+
+        var x = currentX - marginL - mask.offsetWidth / 2;
+        var y = currentY - marginT - mask.offsetHeight / 2;
+
+        //给焦点框设置移动区域
+        if (x < 0) {
+            x = 0;
+        }
+        if (x > small.offsetWidth - mask.offsetWidth) {
+            x = small.offsetWidth - mask.offsetWidth
+        }
+
+        if (y < 0) {
+            y = 0;
+        }
+        if (y > small.offsetHeight - mask.offsetHeight) {
+            y = small.offsetHeight - mask.offsetHeight
+        }
+
+        mask.style.left = x + "px";
+        mask.style.top = y + "px";
+
+        //设置大盒子中显示的内容
+
+        var proporationX = pic.offsetWidth / small.offsetWidth;
+        var proporationY = pic.offsetHeight / small.offsetWidth;
+
+        pic.style.marginLeft = -(x * proporationX) + "px";
+        pic.style.marginTop = -(y * proporationY) + "px";
+    }
+</script>
+
+</body>
+</html>
