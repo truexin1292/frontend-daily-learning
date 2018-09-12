@@ -5,7 +5,8 @@
     "main": "express.js",
     "scripts": {
         "express": "node express.js",
-        "server": "node server.js"
+        "server": "node server.js",
+        "server2": "node server2.js"
     },
     "author": "",
     "license": "ISC",

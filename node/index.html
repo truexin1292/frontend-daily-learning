@@ -30,22 +30,6 @@
 
         //todo yarn server.js 已经实现跨域
 
-        $.ajax({
-            url: 'http://localhost:3001/?file=test.json',
-            type: 'get',
-            success: function (rs) {
-                console.log('test:', rs);
-            }
-        });
-
-        $.ajax({
-            url: 'http://localhost:3000/?file=test.json',
-            type: 'get',
-            success: function (rs) {
-                console.log('test:', rs);
-            }
-        });
-
         //TODO 1.原生js 已经实现跨域
         // var script = document.createElement("script");
         // script.src = "http://localhost:3001/?file=test.json&callback=function(response){console.log(response);}";
@@ -55,6 +39,34 @@
         // $.getJSON("http://localhost:3001/?file=test.json&callback=?", function(data){
         //     console.log(data);
         // });
+
+        // $.ajax({
+        //     url: 'http://localhost:3001/?file=test.json',
+        //     type: 'get',
+        //     success: function (rs) {
+        //         console.log('test:', rs);
+        //     }
+        // });
+
+        $.post(
+            'http://127.0.0.1:3001/?file=test.json',
+            function(ret) {
+                console.log('test:', ret);
+                document.write(JSON.stringify(ret));
+            },
+            'jsonp'
+        );
+
+        //todo yarn server2.js 已经实现跨域
+
+        // $.ajax({
+        //     url: 'http://localhost:3000/?file=test.json',
+        //     type: 'get',
+        //     success: function (rs) {
+        //         console.log('test:', rs);
+        //     }
+        // });
+
 
         //todo 直接调用本地json
 
