@@ -1,0 +1,74 @@
+[
+    {
+        "factory": "恒联",
+        "goods": "HS30电机",
+        "zone": "佛山",
+        "num": "23.00",
+        "prize": "11960.00",
+        "time": "2018.5.30",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "HS30电机",
+        "zone": "佛山",
+        "num": "12.00",
+        "prize": "4176.00",
+        "time": "2018.5.30",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "JG210A电机",
+        "zone": "广州",
+        "num": "17.00",
+        "prize": "5457.00",
+        "time": "2018.5.29",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "B30单相电机",
+        "zone": "茂名",
+        "num": "94.00",
+        "prize": "28350.00",
+        "time": "2018.5.29",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "TJ22单相电机",
+        "zone": "茂名",
+        "num": "100.00",
+        "prize": "34700.00",
+        "time": "2018.5.5",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "B15定子",
+        "zone": "汕头",
+        "num": "50.00",
+        "prize": "6775.00",
+        "time": "2018.5.5",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "HS30电机",
+        "zone": "佛山",
+        "num": "23.00",
+        "prize": "11960.00",
+        "time": "2018.5.30",
+        "head": false
+    },
+    {
+        "factory": "恒联",
+        "goods": "QR20电机",
+        "zone": "佛山",
+        "num": "23.00",
+        "prize": "11960.00",
+        "time": "2018.5.30",
+        "head": false
+    }
+]
