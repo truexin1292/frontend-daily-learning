@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+    <title>浏览器 Notification</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+            background: lightblue;
+        }
+
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        form input {
+            border: 0;
+            padding: 10px;
+            width: 90%;
+            margin-right: .5%;
+        }
+
+        form button {
+            width: 9%;
+            background: rgb(130, 224, 255);
+            border: none;
+            padding: 10px;
+        }
+
+        @media screen and (max-width: 640px) {
+            form button {
+                width: 100%;
+            }
+
+            form input {
+                border: 0;
+                padding: 10px;
+                width: 100%;
+            }
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+<ul id="messages"></ul>
+<form action="">
+    <input id="m" autocomplete="off" />
+    <button>Send</button>
+</form>
+<script src="https://cdn.bootcss.com/socket.io/2.1.1/socket.io.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script>
+    let socket = io();
+    let index = 0;
+    $('form').submit(function () {
+        socket.emit('notification', $('#m').val());
+        $('#m').val('');
+        return false;
+    });
+    let messageList = JSON.parse(sessionStorage.getItem('messageList') || '[]');
+    socket.on('notification', function (msg) {
+        notice(msg);
+        index++;
+        $('#messages').append(`<li>${msg}</li>`);
+        messageList.push({ msg });
+        sessionStorage.setItem('messageList', JSON.stringify(messageList));
+    });
+
+    Notification.requestPermission(function (permission) {
+    });
+
+    function notice(msg) {
+        let _notification = new Notification(`消息通知`, {
+            body: `${msg}`,
+            icon: 'http://localhost:8081/chat.png',
+            msg: 'O(∩_∩)O哈哈~',
+        });
+
+        setTimeout(function () {
+            _notification.close(); //设置5秒后自动关闭通知框
+        }, 5000);
+    }
+
+    if (index === 0) {
+        messageList.map(function (v, i) {
+            $('#messages').append(`<li>${v.msg}</li>`);
+        })
+    }
+</script>
+</body>
+</html>
