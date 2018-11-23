@@ -1,0 +1,77 @@
+{
+    "des": "",
+    "name": "\u519c\u5174\u4e2d",
+    "face_oss": "https:\/\/co-image.qichacha.com\/PersonImage\/",
+    "relativeInfoData": [
+        {
+            "KeyNo": "95df6f9895f8780fdc8eff4eb0ef9df5",
+            "Name": "\u73e0\u6d77\u79d1\u9526\u6295\u8d44\u5408\u4f19\u4f01\u4e1a(\u6709\u9650\u5408\u4f19)",
+            "OperName": "",
+            "OperPersonId": null,
+            "OperType": 2,
+            "RegCap": "",
+            "ImageUrl": "https:\/\/qccdata.qichacha.com\/AutoImage\/95df6f9895f8780fdc8eff4eb0ef9df5.jpg?x-oss-process=image\/resize,w_120",
+            "Date": 1525881600,
+            "Status": "\u5728\u4e1a",
+            "CoyCode": "",
+            "Relation": [
+                {
+                    "Type": "1",
+                    "TypeDesc": "\u80a1\u4e1c",
+                    "Value": "9.4100%"
+                }
+            ],
+            "Area": {
+                "Province": "\u5e7f\u4e1c\u7701",
+                "City": "\u73e0\u6d77\u5e02",
+                "County": ""
+            },
+            "Industry": null,
+            "EconKind": "\u6709\u9650\u5408\u4f19\u4f01\u4e1a",
+            "SXCount": 0,
+            "ZXCount": 0
+        },
+        {
+            "KeyNo": "2bd757684a919efa1b97cc30ddddcc30",
+            "Name": "\u5e7f\u5dde\u5730\u94c1\u8bbe\u8ba1\u7814\u7a76\u9662\u80a1\u4efd\u6709\u9650\u516c\u53f8",
+            "OperName": "\u519c\u5174\u4e2d",
+            "OperPersonId": "p91cac780336569f815cdb6d8d223e06",
+            "OperType": 1,
+            "RegCap": "36000\u4e07\u5143\u4eba\u6c11\u5e01",
+            "ImageUrl": "https:\/\/co-image.qichacha.com\/CompanyImage\/2bd757684a919efa1b97cc30ddddcc30.jpg?x-oss-process=style\/qcc_cmp",
+            "Date": 744566400,
+            "Status": "\u5728\u4e1a",
+            "CoyCode": "",
+            "Relation": [
+                {
+                    "Type": "0",
+                    "TypeDesc": "\u6cd5\u5b9a\u4ee3\u8868\u4eba",
+                    "Value": "\u519c\u5174\u4e2d"
+                },
+                {
+                    "Type": "2",
+                    "TypeDesc": "\u4efb\u804c",
+                    "Value": "\u8463\u4e8b\u957f\u517c\u603b\u7ecf\u7406"
+                }
+            ],
+            "Area": {
+                "Province": "\u5e7f\u4e1c\u7701",
+                "City": "\u5e7f\u5dde\u5e02",
+                "County": "\u8d8a\u79c0\u533a"
+            },
+            "Industry": {
+                "IndustryCode": "M",
+                "SubIndustryCode": 74,
+                "Industry": "\u79d1\u5b66\u7814\u7a76\u548c\u6280\u672f\u670d\u52a1\u4e1a",
+                "SubIndustry": "\u4e13\u4e1a\u6280\u672f\u670d\u52a1\u4e1a"
+            },
+            "EconKind": "\u5176\u4ed6\u80a1\u4efd\u6709\u9650\u516c\u53f8(\u975e\u4e0a\u5e02)",
+            "SXCount": 0,
+            "ZXCount": 0
+        }
+    ],
+    "relativeInfoCount": 2,
+    "job": "\u6cd5\u5b9a\u4ee3\u8868\u4eba",
+    "companyname": "\u5e7f\u5dde\u5730\u94c1\u8bbe\u8ba1\u7814\u7a76\u9662\u80a1\u4efd\u6709\u9650\u516c\u53f8",
+    "companykey": "2bd757684a919efa1b97cc30ddddcc30"
+}

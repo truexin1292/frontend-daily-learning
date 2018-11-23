@@ -1,0 +1,15 @@
+{
+    "name": "carlo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "demo": "node demo.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "carlo": "^0.9.29"
+    }
+}

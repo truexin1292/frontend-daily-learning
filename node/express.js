@@ -68,6 +68,51 @@ app.get('/api/buyers', function (req, res) {
     });
 });
 
+//获取企业get接口
+app.get('/api/comp', function (req, res) {
+    var file = path.join(__dirname, 'data/comp.json'); //文件路径，__dirname为当前运行js文件的目录
+    //读取json文件
+    fs.readFile(file, 'utf-8', function (err, data) {
+        if (err) {
+            console.log('fail:', data);
+            res.send('文件读取失败');
+        } else {
+            // console.log('success:', data);
+            res.send(data);
+        }
+    });
+});
+
+//获取企业get接口
+app.get('/api/more', function (req, res) {
+    var file = path.join(__dirname, 'data/more.json'); //文件路径，__dirname为当前运行js文件的目录
+    //读取json文件
+    fs.readFile(file, 'utf-8', function (err, data) {
+        if (err) {
+            console.log('fail:', data);
+            res.send('文件读取失败');
+        } else {
+            // console.log('success:', data);
+            res.send(data);
+        }
+    });
+});
+
+//获取企业get接口
+app.get('/api/boss', function (req, res) {
+    var file = path.join(__dirname, 'data/boss.json'); //文件路径，__dirname为当前运行js文件的目录
+    //读取json文件
+    fs.readFile(file, 'utf-8', function (err, data) {
+        if (err) {
+            console.log('fail:', data);
+            res.send('文件读取失败');
+        } else {
+            // console.log('success:', data);
+            res.send(data);
+        }
+    });
+});
+
 app.listen(port, hostName, function () {
     console.log(`服务器运行在http://${hostName}:${port}`);
 });
