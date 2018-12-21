@@ -113,6 +113,34 @@ app.get('/api/boss', function (req, res) {
     });
 });
 
+//fcl - h5
+app.get('/api/fclh5', function (req, res) {
+    var file = path.join(__dirname, 'data/fclH5.json'); //文件路径，__dirname为当前运行js文件的目录
+    //读取json文件
+    fs.readFile(file, 'utf-8', function (err, data) {
+        if (err) {
+            console.log('fail:', data);
+            res.send('文件读取失败');
+        } else {
+            res.send(data);
+        }
+    });
+});
+
+//fcl - h5 hit
+app.get('/api/fclhit', function (req, res) {
+    var file = path.join(__dirname, 'data/hit.json'); //文件路径，__dirname为当前运行js文件的目录
+    //读取json文件
+    fs.readFile(file, 'utf-8', function (err, data) {
+        if (err) {
+            console.log('fail:', data);
+            res.send('文件读取失败');
+        } else {
+            res.send(data);
+        }
+    });
+});
+
 app.listen(port, hostName, function () {
     console.log(`服务器运行在http://${hostName}:${port}`);
 });
