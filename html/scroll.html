@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>元素自动滚动到可视范围内</title>
+    <style type="text/css">
+        .test {
+            height: 5000px;
+            background: #666;
+        }
+
+        .intoview {
+            height: 100px;
+            background: green;
+        }
+
+        .link-block a {
+            display: block;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+<div class="link-block">
+    <a>
+        <p>test1</p>
+        <br>
+        <span>eee</span>
+    </a>
+    <a>
+        <p>test2</p>
+        <br>
+        <span>eee</span>
+    </a>
+    <a>
+        <p>test3</p>
+        <br>
+        <span>eee</span>
+    </a>
+</div>
+<div id="show-more">滚动按钮</div>
+<div id="test" class="test"></div>
+<div id="m-intoview" class="intoview">1</div>
+<div id="test2" class="test2"></div>
+
+<!--[if lte IE 7]>
+<script type="text/javascript">
+    var isIE7 = true;
+</script>
+<![endif]-->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            // $("#m-intoview")[0].scrollIntoView(false);
+            // $("#m-intoview")[0].scrollIntoViewIfNeeded({behavior: "instant", block: "center", inline: "nearest"});
+            // $("#m-intoview")[0].scrollIntoViewIfNeeded();
+        }, 2000);
+
+        var showMore = $('#show-more');
+        var linkBlockHtml1 = $('.link-block').html();
+        showMore.click(function () {
+            var linkBlockHtml = $('.link-block').html();
+            let html = linkBlockHtml + linkBlockHtml1;
+            var n = $(".link-block a").length + 1;//当前LI个数
+            setTimeout(function () { //todo 替换澄接口请求数据
+                $('.link-block').html(html); //todo 接口拼接数据；
+                if (window.isIE7) $('html').stop().animate({'scrollTop': 150 * n}, 150 * n);
+                else $('html,body').stop().animate({'scrollTop': 150 * n}, 150 * n);
+            }, 1000)
+        })
+    });
+</script>
+</body>
+</html>
