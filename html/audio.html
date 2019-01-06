@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>audio-ios --- auto play</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .musicPlay {
+            position: fixed;
+            width: 100vw;
+            top: 20vh;
+        }
+
+        .musicPlay > p {
+            width: 64vw;
+            margin-left: 18vw;
+            font-size: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 0 12px 0 #aaa;
+            height: 7vh;
+            line-height: 7vh;
+        }
+
+        .musicPlay > p > img {
+            float: left;
+            margin-left: 1vw;
+            height: 5vh;
+            margin-top: 1vh;
+        }
+
+        .musicPlay > p > span {
+            float: left;
+        }
+
+        .musicPlay > p > span > em {
+            color: #d81e06;
+        }
+    </style>
+</head>
+
+<body>
+<div class="musicPlay">
+    <audio id="voice" src="http://vk88.vka88.com/00006/2017063014590719381_Stay the Night.mp3"
+           autoplay="autoplay">
+    </audio>
+    <p>
+        <img
+            src="http://upload-images.jianshu.io/upload_images/6171922-4d23a92a9c256d0d.gif?imageMogr2/auto-orient/strip">
+        <span>
+            <em></em>
+            播放/暫停
+        </span>
+    </p>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var voice = document.getElementById('voice');
+        //调用 <audio> 元素提供的方法 play()
+        voice.play();
+        //判斷 WeixinJSBridge 是否存在
+        if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+            voice.play();
+        } else {
+            //監聽客户端抛出事件"WeixinJSBridgeReady"
+            if (document.addEventListener) {
+                document.addEventListener("WeixinJSBridgeReady", function () {
+                    voice.play();
+                }, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("WeixinJSBridgeReady", function () {
+                    voice.play();
+                });
+                document.attachEvent("onWeixinJSBridgeReady", function () {
+                    voice.play();
+                });
+            }
+        }
+
+        //voiceStatu用來記録狀態,使 touchstart 事件只能觸發一次有效,避免與 click 事件衝突
+        var voiceStatu = true;
+        //监听 touchstart 事件进而调用 <audio> 元素提供的 play() 方法播放音频
+        document.addEventListener("touchstart", function (e) {
+            if (voiceStatu) {
+                voice.play();
+                voiceStatu = false;
+            }
+        }, false);
+
+        $('.musicPlay').click(function () {
+            // 依據 audio 的 paused 属性返回音频是否已暂停來判斷播放還是暫停音频。
+            if (voice.paused) {
+                voice.play();
+                $('.musicPlay>p>img').attr('src', 'http://upload-images.jianshu.io/upload_images/6171922-4d23a92a9c256d0d.gif?imageMogr2/auto-orient/strip');
+            } else {
+                voice.pause();
+                $('.musicPlay>p>img').attr('src', 'http://upload-images.jianshu.io/upload_images/6171922-e5206046b43e1efe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240');
+            }
+        });
+        //监听浏览器能够开始播放这段音频时，发生的 canplay 事件来获取 <audio> 元素的 duration 属性.
+        $("#voice").on("canplay", function () {
+            $(".musicPlay>p>span>em").html(parseInt(voice.duration) + '" ');
+        });
+    });
+</script>
+</body>
+</html>
