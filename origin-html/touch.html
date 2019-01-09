@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" Content="text/html; charset=utf-8;">
+    <title>移动端触摸滑动</title>
+    <meta name="author" content="rainna"/>
+    <meta name="keywords" content="rainna's js lib"/>
+    <meta name="description" content="移动端触摸滑动"/>
+    <!--<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .m-slider {
+            width: 600px;
+            margin: 50px 20px;
+            overflow: hidden;
+        }
+
+        .m-slider .cnt {
+            position: relative;
+            left: 0;
+            width: 3000px;
+        }
+
+        .m-slider .cnt li {
+            float: left;
+            width: 600px;
+        }
+
+        .m-slider .cnt img {
+            display: block;
+            width: 100%;
+            height: 450px;
+        }
+
+        .m-slider .cnt p {
+            margin: 20px 0;
+        }
+
+        .m-slider .icons {
+            text-align: center;
+            color: #000;
+        }
+
+        .m-slider .icons span {
+            margin: 0 5px;
+        }
+
+        .m-slider .icons .curr {
+            color: red;
+        }
+
+        .f-anim {
+            -webkit-transition: left .2s linear;
+        }
+    </style>
+</head>
+
+<body>
+<p id="output">这里显示坐标</p>
+
+<script>
+    function handleTouchEvent(event) {
+        //只跟踪一次触摸
+        if (event.touches.length == 1) {
+            var output = document.getElementById("output");
+            switch (event.type) {
+                case "touchstart":
+                    output.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";
+                    break;
+                case "touchend":
+                    output.innerHTML += "Touch ended (" + event.changedTouches[0].clientX + "," + event.changeTouches[0].clientY + ")";
+                    break;
+                case "touchmove":
+                    event.preventDefault(); //阻止滚动
+                    output.innerHTML += "Touch moved (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")";
+                    break;
+            }
+        }
+    }
+    document.addEventListener("touchstart", handleTouchEvent, false);
+    document.addEventListener("touchend", handleTouchEvent, false);
+    document.addEventListener("touchmove", handleTouchEvent, false);
+</script>
+</body>
+</html>

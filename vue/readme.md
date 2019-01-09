@@ -40,3 +40,9 @@ https://www.cnblogs.com/soyxiaobi/p/9554565.html
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
 }
+
+pc:
+![](.readme_images/04b5d488.png)
+
+h5:
+![](.readme_images/fb70e109.png)
