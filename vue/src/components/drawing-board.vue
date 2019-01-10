@@ -73,7 +73,9 @@
 				document.addEventListener("touchmove", () => {
 					this.drawing(event, ws);
 				}, false);
-				// document.addEventListener("touchend", this.drawEnd, false);
+				// document.addEventListener("touchend", () => {
+				// 	this.drawEnd(event, ws)
+				// }, false);
 			} else {
 				document.onmousemove = () => {
 					this.drawing(event, ws);
@@ -114,7 +116,9 @@
 				document.removeEventListener("touchmove", () => {
 					this.drawing(event, ws)
 				});
-				document.removeEventListener("touchend", this.drawEnd);
+				document.removeEventListener("touchend", () => {
+					this.drawEnd(event, ws)
+				});
 			} else {
 				document.onmousemove = document.onmouseup = null;
 			}
@@ -131,7 +135,8 @@
 	export default {
 		name: 'draw',
 		mounted() {
-			const ws = new WebSocket('ws://localhost:8090');
+			// const ws = new WebSocket('ws://localhost:8090'); // todo 需要替换ip才能在手机访问哇，O(∩_∩)O哈哈~
+			const ws = new WebSocket('ws://192.168.9.238:8090');
 			let draw = new Draw('canvas');
 			let btn = document.getElementById('btn');
 			ws.onopen = () => {

@@ -14,7 +14,8 @@
 	export default {
 		name: 'show',
 		mounted() {
-			const ws = new WebSocket('ws://localhost:8090');
+			// const ws = new WebSocket('ws://localhost:8090');
+			const ws = new WebSocket('ws://192.168.9.238:8090');
 			const canvas = document.getElementById('showing');
 			const cxt = canvas.getContext('2d');
 			let moveToSwitch = 1;
