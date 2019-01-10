@@ -15,7 +15,9 @@ module.exports = {
 	},
 	devServer: {
 		historyApiFallback: true,
-		overlay: true
+		overlay: true,
+		disableHostCheck: true,
+		host: '0.0.0.0' // 用于手机访问局域网ip
 	},
 	resolve: {
 		alias: {
@@ -93,7 +95,7 @@ module.exports = {
 	plugins: [
 		// make sure to include the plugin for the magic
 		new VueLoaderPlugin()
-	]
+	],
 };
 
 if (process.env.NODE_ENV === 'production') {
