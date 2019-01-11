@@ -31,6 +31,7 @@
 cmd + f ：搜索
 cmd + alt + f： 替换
 cmd + shift + f：在项目内搜索
+shift + alt +f : 代码格式化
 ```
 
 ----

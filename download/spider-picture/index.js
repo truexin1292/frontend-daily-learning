@@ -1,3 +1,3 @@
-let app = require('./src/app.js');
+let app = require('./src/app.js')
 
-app.start();
+app.start()
