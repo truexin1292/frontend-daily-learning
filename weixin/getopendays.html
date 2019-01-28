@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>2018 微信数据报告</title>
+    <meta id=viewport name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"/>
+    <style>
+        @font-face {
+            font-family: WeChatSansStd;
+            src: url("https://res.wx.qq.com/a/wx_fed/cdn_libs/res/WeChatSans/1.0.0/WeChatSansStd-Regular.ttf");
+            font-weight: 400
+        }
+
+        body, html {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+            background: #292929
+        }
+
+        .page-result {
+            display: none;
+            height: 100%;
+            width: 100%;
+            max-width: 1024px;
+            margin: auto;
+            position: relative
+        }
+
+        .image-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: block
+        }
+
+        .image-bottom {
+            position: absolute;
+            bottom: 78px;
+            left: 0;
+            width: 100%
+        }
+
+        .days-container {
+            top: 34%;
+            width: 100%;
+            left: 0;
+            position: absolute;
+            z-index: 10;
+            text-align: center
+        }
+
+        .title {
+            color: #fff;
+            font-size: 20px;
+            line-height: 1.2
+        }
+
+        .days {
+            color: #2ec179;
+            line-height: 1.1
+        }
+
+        .error {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 20px
+        }
+
+        .days .day-num {
+            font-family: WeChatSansStd;
+            font-size: 62px;
+            font-weight: 400
+        }
+
+        .days .day-text {
+            font-size: 15px;
+            margin-right: -15px
+        }
+
+        .footer {
+            font-size: 12px;
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            text-align: center;
+            width: 100%;
+            color: #6d6d6d
+        }
+
+        .page-data {
+            text-align: center;
+            max-width: 1024px;
+            margin: auto
+        }
+
+        .page-data .data-img {
+            width: 100%
+        }
+
+        .button {
+            width: 30%;
+            max-width: 307px;
+            margin: auto
+        }</style>
+    <script>window.mydata = {code: 1, days: 0}</script>
+</head>
+<body>
+<div class=page-data>
+    <img class=data-img
+         src="https://res.wx.qq.com/a/fed_upload/c063a42f-73f0-4175-b538-e1933b8c361a/data-1-6.png"
+         alt="">
+    <img class=data-img
+         src="https://res.wx.qq.com/a/fed_upload/111c6cfa-e7c5-498a-af09-0c792ca1718b/data-2.png"
+         alt="">
+    <img class=data-img
+         src="https://res.wx.qq.com/a/fed_upload/111c6cfa-e7c5-498a-af09-0c792ca1718b/data-3.png"
+         alt="">
+    <img class=data-img
+         src="https://res.wx.qq.com/a/fed_upload/111c6cfa-e7c5-498a-af09-0c792ca1718b/data-4.png"
+         alt="">
+    <img class=data-img
+         src="https://res.wx.qq.com/a/fed_upload/111c6cfa-e7c5-498a-af09-0c792ca1718b/data-5.png"
+         alt="">
+    <img class=button
+         src="https://res.wx.qq.com/a/fed_upload/5095ae63-65dc-4723-911c-67b637b70f4f/buttom.png">
+    <img class=data-img src="https://res.wx.qq.com/a/fed_upload/111c6cfa-e7c5-498a-af09-0c792ca1718b/data-6.png" alt="">
+</div>
+<div class=page-result>
+    <img class=image-top
+         src="https://res.wx.qq.com/a/fed_upload/2ae7ebaf-d737-40f0-9312-aea96590207e/Fill%2048742.png">
+    <img class=image-bottom
+         src="https://res.wx.qq.com/a/fed_upload/2ae7ebaf-d737-40f0-9312-aea96590207e/Fill%204874.png">
+    <div class=days-container>
+        <div class=error> 获取数据失败，请稍候再试</div>
+    </div>
+    <div class=footer> 微信，是一个生活方式</div>
+</div>
+<script>
+    var dombutton = document.querySelector(".button"),
+        domresult = document.querySelector(".page-result"),
+        domdata = document.querySelector(".page-data");
+
+    function open() {
+        domresult.style.display = "block",
+            domdata.style.display = "none"
+    }
+
+    function jsBridgeReady() {
+        var e = "https://support.weixin.qq.com/cgi-bin/mmsupport-bin/getopendays",
+            i = "2018 微信数据报告，内有彩蛋",
+            n = "我已与微信同行" + window.mydata.days + "天，你呢?",
+            t = "https://res.wx.qq.com/a/fed_upload/b2327abe-ce58-4a83-a0c7-d67085f4ea0e/wechat-pro.png";
+
+        WeixinJSBridge.on(
+            "menu:share:timeline",
+            function () {
+                WeixinJSBridge.invoke(
+                    "shareTimeline",
+                    {
+                        img_url: t,
+                        img_width: "640",
+                        img_height: "640",
+                        link: e,
+                        desc: i,
+                        title: n
+                    },
+                    function (e) {
+                        WeixinJSBridge.log(e.err_msg)
+                    }
+                )
+            }
+        ),
+            WeixinJSBridge.on(
+                "menu:share:appmessage",
+                function () {
+                    WeixinJSBridge.invoke(
+                        "sendAppMessage",
+                        {
+                            img_url: t,
+                            img_width: "640",
+                            img_height: "640",
+                            link: e,
+                            desc: i,
+                            title: n
+                        },
+                        function (e) {
+                            WeixinJSBridge.log(e.err_msg)
+                        }
+                    )
+                }
+            ),
+            WeixinJSBridge.invoke(
+                "hideToolbar",
+                {},
+                function (e) {
+                }
+            ),
+        window.mydata.code && WeixinJSBridge.invoke(
+            "hideOptionMenu",
+            {},
+            function (e) {
+            }
+        )
+    }
+
+    document.addEventListener ?
+        document.addEventListener("WeixinJSBridgeReady", jsBridgeReady, !1) :
+        document.attachEvent && (document.attachEvent("WeixinJSBridgeReady", jsBridgeReady),
+            document.attachEvent("onWeixinJSBridgeReady", jsBridgeReady)),
+        dombutton.addEventListener("click", open, !1),
+        (new Image).src = "https://support.weixin.qq.com/cgi-bin/mmsupport-bin/reportforweb?rid=64692&rkey=40&rvalue=1"
+</script>
+<script src="https://res.wx.qq.com/a/wx_fed/activity/res/static/js/index_b9de0c5.js"></script>
+</body>
+</html>

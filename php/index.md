@@ -12,7 +12,7 @@ http://truexinologydemacbook-pro.local/
 sudo apachectl stop
 ```
 再打开xampp的php server
-
+![](.index_images/3769b9ec.png)
 #### html里面解析php
 https://blog.csdn.net/chengqianduan/article/details/80459456
 
