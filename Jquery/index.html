@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #main {
+            background: lightblue;
+            width: 500px;
+            height: 500px;
+            padding: 20px;
+            color: #fff;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="main">
+
+</div>
+<script>
+    // 编写两个jQuery的扩展：
+    $.fn.stringifyArray = function (array) {
+        return JSON.stringify(array)
+    }
+
+    $.fn.parseArray = function (array) {
+        return JSON.parse(array)
+    }
+
+    //然后调用：
+
+    var str = $("").stringifyArray([1, 2, 3, 4, 5, 'alex']);
+    var arr = $("").parseArray(str);
+    console.log(str);
+    console.log(arr);
+    $('#main').html(str);
+</script>
+</body>
+</html>
