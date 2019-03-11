@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>中英文切换</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/transform.js"></script>
+    <script type="text/javascript" src="js/language.js"></script>
+</head>
+<body>
+<button id="change">中英文切换</button>
+<div style="text-align: center">
+    你好
+</div>
+
+<h1>测试简繁转换</h1>
+<p> 简繁转换是否成功了呢？看看就知道了</p>
+<p> 我们知道了。邹新许</p>
+<span>可以</span>
+<h3>真的</h3>
+
+<input type="button" value="繁体" onclick="zh_tran('t');"/>
+<input type="button" value="简体" onclick="zh_tran('s');"/>
+</body>
+<script type="text/javascript">
+    $("#change").click(function () {
+        translate();
+    })
+</script>
+</html>

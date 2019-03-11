@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="https://segmentfault.com/q/1010000012664753">https://segmentfault.com/q/1010000012664753</a>
+<br/>
+<a href="https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript?rq=1">
+    https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript?rq=1
+</a>
+<pre>
+    前瞻：
+    exp1(?=exp2) 查找exp2前面的exp1
+    后顾：
+    (?<=exp2)exp1 查找exp2后面的exp1
+    负前瞻：
+    exp1(?!exp2) 查找后面不是exp2的exp1
+    负后顾：
+    (?<!=exp2)exp1 查找前面不是exp2的exp1
+</pre>
+<script type="text/javascript">
+    // var num = 12344444666.896;
+    var num = 9999966666669.45146;
+    // var num = 6.896;
+    // var num1 = Number(num).toFixed(2).toString();
+    // var num1 = num.toString();
+    var num1 = '32mmdfkkff44444440200202.55555'
+    var num2 = num1.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');//当前数字保留，后面加一个逗号；
+    var num3 = num1.replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");//直接在当前数字边界（即非单词边界）后面加一个逗号；
+    var num4 = num1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    document.write(num1);
+    document.write('<br/>');
+    document.write(num2);
+    document.write('<br/>');
+    document.write(num3);
+    document.write('<br/>');
+    document.write(num4);
+
+    // 12344444666.90
+    // 12,344,444,666.90
+    // 12,344,444,666.90
+
+    function numberWithCommas(x) {
+        x = x.toString();
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(x))
+            x = x.replace(pattern, "$1,$2");
+        return x;
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function numberWithCommas(x) {
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
+    var n = 34523453.345
+    n.toLocaleString();
+    "34,523,453.345"
+
+    var number2 = 1234.56789; // floating point example
+    number2.toLocaleString(undefined, { maximumFractionDigits: 2 }) // "1,234.57"
+
+    function number_format(number, decimals, dec_point, thousands_sep) {
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            toFixedFix = function (n, prec) {
+                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                var k = Math.pow(10, prec);
+                return Math.round(n * k) / k;
+            },
+            s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+    }
+</script>
+</body>
+</html>

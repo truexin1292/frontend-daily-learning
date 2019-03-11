@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #nav {
+            border: 1px solid;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="nav"></div>
+</body>
+<!--把 Script 标签 放在页面的最底部的 body 封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？-->
+<!--Google并没有把插入在之后，而只是没有写和闭合标签。
+【这样做是符合标准的。不仅是html5标准，从第一个HTML正式标准HTML 2.0开始，这样做都是允许的。
+相反，在之后插入其他元素，从HTML 2.0起就是不合标准的。】-->
+
+<!--按照HTML5标准中的HTML语法规则，
+如果在后再出现或任何元素的开始标签，都是parse error，
+浏览器会忽略之前的，即视作仍旧在body内。所以实际效果和写在之前是没有区别的-->
+
+<!--但并不建议这么写，不同的游览器实现不一样-->
+
+<script>
+    // html标签只包含head 和body两个标签，解析时，所有标签都会解析进这两个标签里边。
+    // body之前的任何位置都会解析进head里边，之后的都会解析进body里边。
+    var nav = document.getElementById("nav");
+    nav.onclick = function () {
+        this.style.background = "red";
+    }
+</script>
+</html>
