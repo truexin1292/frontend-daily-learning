@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>css���ж���</title>
+    <style>
+        /*float��ʽʵ��*/
+        .main {
+            clear: both;
+            overflow: hidden;
+            width: 200px
+        }
+
+        .title, .content {
+            float: left;
+            line-height: 20px;
+            display: inline-block;
+        }
+
+        .title {
+            width: 50px;
+        }
+
+        .content {
+            width: 150px;
+        }
+
+        /*flex��ʽʵ��*/
+        .main1 {
+            display: flex;
+            width: 200px;
+        }
+
+        .title {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+<p class="main">
+    <span class="title">���ݣ�</span>
+    <span class="content">�й����������й����������й����������й���������</span>
+</p>
+
+<p class="main1">
+    <span class="title">���ݣ�</span>
+    <span class="content">�й����������й����������й����������й���������</span>
+</p>
+
+</body>
+</html>
