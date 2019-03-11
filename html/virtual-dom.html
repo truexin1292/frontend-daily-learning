@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-dom</title>
+    <style>
+        #liuyang {
+            width:300px;
+            height:300px;
+            background:lightblue;
+            color:#fff;
+            text-align:center;
+            font-size:18px;
+        }
+    </style>
+</head>
+<body>
+<div id='root'></div>
+<script>
+    function h(nodeName , attributes , ...args){
+        // 返回虚拟DOM, 虚拟DOM结构？
+        var children =  args.length ? [].concat( ...args ) : [];
+        return { nodeName, attributes, children };
+    }
+    vdom = h(
+        'div',
+        { 'id':"liuyang" },
+        h( 'div', null, 'hello,world!' ),
+        h( 'span', null, '你好吗' )
+    )
+    // 虚拟DOM映射成 DOM节点 
+    function render( vnode ){
+        // 如果是文本，直接返回
+        if(vnode.split){
+            return document.createTextNode( vnode );
+        }
+        // 是一个虚拟DOM
+        var node = document.createElement( vnode.nodeName );
+
+        // get属性
+        var attrs = vnode.attributes || {} ;
+        // 给节点加上属性
+        Object.keys( attrs ).forEach(
+            item => node.setAttribute( item , attrs[item] )
+        );
+        // 递归处理子元素，children
+        ( vnode.children || [] ).forEach(
+            item => node.appendChild( render(item) )
+        );
+        // 返回node 
+        return node;
+    }
+    var dom = render( vdom );
+    document.getElementById("root").appendChild(dom);
+</script>
+</body>
+</html>
