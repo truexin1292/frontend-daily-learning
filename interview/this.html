@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //1)
+    var add = function (a, b) {
+        console.log('add:', a, b)
+        return a + b;
+    }
+    var myObject = {
+        value: 3
+    }
+    myObject.fun = function () {
+        var helper = function () {
+            console.log('helper:', this, this.value);
+            this.value = add(this.value, this.value);
+        }
+        helper(); // 函数调用，this 指向window；this.value = undefined;
+    }
+    myObject.fun();
+    console.log(this.value); //todo 注意：undefined + undefined = NaN 还有 undefined + 1 = NaN;
+    console.log(myObject.value); // 3
+
+    /**************************************/
+
+    //1)
+    // var add = function (a, b) {
+    //     return a + b;
+    // }
+    // var myObject = {
+    //     value: 3
+    // }
+    // myObject.fun = function () {
+    //     var that = this;
+    //     var helper = function () {
+    //         that.value = add(that.value, that.value);
+    //     }
+    //     helper();
+    // }
+    // myObject.fun();
+    // console.log(myObject.value); // 6
+</script>
+</body>
+</html>

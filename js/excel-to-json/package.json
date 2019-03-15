@@ -9,10 +9,18 @@
         "checkPerson": "cd write && node check.js",
         "addPerson": "cd write && node add.js",
         "deletePerson": "cd write && node delete.js",
-        "write": "cd write && node write_Json.js"
+        "write": "cd write && node write_Json.js",
+        "word2": "cd word && node index2.js",
+        "word3": "cd word && node index3.js",
+        "word": "cd word && node index.js",
+        "genDoc": "cd word && node genDoc.js"
     },
     "dependencies": {
+        "docx2html": "^1.1.0",
         "exceljs": "^1.6.0",
+        "mammoth": "^1.4.7",
+        "officegen": "^0.4.7",
+        "textract": "^2.4.0",
         "xls-to-json": "^0.5.0"
     }
 }

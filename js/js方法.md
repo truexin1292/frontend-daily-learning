@@ -9,7 +9,7 @@ console.log(null == null) // true; ===
 console.log(undefined == undefined) // true; ===
 ![](.js方法_images/7ad97ca4.png)
 
-## 3.
+## 3.parseInt
 [1,2,3].map(parseInt);//[1,NaN,NaN];
 实际：[1, 2, 3].map((num, index) => parseInt(num, index))
 
@@ -132,3 +132,4 @@ obj3.a === obj3.b;
 // false
 
 ```
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+<script>
+    // 1) .call(obj, single, ..., ) .call(obj, [ single, ... ]) .bind(obj)(single, ... ,)  ;
+    // var lis = document.getElementsByTagName('li');
+    // Array.prototype.map.call(lis, (v, i) => {
+    //     lis[i].onclick = () => {
+    //         alert(i + 1);
+    //     }
+    // })
+
+    // var lis = document.getElementsByTagName('li');
+    // Array.prototype.map.apply(lis, [(v, i) => { // apply与call 的区别
+    //     lis[i].onclick = () => {
+    //         alert(i + 1);
+    //     }
+    // }])
+
+    var lis = document.getElementsByTagName('li');
+    Array.prototype.map.bind(lis)((v, i) => { // bind与call 的区别
+        lis[i].onclick = () => {
+            alert(i + 1);
+        }
+    })
+
+    // var lis = document.getElementsByTagName('li');
+    // lis = [...lis]; // 类数组转换为数组，就可以使用数组的方法了
+    // lis.map((v, i) => {
+    //     // lis[i].addEventListener('click',
+    //     //     () => {
+    //     //         alert(i + 1);
+    //     //     }
+    //     // )
+    //     lis[i].onclick = () => {
+    //         alert(i + 1);
+    //     }
+    // })
+
+    // 2)
+    // window.onload=function() {
+    //     var lis = document.querySelectorAll('ul li');
+    //     for (var i = 0; i < lis.length; i++) {
+    //         lis[i]._index = i + 1;
+    //         lis[i].onclick = function() {
+    //             alert(this._index);
+    //         };
+    //     }
+    // };
+
+    // 3
+    // window.onload = function () {
+    //     var lis = document.querySelectorAll('ul li');
+    //     for (let i = 0; i < lis.length; i++) {
+    //         lis[i].onclick = function () {
+    //             alert(i + 1);
+    //         };
+    //     }
+    // };
+    //
+    // // 4
+    // window.onload = function () {
+    //     var lis = document.querySelectorAll('ul li');
+    //     var fun = function (i) {
+    //         lis[i].onclick = function () {
+    //             alert(i + 1);
+    //         };
+    //     }
+    //     for (let i = 0; i < lis.length; i++) {
+    //         fun(i);
+    //     }
+    // };
+</script>
+</body>
+
+</html>
