@@ -1,9 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 */node_modules
-*/*/node_modules
-#/js/graphql/node_modules
+/js/excel-to-json/node-uploadfile/node_modules
 #/js/webpack-babel/node_modules
 #/js/babel/node_modules
 vue/dist
+
+
 
