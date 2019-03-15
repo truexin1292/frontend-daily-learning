@@ -16,7 +16,8 @@
     },
     "devDependencies": {},
     "scripts": {
-        "start": "node ."
+        "start": "node .",
+        "dev": "node uploadWord.js"
     },
     "author": "",
     "license": "ISC"

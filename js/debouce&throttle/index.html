@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--https://github.com/hanzichi/underscore-analysis/issues/21-->
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #inp {
+            width: 300px;
+            height: 50px;
+            background: lightblue;
+            border: 1px solid #00bcd4;
+            padding: 5px 10px;
+            border-radius: 10px;
+            vertical-align: center;
+            display: inline-block;
+        }
+
+        #inp:focus {
+            outline: none;
+            outline-offset: 0;
+        }
+
+        #btn {
+            display: inline-block;
+            vertical-align: center;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            background: #00bcd4;
+            font-size: 16px;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<div id="inp">
-
+<input type="text" id="inp"/>
+<div id="btn">
+    确定
 </div>
 <script>
+    var inp = document.getElementById('inp');
+    var btn = document.getElementById('btn');
 
     function debounce(fn) {
         let timeout = null; // 创建一个标记用来存放定时器的返回值
         return function () {
-            clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
-            timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+            clearTimeout(timeout);
+            // 每当用户输入的时候把前一个 setTimeout clear 掉
+            timeout = setTimeout(() => {
+                // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
                 fn.apply(this, arguments);
-            }, 500);
+            }, 1000);
         };
     }
 
@@ -24,9 +60,12 @@
         console.log('防抖成功');
     }
 
-    var inp = document.getElementById('inp');
-    inp.addEventListener('input', debounce(sayHi)); // 防抖
+    function writeValue() {
+        console.log('--click--:', inp.value);
+    }
 
+    inp.addEventListener('change', debounce(sayHi)); // 防抖
+    btn.addEventListener('click', debounce(writeValue)); // 防抖
 </script>
 </body>
 </html>
