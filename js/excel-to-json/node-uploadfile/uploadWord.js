@@ -7,12 +7,19 @@ var path = require('path');
 var xlsx = require('node-xlsx');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+// const compression = require('compression');
 
 const Excel = require('exceljs');
 
-let workbook = new Excel.stream.xlsx.WorkbookWriter({
-    filename: `word_match.xlsx`
-});
+//想获得命令行后面的几个参数值
+/*
+//node arg.js arg1 arg2 arg3， 想取得这三个参数
+//即可以程序中用：
+var args = process.argv.splice(2)
+//process是一个全局对象，argv返回的是一组包含命令行参数的数组。
+//第一项为”node”，第二项为执行的js的完整路径，后面是附加在命令行后的参数
+*/
+var args = process.argv.splice(2);
 
 var app = express();
 var server = http.createServer(app);
@@ -68,6 +75,9 @@ app.post('/upload', (req, res) => {
         var folder_exists = fs.existsSync(target_path);
         if (folder_exists) {
             var dirList = fs.readdirSync(target_path);
+            let workbook = new Excel.stream.xlsx.WorkbookWriter({
+                filename: `${ args[0] }_word_match.xlsx`
+            });
             dirList.map((item, index) => {
                 console.log('--log--:', index, fields);
                 if (!fs.statSync(target_path + '/' + item).isDirectory()) {
@@ -142,4 +152,4 @@ app.post('/upload', (req, res) => {
     form.parse(req);
 });
 
-
+// app.use(compression()); // todo 好像与默认压缩一样；
