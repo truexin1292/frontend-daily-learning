@@ -2,17 +2,149 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <title>匹配词缀</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .form {
+            width: 100vw;
+            max-width: 600px;
+            height: 100vh;
+            max-height: 600px;
+            background: lightblue;
+            margin: auto;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-item {
+            font-size: 0;
+        }
+
+        span {
+            font-size: 16px;
+            color: #fff;
+            display: inline-block;
+            vertical-align: center;
+        }
+
+        .input {
+            display: inline-block;
+            vertical-align: center;
+            width: 200px;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 16px;
+            color: #666;
+            outline-offset: 0;
+            mso-border-shadow: no;
+            border: 1px solid #00bcd4;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            outline: none;
+            outline-offset: 0;
+        }
+
+        .btn {
+            display: block;
+            width: 200px;
+            line-height: 28px;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+            background: #00bcd4;
+            outline-offset: 0;
+            mso-border-shadow: no;
+            border: 1px solid #00bcd4;
+            cursor: pointer;
+            margin-left: 90px;
+            border-radius: 10px;
+        }
+
+        .btn:hover {
+            background: #2ec179;
+            color: #fff;
+            border: 1px solid #2ec179;
+        }
+
+        .btn-success {
+            margin-bottom: 10px;
+        }
+
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .fileinput-button input {
+            position: absolute;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+        }
+
+        #file-list {
+            font-size: 12px;
+            color: #fff;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<form action="/upload" enctype="multipart/form-data" method="post">
-    <input type="text" name="reg1">
-    <br>
-    <input type="text" name="reg2">
-    <br>
-    <input type="file" name="upload" multiple="multiple">
-    <br>
-    <input type="submit" value="Upload">
+<form action="/upload" enctype="multipart/form-data" method="post" class="form">
+    <div class="flex">
+        <div class="input-item">
+            <span>匹配词缀1：</span>
+            <input type="text" name="reg1" class="input">
+        </div>
+        <div class="input-item">
+            <span>匹配词缀2：</span>
+            <input type="text" name="reg2" class="input">
+        </div>
+        <div class="btn btn-success fileinput-button">
+            <span>上传</span>
+            <input type="file" name="upload" id="files" onchange="changeFile()"/>
+            <!--<input type="file" name="upload" multiple="multiple" id="files" onchange="changeFile()"/>-->
+        </div>
+        <div>
+            <input type="submit" value="提交" class="btn">
+        </div>
+        <div id="file-list"></div>
+    </div>
 </form>
+<script>
+    var index = 0;
+
+    function changeFile() {
+        var files = document.getElementById("files").files;
+        var fileList = document.getElementById("file-list");
+        [...files].map((v, i) => {
+            index = index + 1;
+            fileList.innerText += ((index + ' : ') + v.name) + '\n';
+        })
+    }
+</script>
 </body>
 </html>

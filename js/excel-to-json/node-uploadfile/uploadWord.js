@@ -61,10 +61,9 @@ app.post('/upload', (req, res) => {
     var files = [];
 
     form.on('field', (field, value) => {
-        fields.push({ reg: value });
+        value && fields.push({ reg: value });
     });
     form.on('file', (field, file) => {
-        console.log('upload file: ' + file.name);
         fields.push({ reg: false });
         files.push([field, file]);
     });
@@ -79,18 +78,13 @@ app.post('/upload', (req, res) => {
                 filename: `${ args[0] }_word_match.xlsx`
             });
             dirList.map((item, index) => {
-                console.log('--log--:', index, fields);
                 if (!fs.statSync(target_path + '/' + item).isDirectory()) {
-                    console.log('parse item:' + target_path + '/' + item);
                     fileName = target_path + '/' + item;
                     if (fileName.indexOf('doc') > -1) {
                         textract.fromFileWithPath(
                             fileName,
                             async (error, text) => {
-                                // console.log(text);
-
                                 function findWords(article) {
-                                    // return list: article.match(/\b\w+\b/g);
                                     return {
                                         list: article.match(/[\sa-zA-Z.（）<>&]+?[\u4e00-\u9fa5；（）<>]+\s?/g)
                                     }
@@ -100,7 +94,6 @@ app.post('/upload', (req, res) => {
                                     let { list } = findWords(text, regLetter);
                                     let wordList = [];
                                     wordList.push({ word: regLetter });
-                                    console.log('--list--:', list);
                                     list = Array.isArray(list) ? list : [];
                                     list.map((v, j) => {
                                         if (v.indexOf(regLetter) > -1) {
@@ -132,7 +125,6 @@ app.post('/upload', (req, res) => {
                             }
                         );
                     } else {
-                        console.log('--匹配词缀--:', fields[index].reg)
                         res.send({ "code": 200, "msg": "成功导入数据", data: fields[index].reg });
                         //delete file
                         fs.unlinkSync(fileName);

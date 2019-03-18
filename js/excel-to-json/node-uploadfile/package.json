@@ -19,7 +19,7 @@
     },
     "scripts": {
         "start": "node .",
-        "dev": "node uploadWord.js tion-ll"
+        "dev": "node uploadWord.js match"
     },
     "author": "",
     "license": "ISC"
