@@ -1,51 +1,25 @@
-var formidable = require('formidable');
-var http = require('http');
-var textract = require('textract');
-var express = require('express');
-var fs = require('fs');
-var path = require('path');
-var xlsx = require('node-xlsx');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
-// const compression = require('compression');
+const formidable = require('formidable');
+const http = require('http');
+const textract = require('textract');
+const express = require('express');
+const fs = require('fs');
+const bodyParser = require('body-parser');
 
 const Excel = require('exceljs');
 
-//想获得命令行后面的几个参数值
-/*
-//node arg.js arg1 arg2 arg3， 想取得这三个参数
-//即可以程序中用：
-var args = process.argv.splice(2)
-//process是一个全局对象，argv返回的是一组包含命令行参数的数组。
-//第一项为”node”，第二项为执行的js的完整路径，后面是附加在命令行后的参数
-*/
-var args = process.argv.splice(2);
+const args = process.argv.splice(2);
 
-var app = express();
-var server = http.createServer(app);
+const app = express();
+const server = http.createServer(app);
+
+let singleFileName = '';
 
 server.listen(3000);
 
-app.set('views', '/views');
-app.use(favicon('./public/favicon.ico'));
 app.use(bodyParser());
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    // todo
-    // 直接生成html
-    // res.writeHead(200, { 'content-type': 'text/html' });
-    // res.end(
-    //     '<form action="/upload" enctype="multipart/form-data" method="post">' +
-    //     '<input type="text" name="reg1"><br>' +
-    //     '<input type="text" name="reg2"><br>' +
-    //     '<input type="file" name="upload" multiple="multiple"><br>' +
-    //     '<input type="submit" value="Upload">' +
-    //     '</form>'
-    // );
-
-    // todo
-    // 直接使用本地的html，必须使用绝对路径；
     res.sendFile(__dirname + '/index.html');
 });
 
@@ -74,19 +48,27 @@ app.post('/upload', (req, res) => {
         var folder_exists = fs.existsSync(target_path);
         if (folder_exists) {
             var dirList = fs.readdirSync(target_path);
+            singleFileName = `${ fields[0] ? fields[0].reg : 'match' }_word.xls`;
             let workbook = new Excel.stream.xlsx.WorkbookWriter({
-                filename: `${ args[0] }_word_match.xlsx`
+                filename: singleFileName
             });
             dirList.map((item, index) => {
                 if (!fs.statSync(target_path + '/' + item).isDirectory()) {
                     fileName = target_path + '/' + item;
+                    // let allowFile = ['doc', 'docx', 'pdf', 'xls', 'xlsx'];
                     if (fileName.indexOf('doc') > -1) {
                         textract.fromFileWithPath(
                             fileName,
                             async (error, text) => {
+                                if (text) {
+                                    console.log('导入doc或者docx文件内容成功!');
+                                } else {
+                                    console.log('导入doc或者docx文件内容失败!', error);
+                                }
+
                                 function findWords(article) {
                                     return {
-                                        list: article.match(/[\sa-zA-Z.（）<>&]+?[\u4e00-\u9fa5；（）<>]+\s?/g)
+                                        list: article ? article.match(/[\sa-zA-Z.（）<>&]+?[\u4e00-\u9fa5；（）<>]+\s?/g) : []
                                     }
                                 }
 
@@ -118,7 +100,10 @@ app.post('/upload', (req, res) => {
                                 // 添加sheet
                                 workbook.commit();
 
-                                await res.send({ "code": 200, "msg": "成功导入数据" });
+                                console.log('成功匹配词缀，生成xls!');
+
+                                await res.sendFile(__dirname + '/success.html');
+                                // await res.send({ "code": 200, "msg": "成功导入数据" });
 
                                 //delete file
                                 fs.unlinkSync(fileName);
@@ -144,4 +129,9 @@ app.post('/upload', (req, res) => {
     form.parse(req);
 });
 
-// app.use(compression()); // todo 好像与默认压缩一样；
+app.get("/download", (req, res) => {
+    res.download(singleFileName, () => {
+        console.log('下载成功！');
+        fs.unlinkSync(__dirname + '/' + singleFileName);
+    });
+});

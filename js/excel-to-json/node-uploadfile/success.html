@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <title>下载文件</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .success-panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            max-width: 600px;
+            height: 100vh;
+            max-height: 600px;
+            background: lightblue;
+        }
+
+        .flex {
+            text-align: center;
+            color: #fff;
+        }
+
+        .tips {
+            margin: 20px;
+        }
+
+        .btn {
+            display: block;
+            width: 200px;
+            line-height: 28px;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+            background: #28a745;
+            outline-offset: 0;
+            mso-border-shadow: no;
+            border: 1px solid #28a745;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="success-panel">
+    <div class="flex">
+        <img src="./ok.png" alt=""/>
+        <p class="tips">词缀匹配成功</p>
+        <div align="center">
+            <a href="/download" class="btn">下载</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
