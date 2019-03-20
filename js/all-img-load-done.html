@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="https://job.xiyanghui.com/job/showIcon/57b47677bb7a91e313943f65" alt="" id="1"/>
+<img src="https://job.xiyanghui.com/bundles/app/image/why2.jpg" alt="" id="2"/>
+<img src="https://job.xiyanghui.com/bundles/app/image/why6.jpg" alt="" id="3"/>
+<img src="https://job.xiyanghui.com/bundles/app/image/why3.jpg" alt="" id="4"/>
+<img src="https://job.xiyanghui.com/job/showIcon/57b47677bb7a91e313943f65" alt="" id="5"/>
+<img src="https://job.xiyanghui.com/bundles/app/image/why2.jpg" alt="" id="6"/>
+<img src="https://job.xiyanghui.com/bundles/app/image/why6.jpg" alt="" id="7"/>
+<img src="https://job.xiyanghui.com/bundles/app/image/why3.jpg" alt="" id="8"/>
+<div>
+    闫涵：努力工作到底是为了什么？
+    什么算有钱，有个回答印象深刻——就是父母生病进了医院不慌张，拼命努力赚钱不苦，至亲需要自己无能为力时才真的苦。
+
+    吴军：给年轻人第一份工作的建议
+    几乎没有人靠第一份工作的工资发财。第一份工作是否多20%的工资是一件毫无意义的事情，因为你在那个阶段挣多少花多少。
+
+    吴晓波：没苦熬过，40岁也不配谈岁月静好
+    你要拼搏，你走出校门利用十年的时间成为你这个行业的专家，再用五年到十年时间你把你的专业能力在现实生活中实现一次兑换。
+
+    咪蒙：你不是焦虑，你是急功近利
+    绝大多数人都不能一蹴而就地成功，你看到的爆发背后有多少不知道地累积？
+
+    我们认为，工作最重要的是方法
+    吴军：不做伪工作者
+    每当你因总也干不完的工作而焦虑时，不妨试试先停下来，重新梳理一遍手边的工作：主动地站在对公司业务帮助最大的角度，站在提升自己能力的角度，当处于工作永远做不完的处境时，把那些最重要的完成了。试试看，这样你的工作状态会不会发生改变？
+
+    愿你在工作之余还能有时间欣赏身边的风景。
+
+    王烁：你和耶鲁精英的差别在哪里？
+    王烁和他的耶鲁精英同学一起分享的16点自我管理术。
+
+    赶紧用起来，你也可以成为别人眼中最可怕的人。
+
+
+</div>
+<script>
+    var counter = 0,
+        queryInterval = 50;
+    var pics = document.getElementsByTagName("img");
+    console.log(pics);
+
+    var timer = setInterval(queryPictures, queryInterval, callback); // todo setInterval
+    // setTimeout(queryPictures, queryInterval, callback); // todo setTimeout
+
+    for (var i = 0; i < pics.length; i++) {
+        pics[i].onload = function () {
+            counter++;
+            console.log(this.id + " is loaded");
+        }
+    }
+
+    function queryPictures(callback) {
+        if (counter < pics.length) {
+            console.log("current number of loaded pics: " + counter);
+            // setTimeout(queryPictures, queryInterval, callback); // todo setTimeout
+        } else {
+            console.log("All pics are loaded");
+            clearInterval(timer); // todo setInterval
+            timer = null; // todo setInterval
+            callback();
+        }
+    }
+
+    function callback() {
+        console.log('done..')
+    }
+
+</script>
+</body>
+</html>

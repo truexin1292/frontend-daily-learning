@@ -233,4 +233,27 @@ console.log(a++ + ++a + a++ + ++a)       //输出16
 ![](.index_images/fd7b2aad.png)
 
 
-## 14.
+## 14.ajax原理
+```md
+1) 创建xhr对象 
+   //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+   var xhr = new XMLHttpRequest();
+   // IE6, IE5 浏览器执行代码
+   var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+2）打开请求
+   xhr.open("GET/POST", "info.txt", true); // open(method,url,async);
+3) 发送请求
+   xhr.send(); // send(string)
+4) 接受响应
+   xhr.onreadystatechange= function(){
+        if(xhr.readyState == 4){
+            if(xhr.status==200){
+                 console.log(xhr.responseText);
+            }
+        } else { xhr.readyState = 1 / 2 / 3
+           console.log(xhr.responseText);
+        }
+   }
+```
+
+
