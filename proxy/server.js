@@ -10,7 +10,7 @@ var options = {
 };
 //var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 //拦截器允许跨域
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", req.headers.origin);
@@ -27,7 +27,7 @@ app.get('/get', function (req, res) {
         ServerCookie = req.headers.cookie,
         nres = res;
     if (data.api == "" || data.api == undefined) {
-        res.json({"msg": "api字段不能为空!"})
+        res.json({ "msg": "api字段不能为空!" })
         return
     }
     var sreq = superagent.get(data.api);
@@ -55,7 +55,7 @@ app.get('/get', function (req, res) {
     }
     sreq.end(function (err, res) {
         if (err) {
-            nres.json({"msg": "请求发生错误可能是api地址无效或者Accept设置不正确或者请求方式错误"})
+            nres.json({ "msg": "请求发生错误可能是api地址无效或者Accept设置不正确或者请求方式错误" })
         } else {
             console.log(res)
             if (JSON.stringify(res.body) == "{}") {
@@ -63,7 +63,7 @@ app.get('/get', function (req, res) {
                 if (text.charAt(0) == "{" && text.charAt(text.length - 1) == "}") {
                     nres.json(JSON.parse(text))
                 } else {
-                    nres.json({"data": text})
+                    nres.json({ "data": text })
                 }
             } else {
                 nres.json(res.body)
@@ -76,7 +76,7 @@ app.post('/post', function (req, res) {
         ServerCookie = req.headers.cookie,
         nres = res;
     if (data.api == "" || data.api == undefined) {
-        res.json({"msg": "api字段不能为空!"})
+        res.json({ "msg": "api字段不能为空!" })
         return
     }
     var sreq = superagent.post(data.api);
@@ -104,7 +104,7 @@ app.post('/post', function (req, res) {
     sreq.end(function (err, res) {
         if (err) {
 //nres.send(err.response.text)
-            nres.json({"msg": "请求发生错误可能是api地址无效或者Accept设置不正确或者请求方式错误"})
+            nres.json({ "msg": "请求发生错误可能是api地址无效或者Accept设置不正确或者请求方式错误" })
         } else {
             console.log(res)
             if (JSON.stringify(res.body) == "{}") {
@@ -112,7 +112,7 @@ app.post('/post', function (req, res) {
                 if (text.charAt(0) == "{" && text.charAt(text.length - 1) == "}") {
                     nres.json(JSON.parse(text))
                 } else {
-                    nres.json({"data": text})
+                    nres.json({ "data": text })
                 }
             } else {
                 nres.json(res.body)

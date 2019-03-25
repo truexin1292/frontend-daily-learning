@@ -18,10 +18,10 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', proxy({target: 'http://www.example.com', changeOrigin: true}));
+app.use('/api', proxy({ target: 'http://www.example.com', changeOrigin: true }));
 //这句话的意思就是说，凡是你的ajax请求里面带api的 就还会自动帮你向http://www.example.com这里进行数据请求
 module.exports = app;

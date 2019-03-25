@@ -255,5 +255,63 @@ console.log(a++ + ++a + a++ + ++a)       //输出16
         }
    }
 ```
+```js
+// todo synchronous // asynchronous 
+const ajax = function(
+    method = 'POST',
+    url = '',
+    data = {},
+    async = true
+    ) {
+    let xmlHttp = null;
+    if(window.XMLHttpRequest){ // IE7以上，其他流行浏览器执行代码；
+        xmlHttp = new XMLHttpRequest();
+    } else { // IE6 , IE5 浏览器执行代码
+        xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xmlHttp.open(method, url, async);
+    xmlHttp.onreadystatechange = function(){ // onreadystatechange 全小写
+        if(xmlHttp.readyState==4 && xmlHttp.status==200){ // readyState 单词边界大写
+            console.log(xmlHttp.responseText);
+        } else {
+            console.log(xmlHttp.responseText);
+        }
+    }
+    // xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlHttp.send();
+}
+```
 
+# 优先级由高到低：小括号(xxx)  >  属性访问.   >  new foo()  >  foo()
+![](.index_images/f7364435.png)
+![](.index_images/9fbcce96.png)
 
+## 15.定义一个new的方法；
+```js
+// 1.新建一个新的对象；
+// 2.该对象的隐性原型链接到函数的原型；
+// 3.调用函数绑定this；
+// 4.返回这个新的对象。
+
+const newCreate = function(func) {
+    return function() {
+        const newObj = {
+            _proto_: func.prototype,
+        };
+        func.apply(newObj, arguments);
+        return newObj;
+    }
+}
+
+// demo1 
+const Person = function(name) {
+    this.name = name;
+}
+
+let personName = new Person('alex').name;
+let personName2 = newCreate(Person)('tom').name;
+
+console.log('personName',personName);
+console.log('personName2',personName2);
+console.log(personName == personName2);
+```

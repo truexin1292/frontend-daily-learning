@@ -20,9 +20,11 @@ app.use('/', express.static(__dirname + '/src'));
 
 //反向代理
 var proxyOption = {
-    target: 'http://localhost:8081/', //要代理到的目标主机
+    // target: 'http://localhost:8081/', //要代理到的目标主机
+    target: 'http://www.runoob.com/', //要代理到的目标主机 http://www.runoob.com/try/ajax/ajax_info.txt
     pathRewrite: {
-        // '^/szmqs/':'/szmqs'
+        // '^/szmqs/':'/szmqs',
+        '^/new/bird/': '/'
     },
     changeOrigoin: true
 }

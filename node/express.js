@@ -4,6 +4,22 @@ var fs = require('fs'); //文件模块
 var bodyParser = require('body-parser'); //对post请求的请求体进行解析模块
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(
+    express.static(
+        path.join(__dirname, 'public'), {
+            etag: false,
+            lastModified: false,
+            cacheControl: false,
+            setHeaders: function (res, path, stat) {
+                res.set({
+                    expires: new Date(Date.now() + 60000),
+                })
+            }
+        }
+    )
+)
+
 //bodyParser.urlencoded 用来解析request中body的 urlencoded字符，只支持utf-8的编码的字符，也支持自动的解析gzip和 zlib。
 // 返回的对象是一个键值对，当extended为false的时候，键值对中的值就为'String'或'Array'形式，为true的时候，则可为任何数据类型。
 var hostName = '127.0.0.1'; //ip
@@ -141,6 +157,14 @@ app.get('/api/fclhit', function (req, res) {
     });
 });
 
+app.get('/httpCache', (req, res) => {
+    res.send({
+        name: 'alex',
+        gender: 'male',
+        age: 26
+    });
+})
+
 app.listen(port, hostName, function () {
-    console.log(`服务器运行在http://${hostName}:${port}`);
+    console.log(`服务器运行在http://${ hostName }:${ port }`);
 });

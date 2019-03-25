@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>self-executing anonymous function</p>
+<p>immediately-invoked function expression</p>
+<a href="https://blog.csdn.net/ttx_laughing/article/details/78503344" target="_blank">
+</a>
+</body>
+<script>
+    var a = { name: 'alex' },
+        familyName = 'chou',
+        b = { gender: 'male' };
+    (function (a, b, c) {
+        a.name = 'tom';
+        a.gender = b;
+        b.a = 'test';
+        familyName = 'test c';
+        console.log('inner a:', a);
+        console.log('inner familyName:', familyName);
+    })(a, b, familyName);
+    console.log('outer a:', a);
+    console.log('outer b:', b);
+    console.log('outer familyName:', familyName);
+    // a，b是引用类型，只是地址的传递；故会改变原来的值；而c是基本类型，不会影响原来的值，只会修改匿名函数参数的值；
+</script>
+</html>

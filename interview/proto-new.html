@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="https://www.v2ex.com/t/351261" target="_blank">new与属性访问的顺序1</a>
+
+<br/>
+
+<a href="https://www.cnblogs.com/zhansu/p/6641190.html" target="_blank">new与属性访问的顺序2</a>
+
+<br/>
+
+<a href="https://github.com/Wscats/Good-text-Share/issues/85" target="_blank">github</a>
+
+<br/>
+
+<img src=".index_images/34e28c26.png" alt="">
+<script>
+    /**
+     *
+     * 若有返回值则检查其返回值是否为引用类型。如果是非引用类型，
+     * 如基本类型（String,Number,Boolean,Null,Undefined）
+     * 则与无返回值相同，实际返回其实例化对象。
+     * 若返回值是引用类型，则实际返回值为这个引用类型。
+     *
+     *
+     * 私有方法和属性 var func = function{ var name = 'alex'; var getName = function(){} }
+     * 公有方法和属性 func.prototype.name = 'alex';func.prototype.getName = function(){} 通过new func关键字访问 / func.prototype属性访问
+     * 静态方法和属性 func.name = 'alex'; func.getName = function(){} 直接func.name / func[name]访问
+     *
+     *
+     * .成员访问(18)->new有参数列表(18)->()函数调用(17)
+     */
+
+    var myName = 'alex';  // 不能取name来测试；prototype里面有个属性名称就做name
+
+    var person = function () {
+        // this.myName = function () { // todo 1 new 只有this才能访问的 -- 也就是公有方法和属性
+        //     console.log(1);
+        // }
+        myName = function () { // todo 2 没有this就是window的全局变量 window.myName
+            console.log(1);
+        }
+        return this;
+    }
+
+    person.myName = function () { // 静态方法和属性
+        console.log(2);
+    }
+
+    person.prototype.myName = function () { // 公有方法和属性
+        console.log(3);
+    }
+
+    var myName = function () { // 因为赋值在最后，覆盖前面的；window.myName
+        console.log(4);
+    }
+
+    function myName() {
+        console.log(5);
+    }
+
+    person.myName(); // 2 静态方法
+
+    myName(); // 4 // 声明提前 var = myName 最前面 再到 function myName(){} 再到赋值的 myName = function(){}
+
+    person().myName(); // 1 返回this自己的方法 person() 前面没有.符号this指向window =》person().myName =》person().myName()
+
+    myName(); // 1 // 前面一步覆盖掉原来的myName方法了；
+
+    new person.myName(); // 2 对静态方法 .成员访问(18)->new有参数列表(18)->()函数调用(17) person.myName 进行new 操作 =》new （person.myName） =》（new person.myName）()
+
+    new person().myName(); // 3 new有参数列表(18)->.成员访问(18)->()函数调用(17)
+    // new person {公有方法}=》new person() =》new person().myName =》new person().myName()
+
+    new new person().myName(); // 3 // new person{公有方法} => new person() => new person().myName  = > new function () {console.log(1); }
+
+    new new new person().myName(); // 3 new person{公有方法}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    document.write('hello');
+
+    var write = document.write; // document
+    // write('hello'); // 报错 // window
+    write.bind(document)('hello');
+    write.call(document, 'hello');
+    write.apply(document, ['hello']);
+
+    setTimeout(function () { // window
+        console.log('--log--:', 1);
+    }, 1000);
+
+    var mySetTimeout = setTimeout;
+    mySetTimeout(function () {
+        console.log('--log--:', 1);
+    }, 1000)
+
+
+    var obj = {};
+    console.log(typeof Function.prototype.bind); // function
+    console.log(typeof Function.prototype.bind()); // function
+    console.log(typeof Function.prototype.bind); // string
+    console.log(typeof Function.prototype.bind); // string
+    console.log(Function.prototype.bind.name); // bind
+    console.log(Function.prototype.bind().name); // bound
+
+
+    var foo = {
+        value: 1
+    }
+
+    // function bar(name, age) {
+    //     // console.log(this.value); // demo 1
+    //     return this.value; // demo 2
+    // }
+    //
+
+    function bar(name, age) {
+        console.log(name);
+        console.log(age);
+        console.log(this.value);
+        // return this.value;
+    }
+
+    // var bindFoo = bar.bind(foo, 'Alex', 18);
+    // bindFoo();  // 1
+    // 一样效果
+    var bindFoo = bar.bind(foo, 'Alex');
+    bindFoo(18);  // bind处理参数有合并的特点  // 柯理化，偏函数，反柯理化
+
+    // 实现一个bind方法，达到一样的效果？
+
+    // 基础版（第一版） - BAT进入2面
+    Function.prototype.bind2 = function (context) {
+        console.log(context); // foo
+        console.log(this); // bar
+        var self = this;
+        // args 是除开 foo参数之外的参数内容，并且没有直接修改arguments
+        var args = Array.prototype.slice.call(arguments, 1);
+        var bound = function () {
+            // self.apply(context); // demo 1
+            // bar(args) 作用域环境是 context （foo）
+            var bindArgs = Array.prototype.slice.call(arguments);
+            // 当作为构造函数，this指向实例，结果为true context要变化。
+            // 不是构造函数，为context。
+            return self.apply(this instanceof bound ? this : context, args.concat(bindArgs));
+        }
+        bound.prototype = this.prototype;
+        return bound;
+    }
+
+    // BAT - 80 分
+    Function.prototype.bind2 = function (context) {
+        if (typeof this !== 'function') {
+            throw new Error('Function.prototype.bind - what is trying to be bound is not callable!');
+        }
+        console.log(context); // foo
+        console.log(this); // bar
+        var self = this;
+        // args 是除开 foo参数之外的参数内容，并且没有直接修改arguments
+        var args = Array.prototype.slice.call(arguments, 1);
+        var bound = function () {
+            // self.apply(context); // demo 1
+            // bar(args) 作用域环境是 context （foo）
+            var bindArgs = Array.prototype.slice.call(arguments);
+            // 当作为构造函数，this指向实例，结果为true context要变化。
+            // 不是构造函数，为context。
+            return self.apply(this instanceof bound ? this : context, args.concat(bindArgs));
+        }
+        bound.prototype = this.prototype;
+        return bound;
+    }
+
+    var bindFoo2 = bar.bind2(foo, 'Alex');
+    bindFoo2(18);  // 1
+</script>
+</body>
+</html>

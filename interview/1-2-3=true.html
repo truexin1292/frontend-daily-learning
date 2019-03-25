@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    /* 知识：
+    * 1.隐式转换
+    * 2.object的valueOf函数
+    */
+    var a = {
+        num: 0,
+        valueOf: function () { // Object.prototype.valueOf() ：cover the origin's valueOf ： object => { num : 0 }
+            return ++this.num;
+        }
+    }
+    // 变量的类型为object时，比较换转换为基本类型进行比较的。调用原生的valueOf方法进行转换；
+    var check123 = (a == 1 && a == 2 && a == 3);
+    console.log('--check123--:', check123)
+</script>
+</body>
+</html>
