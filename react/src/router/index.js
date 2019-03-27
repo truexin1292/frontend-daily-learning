@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import MouseTracker from '../renderProps';
 import ContextDemo from '../context-demo';
+import Home from '../home';
 
 const MyRouter = () => (
     <Router>
@@ -18,22 +19,22 @@ const MyRouter = () => (
                 <li><Link to="/contextDemo">ContextDemo</Link></li>
             </ul>
 
-            <hr />
+            <hr/>
 
-            <Route exact path="/" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/topics" component={Topics} />
-            <Route path="/mouseTracker" component={MouseTracker} />
-            <Route path="/contextDemo" component={ContextDemo} />
+            <Route exact path="/" component={ Home }/>
+            <Route path="/about" component={ About }/>
+            <Route path="/topics" component={ Topics }/>
+            <Route path="/mouseTracker" component={ MouseTracker }/>
+            <Route path="/contextDemo" component={ ContextDemo }/>
         </div>
     </Router>
 )
 
-const Home = () => (
-    <div>
-        <h2>Home</h2>
-    </div>
-)
+// const Home = () => (
+//     <div>
+//         <h2>Home</h2>
+//     </div>
+// )
 
 const About = () => (
     <div>
@@ -46,32 +47,32 @@ const Topics = ({ match }) => (
         <h2>Topics</h2>
         <ul>
             <li>
-                <Link to={`${match.url}/rendering`}>
+                <Link to={ `${ match.url }/rendering` }>
                     Rendering with React
                 </Link>
             </li>
             <li>
-                <Link to={`${match.url}/components`}>
+                <Link to={ `${ match.url }/components` }>
                     Components
                 </Link>
             </li>
             <li>
-                <Link to={`${match.url}/props-v-state`}>
+                <Link to={ `${ match.url }/props-v-state` }>
                     Props v. State
                 </Link>
             </li>
         </ul>
 
-        <Route path={`${match.url}/:topicId`} component={Topic} />
-        <Route exact path={match.url} render={() => (
+        <Route path={ `${ match.url }/:topicId` } component={ Topic }/>
+        <Route exact path={ match.url } render={ () => (
             <h3>Please select a topic.</h3>
-        )} />
+        ) }/>
     </div>
 )
 
 const Topic = ({ match }) => (
     <div>
-        <h3>{match.params.topicId}</h3>
+        <h3>{ match.params.topicId }</h3>
     </div>
 )
 

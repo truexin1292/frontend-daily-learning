@@ -6,7 +6,7 @@
         "react": "^16.4.1",
         "react-dom": "^16.4.1",
         "react-router-dom": "^4.3.1",
-        "truexinutil": "^1.0.0"
+        "truexinutil": "^1.0.1"
     },
     "devDependencies": {
         "react-router": "^4.3.1",
