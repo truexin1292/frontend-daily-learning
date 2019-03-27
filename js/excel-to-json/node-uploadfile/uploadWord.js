@@ -82,6 +82,11 @@ app.post('/upload', (req, res) => {
                                             wordList.push({ word: v });
                                         }
                                     });
+                                    console.log(
+                                        wordList.length == 0 ?
+                                            '没有匹配到对应的单词哦！' :
+                                            `单词匹配成功：${ wordList.length }`
+                                    );
                                     let worksheet = workbook.addWorksheet(`${ regLetter }_sheet`);
                                     worksheet.columns = [
                                         { header: '词缀', key: 'word', width: 50 },

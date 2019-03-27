@@ -2,9 +2,12 @@
 
 ```node
 var str = 'i am a string!';
-1. typeof(str) === 'string'; //true;
-2. typeof str === 'string'; //true;
+1. typeof(str) === 'string'; //true; //typeof str =>object,function,...基本类型；
+2. Object.prototype.toString.call(obj) == '[object Object]'
 3. str.constructor === String; //true;
+4. instanceof
+5. ===
+
 ```
 
 ### 1.arguments.callee

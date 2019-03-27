@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建对象的7种方法</title>
+</head>
+<body>
+<script>
+    // 1. Object构造函数或者对象字面量创建单个对象；
+    var obj = {}; // var obj = new Object();
+    obj.name = 'alex';
+    obj.age = 26;
+    //缺点：使用同一个接口创建多个对象，会产生大量重复代码。解决：引进工厂函数模式。
+
+    // 2. {因为es6前无法创建类} =》工厂模式：在一个函数内创建好对象，将对象返回；
+    function factory(name, age, gender) {
+        var obj = new Object();
+        obj.name = name;
+        obj.age = age;
+        obj.gender = gender;
+        obj.getInfo = function () {
+            console.log('--info--:', this.name, this.age, this.gender);
+        }
+        return obj;
+    }
+
+    var person1 = factory('alex', 26, 'male');
+    var person2 = factory('tom', 27, 'female');
+    //优势：创建多个相似对象的问题 缺点：没有解决对象识别的问题，即怎么知道一个对象的类型 解决：引入构造函数模式
+    function Person(name, age, gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.getInfo = function () {
+            console.log('--info--:', this.name, this.age, this.gender);
+        }
+    }
+
+    var person3 = new Person('alex', 26, 'male');
+    var person4 = new Person('tom', 27, 'female');
+
+</script>
+</body>
+</html>

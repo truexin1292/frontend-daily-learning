@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../static/img/logo.svg';
 
+
 export default class Home extends React.Component {
     render() {
         return (
