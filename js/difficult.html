@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>奇怪</title>
+</head>
+<body>
+<p>点击按钮循环5次</p>
+<button onclick="myFunction()">点击这里</button>
+<p id="demo"></p>
+<script>
+    function myFunction() {
+        var a = '';
+        for (var i = 0; i < 5; i++) {
+            a = a + '该数字为' + i + '<br/>'
+        }
+        document.getElementById('demo').innerHTML = a;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function ajax(method = 'POST', url = 'https://www.baidu.com', type = true) {//'async'
+        var httpAjax = null;
+        if (window.XMLHttpRequest) {
+            httpAjax = new window.XMLHttpRequest();
+        } else {
+            httpAjax = new window.ActiveXObject('microsoft.XMLHTTP');
+        }
+        httpAjax.open(method, url, type);
+        httpAjax.setHeader({
+            contentType: 'application/json'
+        })
+        httpAjax.onreadystatechange = function () {
+            if (httpAjax.readyState == 4) {
+                if (httpAjax.status == 200 || httpAjax.status == 206 || httpAjax.status == 304) {
+                    // 206 媒体返回太大，返回部分的情况
+                    // 304 重定向，利用缓存
+                    console.log('--log--:', httpAjax.responseText);
+                }
+            } else {
+                console.log('--log--:', httpAjax.responseText);
+            }
+        }
+        httpAjax.send();
+    }
+</script>
+</body>
+</html>

@@ -1,4 +1,96 @@
 # readme.md
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+pop,push,
+unshift,shift,
+concat,slice,filter,join,map,forEach,some,every,entries,
+find,findIndex,
+fill,flat,flatMap,
+includes,indexOf,keys,lastIndexOf,
+reduce,reduceRight,
+sort,splice,values,
+toString,toLocaleString,
+reverse,
+copyWithin,
+toSource,
+from,
+isArray,
+observe,//废弃了
+of
+[@@iterator] // arr[Symbol.iterator]();数组的 iterator 方法，默认情况下与 values() 返回值相同
+
+```markdown
+Array.of(7) // [7]
+Array(7) // [,,,,,,]
+Array.from({length:7}) [undefined,undefined,undefined,undefined,undefined,undefined,undefined]
+
+let arr = [
+    {name:'alex1',id:'123'},
+    {name:'alex2',id:'124'},
+    {name:'alex3',id:'125'}
+]
+
+相同：
+map,filter,forEach 都可以通过arr[index]索引可以修改原数组；
+数组的迭代方法：every、filter、forEach、map、some
+均不能使用break或者continue进行中断循环。只有for循环才可以使用break或者continue
+
+不同：
+map返回一个长度跟原来数组一样的新数组，没写return，则返回数组的值都是[undefined,...,]；
+filter返回符合过滤条件的数组<=原数组，没有return，则返回[];
+forEach没有返回值，不管写不写return，都是返回undefined；
+
+// for in是遍历键名，for of是遍历键值。
+
+let arr = [
+    {name:'alex1',id:'123'},
+    {name:'alex2',id:'124'},
+    {name:'alex3',id:'125'}
+]
+es5:
+forEach((item,index,curr)=>{ curr[index].gender = 'male' }); 
+some,every,reduce,join,
+for(let key in arr) { // 遍历对象方法
+    console.log(arr[key],key); // key为索引 ，arr[key] = item;
+}
+es6:
+for-of
+for(let key of arr) {
+    console.log(key); // key为item
+}
+
+var student={
+    name:'wujunchuan',
+    age:22,
+    locate:{
+    country:'china',
+    city:'xiamen',
+    school:'XMUT'
+    }
+}
+for(var key of Object.keys(student)){
+    //使用Object.keys()方法获取对象key的数组
+    console.log(key+": "+student[key]);
+}
+Array.find( v => v.id === '123'); // 返回id为123的对象；
+Array.findIndex( v => v.id === '123'); // 返回索引
+
+Array.map((item,index,curr)=>{ return item }); //返回新数组：实现深克隆数组或者类数组；哈哈
+es7:
+
+es8：
+
+es9:
+
+es10:
+Array.flat(2);// 扁平化数组；参数为多少维数组；
+例如：
+var arr = [ [123, 23], [1], 1, [0], 4 ];
+var arr2 = [ [123,[3, 666], 23], [1], 1, [0], 4 ];
+console.log(arr.flat(2)); // [123, 23, 1, 1, 0, 4];
+console.log(arr2.flat(3)); // [123, 3, 666, 23, 1, 1, 0, 4];
+```
+![](.array_images/c9321508.png)
 
 ## [].slice.call(arguments,1)的理解
 [参考](https://segmentfault.com/q/1010000005643934)

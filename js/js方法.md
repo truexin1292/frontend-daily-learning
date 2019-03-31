@@ -19,7 +19,9 @@ https://juejin.im/post/5c45112e6fb9a04a027aa8fe
 
 // 木易杨
 function cloneDeep4(source, hash = new WeakMap()) {
-
+    function isObject(obj) {
+        return typeof obj === 'object' && obj != null;
+    }
     if (!isObject(source)) return source; 
     if (hash.has(source)) return hash.get(source); 
       

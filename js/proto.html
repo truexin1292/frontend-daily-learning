@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型链</title>
+</head>
+<body>
+<script>
+    var Person = function (name) {
+        this.name = name;
+        return { // 若构造函数return返回的是object类型，new操作符后会返回这个object
+            name: 'person',
+            age: 24
+        }
+    }
+
+    var Person1 = function (name) {
+        this.name = name;
+
+        // return 'person1'; // 若构造函数return返回的是基础类型，new操作符后会返回this实例；
+
+        // return null; // 注意：null此时就是当做object处理； new操作符后会返回null；
+
+        // return function () {
+        //     console.log('--log--:',1)
+        // }; // 若构造函数return返回的是function类型，new操作符后会返回this实例；
+
+        return Person; // 若构造函数return返回的是function类型，new操作符后会返回this实例；
+    }
+
+    var Person2 = function (name) {
+        this.name = name;
+    }
+
+    var Person3 = function (name) {
+        this.name = name;
+        return this; //写不写一样的，默认返回就是this实例对象；
+    }
+
+    var new2 = function (func) {
+        var obj = Object.create(func.prototype);
+        // var returnCase = func.call(obj, ...arguments);
+        var returnCase = func.apply(obj, arguments);
+        if (typeof returnCase === 'object') {
+            return returnCase;
+        } else {
+            return obj;
+        }
+    }
+
+    var p1 = new2(Person);
+    var p2 = new2(Person1);
+    var p3 = new2(Person2);
+    var p4 = new2(Person3);
+    console.log('--log--:',p1)
+    console.log('--log--:',p2)
+    console.log('--log--:',p3)
+    console.log('--log--:',p4)
+</script>
+</body>
+</html>
