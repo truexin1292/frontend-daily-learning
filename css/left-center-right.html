@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>左中右布局方式：至少5中方法</title>
+    <style>
+        .layout {
+            margin-top: 20px;
+            /*border: 1px solid #dcdcdc;*/
+        }
+
+        .layout .left-center-right > div {
+            height: 300px;
+        }
+
+        .layout .left-center-right .left {
+            background: #2ec;
+            width: 300px;
+        }
+
+        .layout .left-center-right .center {
+            background: #f00;
+        }
+
+        .layout .left-center-right .right {
+            background: #cce;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<pre>
+    1）要求：左中右布局，左边300px，右边300px，中间自适应撑开。1.统一高度300px；2.高度未知；
+    2）要求：左右布局，左边300px，右边自适应撑开。1.统一高度300px；2.高度未知；
+    3）要求：上下布局，上边100px，下边自适应撑开。
+</pre>
+<!--1.浮动布局方式实现-->
+<section class="layout float">
+    <style>
+        .layout.float .left {
+            float: left;
+        }
+
+        .layout.float .center {
+            margin: 0 300px 0 300px;
+        }
+
+        .layout.float .right {
+            float: right;
+        }
+    </style>
+    <!--左右设置浮动，中间要是没有高度，就一定设置margin，否则可以偷巧。html中间必须放在左右的后面：left，right，center的放置-->
+    <acticle class="left-center-right">
+        <div class="left">
+            left
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="center">
+            <h1>浮动布局实现方式</h1>
+            <p>
+                中间部分内容撑开
+                Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Ab at atque consequuntur debitis delectus deleniti dolor
+                dolores dolorum eaque enim illo illum, in laboriosam nobis nulla, qui quis quos sequi!
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+        </div>
+    </acticle>
+</section>
+
+<!--2.定位布局方式实现-->
+<section class="layout positon">
+    <style>
+        .layout.positon {
+            position: relative;
+        }
+
+        .layout.positon > div {
+            position: absolute;
+        }
+
+        .layout.positon .left {
+            position: absolute;
+        }
+
+        .layout.positon .center {
+            margin: 0 300px 0 300px;
+        }
+
+        .layout.positon .right {
+            float: right;
+        }
+    </style>
+    <!--左右设置浮动，中间要是没有高度，就一定设置margin，否则可以偷巧。html中间必须放在左右的后面：left，right，center的放置-->
+    <acticle class="left-center-right">
+        <div class="left">
+            left
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="center">
+            <h1>定位布局实现方式</h1>
+            <p>
+                中间部分内容撑开
+                Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Ab at atque consequuntur debitis delectus deleniti dolor
+                dolores dolorum eaque enim illo illum, in laboriosam nobis nulla, qui quis quos sequi!
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+        </div>
+    </acticle>
+</section>
+
+</body>
+</html>

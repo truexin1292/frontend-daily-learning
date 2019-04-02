@@ -8,9 +8,21 @@
 <p>点击按钮循环5次</p>
 <button onclick="myFunction()">点击这里</button>
 <p id="demo"></p>
+
+<!--邮件链接：创建a标签，href属性设置为mailto：邮箱地址即可；多个邮件，中间用；隔开 。短信的话就使用sms：1234-->
+<a href="mailto:truexin@163.com">truexin@163.com</a>
+<a href="tel:13760651386">13760651386</a>
+<!--<a href="wtai://wp/mc;10086">10086</a>-->
+<!--<a href="sms:10086,10010?body=cxye">给 10086 和 10010 发送内容为"cxye"的短信</a>-->
+<!--<a href="market://search?q=[query]">Android Market link</a>-->
+<!--<a href="market://search?q=qq">MyApp</a>-->
+<!--<a href="geopoint:104.07642,38.6518">我的位置</a>-->
+
 <script>
+
     function myFunction() {
         var a = '';
+
         for (var i = 0; i < 5; i++) {
             a = a + '该数字为' + i + '<br/>'
         }
