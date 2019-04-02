@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <title>左中右布局方式：至少5中方法</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        pre {
+            padding: 20px;
+        }
+
         .layout {
             margin-top: 20px;
-            /*border: 1px solid #dcdcdc;*/
         }
 
         .layout .left-center-right > div {
             height: 300px;
+            /*TODO 去掉高度的情况*/
         }
 
         .layout .left-center-right .left {
@@ -34,6 +43,9 @@
     2）要求：左右布局，左边300px，右边自适应撑开。1.统一高度300px；2.高度未知；
     3）要求：上下布局，上边100px，下边自适应撑开。
 </pre>
+
+<h1>1）</h1>
+
 <!--1.浮动布局方式实现-->
 <section class="layout float">
     <style>
@@ -108,48 +120,33 @@
 </section>
 
 <!--2.定位布局方式实现-->
-<section class="layout positon">
+<section class="layout position">
     <style>
-        .layout.positon {
+        .layout.position {
             position: relative;
         }
 
-        .layout.positon > div {
+        .layout.position .left-center-right > div {
             position: absolute;
         }
 
-        .layout.positon .left {
-            position: absolute;
+        .layout.position .left {
+            left: 0;
         }
 
-        .layout.positon .center {
-            margin: 0 300px 0 300px;
+        .layout.position .center {
+            left: 300px;
+            right: 300px;
         }
 
-        .layout.positon .right {
-            float: right;
+        .layout.position .right {
+            right: 0;
         }
     </style>
-    <!--左右设置浮动，中间要是没有高度，就一定设置margin，否则可以偷巧。html中间必须放在左右的后面：left，right，center的放置-->
+    <!--中间div设置left和right的距离，width就会自动撑开-->
     <acticle class="left-center-right">
         <div class="left">
             left
-            <p>
-                部分内容撑开
-            </p>
-            <p>
-                部分内容撑开
-            </p>
-            <p>
-                部分内容撑开
-            </p>
-            <p>
-                部分内容撑开
-            </p>
-        </div>
-
-        <div class="right">
-            right
             <p>
                 部分内容撑开
             </p>
@@ -184,6 +181,414 @@
             <p>
                 中间部分内容撑开
             </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+    </acticle>
+</section>
+
+<!--3.table表格布局方式实现-->
+<section class="layout table">
+    <style>
+        .layout.table {
+            margin-top: 340px;
+        }
+
+        .layout.table .left-center-right {
+            display: table;
+        }
+
+        .layout.table .left-center-right > div {
+            display: table-cell;
+        }
+    </style>
+    <!--父元素设置display:table;子元素设置：display:table-cell;-->
+    <acticle class="left-center-right">
+        <div class="left">
+            left
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="center">
+            <h1>table表格布局实现方式</h1>
+            <p>
+                中间部分内容撑开
+                Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Ab at atque consequuntur debitis delectus deleniti dolor
+                dolores dolorum eaque enim illo illum, in laboriosam nobis nulla, qui quis quos sequi!
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+    </acticle>
+</section>
+
+<!--4.flexBox布局方式实现-->
+<section class="layout flexbox">
+    <style>
+        .layout.flexbox .left-center-right {
+            display: flex;
+        }
+
+        .layout.flexbox .center {
+            flex: 1;
+        }
+    </style>
+    <!--中间元素设置为flex：1，启动自动填充效果-->
+    <acticle class="left-center-right">
+        <div class="left">
+            left
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="center">
+            <h1>flexBox布局实现方式</h1>
+            <p>
+                中间部分内容撑开
+                Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Ab at atque consequuntur debitis delectus deleniti dolor
+                dolores dolorum eaque enim illo illum, in laboriosam nobis nulla, qui quis quos sequi!
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+    </acticle>
+</section>
+
+<!--5.grid栅格布局方式实现-->
+<section class="layout grid">
+    <style>
+        .layout.grid .left-center-right {
+            display: grid;
+            grid-template-columns: 300px auto 300px;
+        }
+    </style>
+    <!--父元素设置display: grid;grid-template-columns: 300px auto 300px;-->
+    <acticle class="left-center-right">
+        <div class="left">
+            left
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="center">
+            <h1>grid栅格布局实现方式</h1>
+            <p>
+                中间部分内容撑开
+                Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Ab at atque consequuntur debitis delectus deleniti dolor
+                dolores dolorum eaque enim illo illum, in laboriosam nobis nulla, qui quis quos sequi!
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+    </acticle>
+</section>
+
+<!--6.inline-block布局方式实现-->
+<section class="layout inline">
+    <style>
+        .layout.inline .left-center-right {
+            font-size: 0;
+        }
+
+        .layout.inline .left-center-right > div {
+            display: inline-block;
+            font-size: 16px;
+            vertical-align: top;
+        }
+
+        .layout.inline .left-center-right .center {
+            width: calc(100% - 600px);
+        }
+    </style>
+    <!--父元素设置display:table;子元素设置：display:table-cell;-->
+    <acticle class="left-center-right">
+        <div class="left">
+            left
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+        <div class="center">
+            <h1>inline-block布局实现方式</h1>
+            <p>
+                中间部分内容撑开
+                Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Ab at atque consequuntur debitis delectus deleniti dolor
+                dolores dolorum eaque enim illo illum, in laboriosam nobis nulla, qui quis quos sequi!
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+            <p>
+                中间部分内容撑开
+            </p>
+        </div>
+
+        <div class="right">
+            right
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+            <p>
+                部分内容撑开
+            </p>
+        </div>
+
+    </acticle>
+</section>
+
+<h1>2）</h1>
+
+<section class="layout vertical flex">
+    <style>
+        .layout.vertical.flex {
+
+        }
+
+        .layout.vertical.flex .top-bottom {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .layout.vertical.flex .top-bottom .top {
+            height: 100px;
+            background: #2ec179;
+        }
+
+        .layout.vertical.flex .top-bottom .bottom {
+            flex: 1;
+            background: #F00;
+            overflow: scroll;
+        }
+
+        .fixed-height {
+            height: 100vh;
+        }
+
+    </style>
+    <acticle class="top-bottom">
+        <div class="top">
+            <p>上面部分内容</p>
+            <p>上面部分内容</p>
+            <p>上面部分内容</p>
+            <p>上面部分内容</p>
+        </div>
+        <div class="bottom">
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <div class="fixed-height">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aperiam cum, deserunt ea
+                fugiat illum in ipsam nobis nulla officiis
+                perferendis quidem sequi totam veniam veritatis vero voluptates. Dolor, quibusdam.
+                <p>更新文件</p>
+                <p>更新文件</p>
+                <p>更新文件</p>
+            </div>
+        </div>
+    </acticle>
+</section>
+
+<section class="layout vertical calc">
+    <style>
+        .layout.vertical.calc .top-bottom {
+            height: 600px;
+        }
+
+        .layout.vertical.calc .top-bottom .top {
+            height: 100px;
+            background: #2ec179;
+        }
+
+        .layout.vertical.calc .top-bottom .bottom {
+            height: calc(600px - 100px);
+            background: #F00;
+            overflow: scroll;
+        }
+
+        .fixed-height {
+            height: 100vh;
+        }
+
+    </style>
+    <acticle class="top-bottom">
+        <div class="top">
+            <p>上面部分内容</p>
+            <p>上面部分内容</p>
+            <p>上面部分内容</p>
+            <p>上面部分内容</p>
+        </div>
+        <div class="bottom">
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <p>下面部分内容</p>
+            <div class="fixed-height">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aperiam cum, deserunt ea
+                fugiat illum in ipsam nobis nulla officiis
+                perferendis quidem sequi totam veniam veritatis vero voluptates. Dolor, quibusdam.
+                <p>更新文件</p>
+                <p>更新文件</p>
+                <p>更新文件</p>
+            </div>
         </div>
     </acticle>
 </section>
