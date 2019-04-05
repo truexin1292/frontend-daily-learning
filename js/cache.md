@@ -53,6 +53,8 @@ http 1.1中默认启用Keep-Alive，如果加入"Connection: close "，才关闭
 也就是说默认都会发起Keep-Alive的连接请求了，
 所以是否能完成一个完整的Keep- Alive连接就看服务器设置情况。
 
+浏览器端缓存分为200 from cache和304 not modified
+我们讨论的所有关于缓存资源的问题，都仅仅针对GET请求
 
 缓存影响怎么处理？
 
@@ -61,3 +63,5 @@ http 1.1中默认启用Keep-Alive，如果加入"Connection: close "，才关闭
 2）使用浏览器的隐私模式开发；
 
 3）如果用的是chrome，可以f12在network那里把缓存给禁掉（这是个非常有效的方法）：
+
+https://blog.csdn.net/yan_rong_technology/article/details/80282051

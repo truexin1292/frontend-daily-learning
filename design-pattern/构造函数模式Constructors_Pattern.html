@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>构造函数模式Constructors</title>
+</head>
+<body>
+<script>
+    var Person = function (name, age, gender, career) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.career = career;
+        // return this; // default 默认
+    }
+    var son1 = new Person('alex', 26, 'male', 'web-front-end-engineer');
+    console.log('--son1--:', son1);
+
+
+    /**
+     * 构造一个动物的函数
+     */
+    function Animal(name, color) {
+        this.name = name;
+        this.color = color;
+        this.getName = function () {
+            return this.name;
+        }
+    }
+
+    // 实例一个对象
+    var cat = new Animal('猫', '白色');
+    console.log(cat.getName());
+</script>
+</body>
+</html>

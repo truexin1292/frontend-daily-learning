@@ -16,6 +16,18 @@
 
     }
 
+    function typeDetection (n) {
+        if (typeof n === 'object') {
+            return Object.prototype.toString.call(n);
+        } else {
+            return typeof n;
+        }
+    }
+    /*
+        Object.prototype.toString.call(null) ; // [object Null]
+        Object.prototype.toString.call(new Function()) ; // [object Function]
+        Object.prototype.toString.call(new Date()) ; // [object Date]
+    */
 
 </script>
 NaN:

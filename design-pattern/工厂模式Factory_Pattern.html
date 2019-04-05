@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工厂模式 Factory Pattern</title>
+</head>
+<body>
+<pre>
+    工厂模式定义一个用于创建对象的接口，
+    这个接口由子类决定实例化哪一个类。该模式使一个类的实例化延迟到了子类。
+    而子类可以重写接口方法以便创建的时候指定自己的对象类型。
+
+    简单说：假如我们想在网页面里插入一些元素，而这些元素类型不固定，
+    可能是图片、链接、文本，根据工厂模式的定义，在工厂模式下，
+    工厂函数只需接受我们要创建的元素的类型，其他的工厂函数帮我们处理。
+</pre>
+<script>
+    /*********1*********/
+    /**
+     * 工厂模式
+     */
+    function Animal(opts){
+        var obj = new Object();
+        obj.name = opts.name;
+        obj.color = opts.color;
+        obj.getInfo = function(){
+            return '名称：'+obj.name +'， 颜色：'+ obj.color;
+        }
+        return obj;
+    }
+    var cat = Animal({name: '波斯猫', color: '白色'});
+    cat.getInfo();
+
+
+    /*********2*********/
+
+        // 文本工厂
+    class Text {
+        constructor(text) {
+            this.text = text
+        }
+
+        insert(where) {
+            const txt = document.createTextNode(this.text)
+            where.appendChild(txt)
+        }
+    }
+
+    // 链接工厂
+    class Link {
+        constructor(url) {
+            this.url = url
+        }
+
+        insert(where) {
+            const link = document.createElement('a')
+            link.href = this.url
+            link.appendChild(document.createTextNode(this.url))
+            where.appendChild(link)
+        }
+    }
+
+    // 图片工厂
+    class Image {
+        constructor(url) {
+            this.url = url
+        }
+
+        insert(where) {
+            const img = document.createElement('img')
+            img.src = this.url
+            where.appendChild(img)
+        }
+    }
+
+    // DOM工厂
+    class DomFactory {
+
+        constructor(type) {
+            return new (this[type]())
+        }
+
+        // 各流水线
+        link() {
+            return Link
+        }
+
+        text() {
+            return Text
+        }
+
+        image() {
+            return Image
+        }
+    }
+
+    // 创建工厂
+    const linkFactory = new DomFactory('link');
+    const textFactory = new DomFactory('text');
+    const imageFactory = new DomFactory('image');//https://user-gold-cdn.xitu.io/2017/12/13/1604f3080efffc24
+
+    linkFactory.url = 'https://surmon.me';
+    linkFactory.insert(document.body);
+
+    textFactory.text = 'HI! I am surmon.';
+    textFactory.insert(document.body);
+
+    imageFactory.text = 'HI! I am surmon.';
+    imageFactory.insert(document.body);
+</script>
+</body>
+</html>

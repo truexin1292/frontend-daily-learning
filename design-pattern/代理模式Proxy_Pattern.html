@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代理模式 Proxy Pattern</title>
+</head>
+<body>
+<pre>
+    为其他对象提供一种代理以控制对这个对象的访问。
+代理模式使得代理对象控制具体对象的引用。
+    代理几乎可以是任何对象：文件，资源，内存中的对象，或者是一些难以复制的东西。
+</pre>
+<script>
+    //ES6中的Proxy对象
+    const target = {}
+    const handler = {
+        get(target, property) {
+            if (property in target) {
+                return target[property]
+            } else {
+                throw new ReferenceError("Property \"" + property + "\" does not exist.")
+            }
+        }
+    }
+    const p = new Proxy(target, {})
+    p.a = 3  // 被转发到代理的操作
+    console.log(p.c) //
+</script>
+</body>
+</html>

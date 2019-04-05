@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="email">
+<input type="search">
+<input type="week">
+<input type="month">
+<input type="datetime-local">
+<input type="time">
+<input type="date">
+<a href="https://www.jianshu.com/p/b0c56c2972b9">JS高逼格代码---高大上的简写方式</a>
+<br/>
+<script>
+    // 技巧1：javascript高逼格之Function构造函数
+    // 很多JavaScript教程都告诉我们，不要直接用内置对象的构造函数来创建基本变量，
+    // 例如var arr = new Array(2); 的写法就应该用var arr = [1, 2];的写法来取代。
+    // 但是，Function构造函数(注意是大写的Function)有点特别。Function构造函数接受的参数中，
+    // 第一个是要传入的参数名，第二个是函数内的代码(用字符串来表示)。
+
+    var f = new Function('a', 'console.log(a)');
+    f('gudaochuan'); // 将会弹出窗口显示gudaochuan
+
+    // var options = {
+    //     enableHighAccuracy: true,
+    //     timeout: 5000,
+    //     maximumAge: 0
+    // };
+    //
+    // function success(pos) {
+    //     var crd = pos.coords;
+    //
+    //     console.log('Your current position is:');
+    //     console.log('Latitude : ' + crd.latitude);
+    //     console.log('Longitude: ' + crd.longitude);
+    //     console.log('More or less ' + crd.accuracy + ' meters.');
+    // };
+    //
+    // function error(err) {
+    //     console.warn('ERROR(' + err.code + '): ' + err.message);
+    // };
+    //
+    // console.log('--log--:', window.navigator.geolocation.getCurrentPosition(success, error, options))
+</script>
+</body>
+</html>

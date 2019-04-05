@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="http://www.softwhy.com/" />
+    <title>蚂蚁部落</title>
+</head>
+<body>
+<svg id="svg" width="500px" height="500px" style="background-color: #f2f2f2"></svg>
+<script>
+    var svg = document.getElementById("svg");
+    svg.onclick = function(event){
+        var rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+        rect.setAttribute("x",event.offsetX);
+        rect.setAttribute("y",event.offsetY);
+        rect.setAttribute("width",50);
+        rect.setAttribute("height",50);
+        rect.setAttribute("fill",randomColor());
+        svg.appendChild(rect);
+    }
+
+    function randomColor(){
+        var r = Math.floor(Math.random()*256);
+        var g = Math.floor(Math.random()*256);
+        var b = Math.floor(Math.random()*256);
+        return `rgb(${r},${g},${b})`;
+    }
+</script>
+</body>
+</html>

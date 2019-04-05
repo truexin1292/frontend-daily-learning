@@ -52,7 +52,7 @@
     console.log(new Child1().say()); // 会报错
 
     /**
-     * 借助原型链实现继承
+     * 借助原型链实现继承 缺点：不能实现多继承，实例会直接修改父类原型的引用类型
      * */
     function Parent2() {
         this.name = 'parent2';
@@ -72,7 +72,7 @@
     console.log('--log--:', s1, s2); // [1,2,3,4] [1,2,3,4]
 
     /**
-     * 组合方式
+     * 组合方式 缺点是 两次调用 Parent3构造函数
      * */
     function Parent3() {
         this.name = 'parent3';
@@ -91,7 +91,7 @@
     console.log('--log--:', s3, s4); // [1,2,3,4] [1,2,3]
 
     /**
-     * 组合继承的优化1
+     * 组合继承的优化1 缺点：constructor都是指向父类直接的实例
      * */
     function Parent4() {
         this.name = 'parent4';
@@ -125,6 +125,13 @@
         this.type = 'child5';
     }
 
+    // var createObj = function () { // 中间函数继承 Parent
+    //     function Trans() {};
+    //     Trans.prototype = Parent.prototype;
+    //     return new Trans();
+    // };
+    // Child.prototype = createObj()
+
     Child5.prototype = Object.create(Parent5.prototype); // 隔离父类和子类的原型对象 通过这个属性查看.__proto__
     Child5.prototype.constructor = Child5;
 
@@ -133,6 +140,55 @@
     console.log(s7 instanceof Child5);
     console.log(s7 instanceof Parent5);
     console.log(s7.constructor); // Child5
+
+
+    /**
+     * ①：对象冒充实现继承：(可实现多继承)
+     * */
+    function Parent(name) {
+        this.name = name;
+        this.sayName = function () {
+            console.log(this.name);
+        }
+    }
+
+    function Parent11(name) {
+        this.name1 = name;
+        this.sayName1 = function () {
+            console.log(this.name);
+        }
+    }
+
+    function Child(cname) {
+        this.parent = Parent;
+        this.parent(cname);
+        delete this.parent; // 删除无用的parent函数 == f Parent(name)
+        this.parent1 = Parent11;
+        this.parent1(cname);
+        delete this.parent1; // 删除无用的parent1函数 == f Parent11(name)
+    }
+
+    var mychild = new Child("名字");
+    console.log(mychild)
+   // Child {
+    // name: "名字",
+    // sayName: ƒ,
+    // name1: "名字",
+    // sayName1: ƒ
+    // }
+    // name: "名字"name1: "名字"
+    // sayName: ƒ ()
+    // sayName1: ƒ ()
+    // __proto__: Object
+    // constructor:ƒ Child(cname)
+    // arguments: nullcaller: null
+    // length: 1
+    // name: "Child"
+    // prototype: {constructor: ƒ}
+    // __proto__: ƒ ()
+    // [[FunctionLocation]]: VM309:15
+    // [[Scopes]]: Scopes[1]
+    // __proto__: Object
 
 </script>
 </body>
