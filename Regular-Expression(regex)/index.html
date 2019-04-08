@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则表达式记忆-regular-expression</title>
+</head>
+<body>
+<script>
+    // 匹配中文
+    var chinese = /^[\u4100-\u9fa5]{2,}$/g;
+    var chinese1 = /[\u4100-\u9fa5]{2,}/g;
+    var chinese2 = /[\u4100-\u9fa5]{2,}/;
+    var text = '微信，我们吃饭吧';
+    var text1 = '微信我们吃饭吧';
+    var text2 = '微信.我们吃.饭吧';
+    // var log1 = chinese.test(text); // false
+    // var log1 = chinese.test(text1); // true
+    // var log1 = chinese1.test(text1); // true
+    var log1 = chinese2.test(text1); // true
+    // var log2 = text.match(chinese) // null // 匹配不到返回null；
+    // var log2 = text.match(chinese1) // ['微信' '我们吃饭吧'] // return 数组；
+    var log2 = text.match(chinese2) // 只返回第一个匹配到的数组；格式如此 =》 ["微信", index: 0, input: "微信，我们吃饭吧", groups: undefined]
+    // var log3 = text.replace(chinese, 'zh') // '微信，我们吃饭吧'; // 匹配不到，不能修改，直接返回原字符串；
+    // var log3 = text.replace(chinese1, 'zh') // 'zh，zh'
+    var log3 = text.replace(chinese2, 'zh') // 'zh，zh' // 只修改一个地方，没有全局进行替换 =》'zh，我们吃饭吧'
+
+    console.log('--log--:', log1, log2, log3)
+</script>
+</body>
+</html>

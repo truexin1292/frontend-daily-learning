@@ -2,6 +2,7 @@
 
 https://www.byvoid.com/zhs/blog/http-keep-alive-header
 http://web.jobbole.com/95057/?utm_source=blog.jobbole.com&utm_medium=relatedPosts
+https://segmentfault.com/a/1190000010690320
 
 强缓存：
 1. expires: Thu, 19 Nov 1981 08:52:00 GMT
@@ -65,3 +66,19 @@ http 1.1中默认启用Keep-Alive，如果加入"Connection: close "，才关闭
 3）如果用的是chrome，可以f12在network那里把缓存给禁掉（这是个非常有效的方法）：
 
 https://blog.csdn.net/yan_rong_technology/article/details/80282051
+
+
+三级缓存原理
+1. 先去内存看，如果有，直接加载
+
+2. 如果内存没有，择取硬盘获取，如果有直接加载
+
+3. 如果硬盘也没有，那么就进行网络请求
+
+4. 加载到的资源缓存到硬盘和内存
+
+所以我们可以来解释这个现象
+访问-> 200 -> 退出浏览器
+
+再进来-> 200(from disk cache) -> 刷新 -> 200(from memory cache)
+![](.cache_images/4df50eee.png)

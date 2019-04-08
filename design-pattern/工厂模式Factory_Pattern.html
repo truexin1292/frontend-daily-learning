@@ -19,16 +19,17 @@
     /**
      * 工厂模式
      */
-    function Animal(opts){
+    function Animal(opts) {
         var obj = new Object();
         obj.name = opts.name;
         obj.color = opts.color;
-        obj.getInfo = function(){
-            return '名称：'+obj.name +'， 颜色：'+ obj.color;
+        obj.getInfo = function () {
+            return '名称：' + obj.name + '， 颜色：' + obj.color;
         }
         return obj;
     }
-    var cat = Animal({name: '波斯猫', color: '白色'});
+
+    var cat = Animal({ name: '波斯猫', color: '白色' });
     cat.getInfo();
 
 
@@ -97,7 +98,7 @@
     // 创建工厂
     const linkFactory = new DomFactory('link');
     const textFactory = new DomFactory('text');
-    const imageFactory = new DomFactory('image');//https://user-gold-cdn.xitu.io/2017/12/13/1604f3080efffc24
+    const imageFactory = new DomFactory('image');
 
     linkFactory.url = 'https://surmon.me';
     linkFactory.insert(document.body);
@@ -105,8 +106,87 @@
     textFactory.text = 'HI! I am surmon.';
     textFactory.insert(document.body);
 
-    imageFactory.text = 'HI! I am surmon.';
+    imageFactory.url = 'https://user-gold-cdn.xitu.io/2017/12/13/1604f3080efffc24';
     imageFactory.insert(document.body);
+
+    /***********3***********/
+        // 复杂的工厂模式定义是：将其成员对象的实列化推迟到子类中，子类可以重写父类接口方法以便创建的时候指定自己的对象类型。
+        // 定义自行车的构造函数
+    var BicycleShop = function (name) {
+            this.name = name;
+            this.method = function () {
+                return this.name;
+            }
+        };
+    BicycleShop.prototype = {
+        constructor: BicycleShop,
+        /*
+         * 买自行车这个方法
+         * @param {model} 自行车型号
+        */
+        sellBicycle: function (model) {
+            var bicycle = this.createBicycle(model);
+            // 执行A业务逻辑
+            bicycle.A();
+
+            // 执行B业务逻辑
+            bicycle.B();
+
+            return bicycle;
+        },
+        createBicycle: function (model) {
+            throw new Error("父类是抽象类不能直接调用，需要子类重写该方法");
+        }
+    };
+
+    // 实现原型继承
+    function extend(Sub, Sup) {
+        //Sub表示子类，Sup表示超类
+        // 首先定义一个空函数
+        var F = function () {
+        };
+
+        // 设置空函数的原型为超类的原型
+        F.prototype = Sup.prototype;
+
+        // 实例化空函数，并把超类原型引用传递给子类
+        Sub.prototype = new F();
+
+        // 重置子类原型的构造器为子类自身
+        Sub.prototype.constructor = Sub;
+
+        // 在子类中保存超类的原型,避免子类与超类耦合
+        Sub.sup = Sup.prototype;
+
+        if (Sup.prototype.constructor === Object.prototype.constructor) {
+            // 检测超类原型的构造器是否为原型自身
+            Sup.prototype.constructor = Sup;
+        }
+    }
+
+    var BicycleChild = function (name) {
+        this.name = name;
+        // 继承构造函数父类中的属性和方法
+        BicycleShop.call(this, name);
+    };
+    // 子类继承父类原型方法
+    extend(BicycleChild, BicycleShop);
+    // BicycleChild 子类重写父类的方法
+    BicycleChild.prototype.createBicycle = function () {
+        var A = function () {
+            console.log("执行A业务操作");
+        };
+        var B = function () {
+            console.log("执行B业务操作");
+        };
+        return {
+            A: A,
+            B: B
+        }
+    }
+    var childClass = new BicycleChild("龙恩");
+    console.log(childClass);
+
 </script>
 </body>
 </html>
