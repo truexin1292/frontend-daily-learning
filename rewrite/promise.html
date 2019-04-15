@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise</title>
+</head>
+<body>
+<script>
+    class Promise {
+        constructor() {
+            this.callbacks = []
+            this.oncatch = null
+        }
+
+        reject(result) {
+            this.complete('reject', result)
+        }
+
+        resolve(result) {
+            this.complete('resolve', result)
+        }
+
+        complete(type, result) {
+            if (type === 'reject' && this.oncatch) {
+                this.callbacks = []
+                this.oncatch(result)
+            } else if (this.callbacks[0]) {// 判断第一个
+                var handlerObj = this.callbacks.shift() // 取出第一个，修改原数组；
+                if (handlerObj[type]) {
+                    handlerObj[type](result)
+                }
+            }
+        }
+
+        then(onsuccess, onfail) {
+            this.callbacks.push({
+                resolve: onsuccess,
+                reject: onfail
+            })
+            return this
+        }
+
+        catch(onfail) {
+            this.oncatch = onfail
+            return this
+        }
+    }
+
+    var promise = new Promise()
+
+    function fn1() {
+        setTimeout(function () {
+            var random = Math.random();
+            console.log('--log--:', random)
+            if (random > 0.5) {
+                promise.resolve('杭州')
+            } else {
+                promise.reject('杭州')
+            }
+        })
+        return promise
+    }
+
+    function success1(city) {
+        setTimeout(function () {
+            promise.resolve(city + '晴天')
+            console.log(city + '晴天')
+        }, 1000)
+    }
+
+    function error1(city) {
+        setTimeout(function () {
+            promise.reject(city + '下雨🌧天')
+            console.log(city + '下雨🌧天')
+        }, 1000)
+    }
+
+    function success2(weather) {
+        setTimeout(function () {
+            console.log(weather + '，天气不错，可携女友与狗出行')
+        }, 1000)
+    }
+
+    function error2(weather) {
+        setTimeout(function () {
+            console.log(weather + '，无法带狗狗玩了！')
+        }, 1000)
+    }
+
+    function onerror() {
+        console.log('错误❎啦')
+    }
+
+    fn1().then(success1, error1)
+        .then(success2, error2)
+        .catch(onerror)
+</script>
+</body>
+</html>

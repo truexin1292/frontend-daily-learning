@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content">
+    <div id="box">hello nodeType~</div>
+    <div class="ee">ppA版解破的下SOcaM即，kcarC-ppA-SOcaM</div>
+</div>
+<script>
+    var enc = function (prt) {
+        if (prt.nodeName == "#text") {
+            prt.textContent = prt.textContent.split("").reverse().join("");
+        } else {
+            prt.childNodes.forEach(
+                function (chd) {
+                    enc(chd);
+                }
+            );
+        }
+    };
+    enc(document.querySelector(".content"));
+    var element = document.getElementById("box");
+    var attr = document.getElementById("box").getAttributeNode("id");
+    var text = document.getElementById("box").firstChild;
+
+    console.log(element.nodeType);     //1
+    console.log(attr.nodeType);        //2
+    console.log(text.nodeType);        //3
+</script>
+</body>
+</html>

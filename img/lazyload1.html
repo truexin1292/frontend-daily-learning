@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lazyload 1</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <style>
+        /*<!-- 居然要高度必须确定的 -->*/
+        img {
+            display: block;
+            margin-bottom: 50px;
+            /*height: 500px;*/
+            /*width: 800px;*/
+        }
+    </style>
+</head>
+<body>
+<img src="images/load.gif" data-src="images/1.png">
+<img src="images/load.gif" data-src="images/2.png">
+<img src="images/load.gif" data-src="images/3.png">
+<img src="images/load.gif" data-src="images/4.png">
+<img src="images/load.gif" data-src="images/5.png">
+<img src="images/load.gif" data-src="images/6.png">
+<img src="images/load.gif" data-src="images/7.png">
+<img src="images/load.gif" data-src="images/8.png">
+<img src="images/load.gif" data-src="images/9.png">
+<img src="images/load.gif" data-src="images/10.png">
+<img src="images/load.gif" data-src="images/11.png">
+<img src="images/load.gif" data-src="images/12.png">
+<img src="images/load.gif" data-src="images/13.png">
+<img src="images/load.gif" data-src="images/14.png">
+<script>
+    // function lazyload() { // 闭包
+    //     var images = document.getElementsByTagName('img');
+    //     var len = images.length;
+    //     var n = 0;      //存储图片加载到的位置，避免每次都从第一张图片开始遍历
+    //     return function () {
+    //         var seeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    //         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    //         var sumHeight = seeHeight + scrollTop;
+    //         console.log('--log--:', sumHeight)
+    //         for (let i = n; i < len; i++) {
+    //             if (images[i].getBoundingClientRect().top < sumHeight) {
+    //                 console.log('--log--:', images[i].offsetTop, images[i].getBoundingClientRect().top)
+    //
+    //                 if (images[i].getAttribute('src') === 'images/load.gif') {
+    //                     images[i].src = images[i].getAttribute('data-src');
+    //                 }
+    //                 n = n + 1;
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // var loadImages = lazyload();
+    // loadImages();          //初始化首页的页面图片
+    // window.addEventListener('scroll', loadImages, false);
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let lazyImages = [].slice.call(document.querySelectorAll("img"));
+        let active = false;
+        const lazyLoad = function () {
+            if (active === false) {
+                active = true;
+                setTimeout(function () {
+                    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                    lazyImages.forEach(function (lazyImage) {
+                        if (lazyImage.getBoundingClientRect().top <= (window.innerHeight + scrollTop)) {
+                            if (lazyImage.getAttribute('src') === 'images/load.gif') {
+                                lazyImage.src = lazyImage.getAttribute('data-src');
+                            }
+                            lazyImages = lazyImages.filter(function (image) {
+                                return image !== lazyImage;
+                            });
+                            if (lazyImages.length === 0) {
+                                document.removeEventListener("scroll", lazyLoad);
+                            }
+                        }
+                    });
+                    active = false;
+                }, 200);
+            }
+        };
+        lazyLoad();
+        document.addEventListener("scroll", lazyLoad, false); //默认冒泡
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+就一句话，js里几乎所有回调函数都是异步调用的，但是forEach的回调函数是同步调用的！！！ map呢?
+同样的，在ES6中为Array增加的find()和findIndex函数，也都是同步调用回调函数的。
+.map()里的处理方法是同步的，若想做异步操作，可以这样写。
+// 使用async await 处理异步操作
+let results = await Promise.all(arr.map(async (item) => {
+// 等待异步操作完成，返回执行结果
+return await asyncWorker(item);
+}));
+
+
+<script>
+    // for 循环
+    // async function test() {
+    //     let arr = [3, 2, 1]
+    //     for (let i = 0; i < arr.length; i++) {
+    //         const res = await fetch(arr[i])
+    //         console.log(res)
+    //     }
+    //     console.log('end')
+    // } // 3,2,1,end
+
+    // for of
+    // async function test() {
+    //     let arr = [3, 2, 1]
+    //     for (let key of arr) {
+    //         const res = await fetch(key);
+    //         console.log(res)
+    //     }
+    //     console.log('end')
+    // } // 3,2,1,end
+
+    // forEach
+    // async function test() {
+    //     let arr = [3, 2, 1];
+    //     let list = [];
+    //     arr.forEach(function (v) {
+    //         list.push((async function () {
+    //             const res = await fetch(v);
+    //             console.log(res);
+    //         })());
+    //     })
+    //     await Promise.all(list);
+    //     console.log('end')
+    // } // 1,2,3,end
+
+    // forEach
+    async function test() {
+        let arr = [3, 2, 1];
+        let list = [];
+        arr.forEach((v, i, curr) => { // 只支持同步，无法支持异步
+            list[i] = (async () => {
+                const res = await fetch(v);
+                console.log(res);
+            })()
+        })
+        await Promise.all(list);
+        console.log('end')
+    } // 1,2,3,end
+
+    // while
+    // async function test() {
+    //     let arr = [3, 2, 1];
+    //     let list = [];
+    //     let index = 0;
+    //     while (index < arr.length) {
+    //         // list.push((async function () {
+    //         //     const res = await fetch(arr[index]);
+    //         //     console.log(res);
+    //         // })()); // 1,2,3,end
+    //         const res = await fetch(arr[index]);
+    //         console.log(res);
+    //         index++;
+    //     }
+    //     // await Promise.all(list);
+    //     console.log('end')
+    // } // 3,2,1,end
+
+    // map
+    // async function test() {
+    //     let arr = [3, 2, 1];
+    //     await Promise.all(arr.map(async function (v) {
+    //         const res = await fetch(v);
+    //         console.log(res)
+    //     }))
+    //     console.log('end')
+    // } // 1,2,3,end
+
+    // iterator
+    // async function test() {
+    //     let arr = [3, 2, 1]
+    //     const iterator = arr[Symbol.iterator]()
+    //     let res = iterator.next()
+    //     while (!res.done) {
+    //         const value = res.value
+    //         const res1 = await fetch(value)
+    //         console.log(res1)
+    //         res = iterator.next()
+    //     }
+    //     console.log('end')
+    // } // 3,2,1,end
+
+    function fetch(x) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(x)
+            }, 500 * x) // 1,2,3 默认就是这样子输出的；
+        })
+    }
+
+    test();
+</script>
+</body>
+</html>

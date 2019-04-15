@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+    <title>点石H5-开源的H5工具</title>
+    <meta name="description" content="H5DS，开源的HTML5制作工具，官方网站h5ds.com">
+    <meta name="keywords" content="H5DS，开源的HTML5制作工具，官方网站h5ds.com">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-page-mode" content="app">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.h5ds.com/static/css/h5ds.phone.4.5.0.css?t=1554712006294">
+    <link rel="stylesheet" type="text/css" href="http://cdn.h5ds.com/static/css/h5ds.plus.4.5.0.css?t=1554712006294">
+    <link rel="stylesheet" type="text/css" href="http://cdn.h5ds.com/lib/plugins/weui.min.css">
+    <!--js-->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="http://cdn.h5ds.com/lib/plugins/jquery.min.js"></script>
+    <script src="http://cdn.h5ds.com/lib/plugins/qrcode.min.js"></script>
+    <script src="http://cdn.h5ds.com/lib/plugins/hammer.min.js"></script>
+    <script src="http://cdn.h5ds.com/lib/plugins/weui.min.js"></script>
+    <script src="http://map.qq.com/api/js?v=2.exp&key=ZF5BZ-WGGCQ-4NK5V-GSBW3-Y6KHE-KLFJ6"></script>
+    <script src="http://cdn.h5ds.com/lib/plugins/echarts.simple.min.js"></script>
+    <script>
+        var H5DS_SOURCE = ["/upload/upload_43667b0445274c5b99b252f3428fcbb4.png", "http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/07b52145-b43a-41e3-ba77-21a6aa0ae939.png", "http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/23767056-4937-410b-99d1-e837936cad69.png", "http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/a46f3ea9-0982-448c-b40c-25c4c47c8b5a.png", "http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/2748f7ae-ab5a-4809-ab1b-5b98e6b98e0a.png", "http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/9a1a162d-d922-441d-b3ff-91cbeb7a2c5f.png", "http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/6f53a527-cf07-41a3-903d-d42153fc8a85.png", "/upload/upload_108bc6ed2424799c87504ef8fff12be7.png"];
+        var H5DS_SLIDER_ANIMATE = {
+            "name": "上下隐藏",
+            "inNext": "pt-page-moveFromBottomFade",
+            "outNext": "pt-page-moveToTopFade",
+            "inPrev": "pt-page-moveFromTopFade",
+            "outPrev": "pt-page-moveToBottomFade"
+        };
+        var H5DS_COLLECT_API = 'http://apis.h5ds.com/h5ds/collect';
+    </script>
+    <script src="http://cdn.h5ds.com/static/js/h5ds.phone.4.5.0.js?t=1554712006294"></script>
+    <script src="http://cdn.h5ds.com/static/js/h5ds.plus.4.5.0.js?t=1554712006294"></script>
+</head>
+
+<body class="h5dsapp h5dsapp-phone">
+<div class="h5ds-full" style="width:320px;height:514px">
+    <div class="h5ds-video-icon"><i></i><i></i><i></i><i></i></div>
+    <audio style="display:none" id="h5dsBgMusic" loop="" preload="preload">
+        <source src="http://pic.ibaotu.com/00/23/30/17E888piCgGs.mp3" type="audio/mpeg"/>
+    </audio>
+    <div class="h5ds-loading" id="h5dsLoading">
+        <div class="h5ds-loadinner">
+            <div class="1"></div>
+            <div class="h5ds-progress" id="h5dsProgress"></div>
+        </div>
+    </div>
+    <div id="h5dsPopups"></div>
+    <div>
+        <div id="h5dsFixedsUp">
+            <div class="h5ds-swiper-page">
+                <div class="h5ds-swiper-pageinner">
+                    <div class="h5ds-swiper-layers" style="height:514px"></div>
+                </div>
+            </div>
+        </div>
+        <div id="h5dsFixedsDown">
+            <div class="h5ds-swiper-page">
+                <div class="h5ds-swiper-pageinner">
+                    <div class="h5ds-swiper-layers" style="height:514px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="h5dsSwiper" class="h5ds-swiper">
+        <div class="h5ds-swiper-page" data-title="%u7A7A%u767D%u9875%u9762" data-desc="" data-autoplay="false"
+             data-lock="false">
+            <div class="h5ds-swiper-pageinner"
+                 style="background-image:url(http://www.h5ds.com/upload/upload_43667b0445274c5b99b252f3428fcbb4.png)">
+                <div class="h5ds-swiper-layers" style="height:486px">
+                    <div data-adsorbent="{}" id="" data-keyid="44oxw6w4caa000" data-last-animate="" data-uefun="{}"
+                         class="layer layer-effectcss" style="z-index:9999;width:320px;height:526px;top:-5px;left:5px">
+                        <div class="element" id="" style="-webkit-animation:;animation:">
+                            <div class="effeccsstinner">
+                                <div>
+                                    <i class="star"
+                                       style="width: 5px; height: 5px; left:101px; top:157px; -webkit-animation-delay:0.6509337669780109s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 2px; height: 2px; left:211px; top:15px; -webkit-animation-delay:0.7670695972874466s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:241px; top:387px; -webkit-animation-delay:0.11646507421229035s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:161px; top:79px; -webkit-animation-delay:0.7596694913892064s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 2px; height: 2px; left:301px; top:112px; -webkit-animation-delay:0.13142248331552464s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:13px; top:196px; -webkit-animation-delay:0.295071776023212s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:173px; top:459px; -webkit-animation-delay:0.5490174319570427s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:309px; top:445px; -webkit-animation-delay:0.5558421047409605s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:113px; top:254px; -webkit-animation-delay:0.9364082732540862s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:80px; top:443px; -webkit-animation-delay:0.8314067720409104s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:93px; top:468px; -webkit-animation-delay:0.13173308234736036s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:42px; top:437px; -webkit-animation-delay:0.9896164835218897s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:175px; top:9px; -webkit-animation-delay:0.21198322270312864s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:223px; top:96px; -webkit-animation-delay:0.9088034496645845s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:307px; top:291px; -webkit-animation-delay:0.5536077942384967s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:95px; top:483px; -webkit-animation-delay:0.19314878519847278s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:257px; top:311px; -webkit-animation-delay:0.3315369924503857s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:242px; top:137px; -webkit-animation-delay:0.20669552749309772s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:36px; top:193px; -webkit-animation-delay:0.2679489186726449s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:49px; top:204px; -webkit-animation-delay:0.7618621760053597s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:47px; top:116px; -webkit-animation-delay:0.9895474429319095s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:129px; top:250px; -webkit-animation-delay:0.9686557312887554s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:235px; top:298px; -webkit-animation-delay:0.8606413257519079s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:21px; top:434px; -webkit-animation-delay:0.6247953693969166s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 2px; height: 2px; left:70px; top:206px; -webkit-animation-delay:0.09354438185699321s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:49px; top:225px; -webkit-animation-delay:0.7123918000734379s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:34px; top:100px; -webkit-animation-delay:0.38523489222500973s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:252px; top:91px; -webkit-animation-delay:0.6802682962384261s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:269px; top:469px; -webkit-animation-delay:0.6699831243097152s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:91px; top:164px; -webkit-animation-delay:0.5421296476668338s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:122px; top:380px; -webkit-animation-delay:0.5264036529266445s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 2px; height: 2px; left:302px; top:426px; -webkit-animation-delay:0.5069463760227431s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 2px; height: 2px; left:237px; top:214px; -webkit-animation-delay:0.4702742482611677s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:17px; top:56px; -webkit-animation-delay:0.14735624389726443s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:92px; top:398px; -webkit-animation-delay:0.7849393119264698s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:143px; top:295px; -webkit-animation-delay:0.1810494344476674s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:62px; top:399px; -webkit-animation-delay:0.9248926571178893s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:185px; top:278px; -webkit-animation-delay:0.5432371720864637s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:64px; top:192px; -webkit-animation-delay:0.4967737125600604s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:4px; top:128px; -webkit-animation-delay:0.6250350331671557s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:56px; top:431px; -webkit-animation-delay:0.5010318619659586s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:13px; top:22px; -webkit-animation-delay:0.7554691113933916s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:62px; top:478px; -webkit-animation-delay:0.07136602576059747s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:306px; top:125px; -webkit-animation-delay:0.039078983821029034s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 3px; height: 3px; left:111px; top:329px; -webkit-animation-delay:0.5169374837593326s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:227px; top:245px; -webkit-animation-delay:0.5681895468817972s; -webkit-animation: star 3s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 4px; height: 4px; left:209px; top:5px; -webkit-animation-delay:0.5468789504354876s; -webkit-animation: star 4s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 2px; height: 2px; left:257px; top:417px; -webkit-animation-delay:0.6242009647666593s; -webkit-animation: star 2s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 1px; height: 1px; left:1px; top:282px; -webkit-animation-delay:0.854852745135604s; -webkit-animation: star 1s linear infinite;"></i><i
+                                    class="star"
+                                    style="width: 5px; height: 5px; left:197px; top:56px; -webkit-animation-delay:0.18936759736502817s; -webkit-animation: star 2s linear infinite;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="49bqn7tdztq000" data-last-animate="in" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9998;width:252px;height:67px;top:390px;left:30px">
+                        <div class="element" id=""
+                             style="-webkit-animation:zoomIn 1s ease 4s 1 normal forwards running;animation:zoomIn 1s ease 4s 1 normal forwards running;opacity:0">
+                            <img
+                                src="http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/07b52145-b43a-41e3-ba77-21a6aa0ae939.png"/>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="2v2jf3i7hnk000" data-last-animate="in" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9997;width:18.66px;height:160.31px;top:125px;left:60px">
+                        <div class="element" id=""
+                             style="-webkit-animation:bounceIn 1s ease 3.2s 1 normal forwards running;animation:bounceIn 1s ease 3.2s 1 normal forwards running;opacity:0">
+                            <img
+                                src="http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/23767056-4937-410b-99d1-e837936cad69.png"/>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="1cdw9j5stc3k00" data-last-animate="em" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9996;width:180.5px;height:319.26px;top:50px;left:75px">
+                        <div class="element" id=""
+                             style="-webkit-animation:zoomIn 0.5s ease 1.7s 1 normal forwards running,tada 1s ease 2.5s 1 normal forwards running;animation:zoomIn 0.5s ease 1.7s 1 normal forwards running,tada 1s ease 2.5s 1 normal forwards running;opacity:0">
+                            <img
+                                src="http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/a46f3ea9-0982-448c-b40c-25c4c47c8b5a.png"/>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="pmvbf2v1yww00" data-last-animate="in" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9995;width:113px;height:109.46px;top:254px;left:148px">
+                        <div class="element" id=""
+                             style="-webkit-animation:zoomInLeft 1s ease 2.3s 1 normal forwards running;animation:zoomInLeft 1s ease 2.3s 1 normal forwards running;opacity:0">
+                            <img
+                                src="http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/2748f7ae-ab5a-4809-ab1b-5b98e6b98e0a.png"/>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="2gbnx482svy800" data-last-animate="em" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9994;width:345px;height:391px;top:-10px;left:-50px">
+                        <div class="element" id=""
+                             style="-webkit-animation:slideInDown 1s ease 1s 1 normal forwards running,pulse 1.3s ease 1.5s 99 normal forwards running;animation:slideInDown 1s ease 1s 1 normal forwards running,pulse 1.3s ease 1.5s 99 normal forwards running;opacity:0">
+                            <img
+                                src="http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/9a1a162d-d922-441d-b3ff-91cbeb7a2c5f.png"/>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="3s7via5a8pg000" data-last-animate="in" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9993;width:319.83px;height:65.18px;top:0;left:0">
+                        <div class="element" id=""
+                             style="-webkit-animation:fadeInDown 1s ease 0s 1 normal forwards running;animation:fadeInDown 1s ease 0s 1 normal forwards running;opacity:0">
+                            <img
+                                src="http://h5ds-cdn.oss-cn-beijing.aliyuncs.com/upload/6f53a527-cf07-41a3-903d-d42153fc8a85.png"/>
+                        </div>
+                    </div>
+                    <div data-adsorbent="{}" id="" data-keyid="3eun18hr4pw000" data-last-animate="in" data-uefun="{}"
+                         class="layer layer-img" style="z-index:9992;width:321px;height:514px;top:0;left:0">
+                        <div class="element" id=""
+                             style="-webkit-animation:fadeIn 1s ease 0s 1 normal forwards running;animation:fadeIn 1s ease 0s 1 normal forwards running">
+                            <img src="/upload/upload_108bc6ed2424799c87504ef8fff12be7.png"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="h5ds-last-page" style="animation:slideInUp 0.5s ease 0s 1 normal forwards running;opacity:0">
+        <div class="h5ds-last-info"><img src="http://cdn.h5ds.com/static/images/img-null.png" alt=""/>
+            <h1>点石H5-开源的H5工具</h1>
+            <p>H5DS，开源的HTML5制作工具，官方网站h5ds.com</p>
+            <div class="h5ds-last-btns">
+                <button id="h5ds-last-close">关闭</button>
+                <button id="h5ds-last-topage1">重看</button>
+            </div>
+        </div>
+        <div class="h5ds-last-power">Powered by <a href="http://h5ds.cn">h5ds.com</a></div>
+    </div>
+</div>
+</body>
+
+</html>

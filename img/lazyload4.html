@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片懒加载-简单</title>
+    <script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+    <style>
+        ul, li {
+            list-style: none;
+        }
+
+        .container {
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .container li {
+            float: left;
+            margin: 10px 10px;
+        }
+
+        .container li img {
+            width: 240px;
+            height: 180px;
+        }
+
+        p {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<ul class="container">
+    <li><a href="#"><img src="" data-src="images/1.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/2.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/3.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/4.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/5.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/6.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/7.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/8.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/9.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/10.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/11.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/12.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/13.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/14.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/15.png"/></a></li>
+    <li><a href="#"><img src="" data-src="images/16.png"/></a></li>
+</ul>
+
+<script>
+    $(window).on('scroll', function () {//当页面滚动的时候绑定事件
+        $('.container img').each(function () {//遍历所有的img标签
+            if (checkShow($(this)) && !isLoaded($(this))) {
+                // 需要写一个checkShow函数来判断当前img是否已经出现在了视野中
+                //还需要写一个isLoaded函数判断当前img是否已经被加载过了
+                loadImg($(this));//符合上述条件之后，再写一个加载函数加载当前img
+            }
+        })
+    })
+
+    checkShow()
+
+    function checkShow($img) { // 传入一个img的jq对象
+        var scrollTop = $(window).scrollTop();  //即页面向上滚动的距离
+        var windowHeight = $(window).height(); // 浏览器自身的高度
+        var offsetTop = $img.offset().top;  //目标标签img相对于document顶部的位置
+
+        if (offsetTop < (scrollTop + windowHeight) && offsetTop > scrollTop) { //在2个临界状态之间的就为出现在视野中的
+            return true;
+        }
+        return false;
+    }
+
+    function isLoaded($img) {
+        return $img.attr('data-src') === $img.attr('src'); //如果data-src和src相等那么就是已经加载过了
+    }
+
+    function loadImg($img) {
+        $img.attr('src', $img.attr('data-src')); // 加载就是把自定义属性中存放的真实的src地址赋给src属性
+    }
+</script>
+</body>
+</html>

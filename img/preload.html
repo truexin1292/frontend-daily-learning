@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //todo demo 1
+    // 不使用代理的预加载图片函数如下
+    // var myImage = (function () {
+    //     var imgNode = document.createElement("img");
+    //     document.body.appendChild(imgNode);
+    //     var img = new Image();
+    //
+    //     img.onload = function () {
+    //         // setTimeout(() => {
+    //         imgNode.src = this.src;
+    //         // }, 1000);
+    //     };
+    //     return {
+    //         setSrc: function (src) {
+    //             imgNode.src = "./load.gif";
+    //             img.src = src;
+    //         }
+    //     }
+    // })();
+    // // 调用方式
+    // // myImage.setSrc("https://cdn.pixabay.com/photo/2019/04/01/14/17/puppy-4095481__340.jpg");
+    // myImage.setSrc("./nba-new.jpg");
+
+
+    //todo demo 2
+    var myImage = (function () {
+        var imgNode = document.createElement("img");
+        document.body.appendChild(imgNode);
+        return {
+            setSrc: function (src) {
+                imgNode.src = src;
+            }
+        }
+    })();
+    // 代理模式
+    var ProxyImage = (function () {
+        var img = new Image();
+        img.onload = function () {
+            myImage.setSrc(this.src);
+        };
+        return {
+            setSrc: function (src) {
+                myImage.setSrc("./load.gif");
+                img.src = src;
+            }
+        }
+    })();
+    // 调用方式
+    ProxyImage.setSrc("./nba-new.jpg");
+    // myImage.setSrc("./nba-new.jpg");
+</script>
+</body>
+</html>

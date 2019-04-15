@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shallow and deep clone</title>
+</head>
+<body>
+<script>
+    /* 方法说明
+     * @method 方法名
+     * @for 所属类名
+     * @param {参数类型} 参数名 参数说明
+     * @return {返回值类型} 返回值说明
+    */
+
+    /*
+    * clone an object { js's all type is support } in deep totally!
+    * @method deepClone : 深克隆
+    * @param { all type } source 被克隆的对象
+    * @param { new WeakMap } hash = new WeakMap : 防止堆栈溢出的指向自己的情况，克隆过的对象，不需要再克隆，直接拿副本就可以；
+    * @return target : 被克隆的对象的新对象
+    * */
+    const deepClone = (source, hash = new WeakMap) => {
+        // 1.两个参数；被克隆对象，对象内的克隆副本；
+        // new WeakMap() 不带参数可以省略括号；等价于new WeakMap 存在是三个关键方法，has(key) =》get(key) =》set(key,value);
+        function isObj(obj) {
+            // 2. 判断对象和基础类型的方法；
+            return typeof obj === 'object' && obj !== null;
+        }
+
+        if (!isObj(source)) {
+            // 3.基础类型的值深克隆直接返回就是；
+            return source;
+        }
+
+        if (hash.has(source)) {
+            // 4.存在克隆过的对象就直接返回，不用重新遍历； has = > get
+            return hash.get(source);
+        }
+
+        let target = Array.isArray(source) ? [...source] : { ...source }; // 5.创建新的对象，判断是数组还是对象，声明方式不一样；
+        hash.set(source, target); // 6. hash储存； set(key,value);
+
+        Reflect.ownKeys(source).forEach((item, i, curr) => {
+            // 7.遍历自有属性，判断是否对象进行递归调用 Reflect.keys(source) = [属性名列表],forEach只作遍历，无需返回值，故不选map
+            if (isObj(source[item])) {
+                // 8.是对象就递归深克隆方法；
+                target[item] = deepClone(source[item], hash);
+            } else {
+                // 9.基础类型就直接赋值；
+                target[item] = source[item];
+            }
+        })
+
+        return target;
+        // 8.返回克隆完成的新对象；
+    }
+
+    var arr = [
+        {
+            id: 1234555,
+            account: 'truexin@163.com'
+        },
+        {
+            name: 'alex',
+            age: 35
+        },
+        [3, 4, 5, 6],
+        77,
+        'hh',
+        '干嘛',
+        { obj: { obj: {} } },
+        null,
+        undefined,
+        NaN,
+        Symbol,
+        String,
+        Number,
+        true,
+        {
+            false: false
+        },
+        function () {
+            console.log('--log--:', 1)
+        },
+        Error,
+        RegExp,
+        Math,
+        [this],
+    ];
+    var obj = {
+        id: 1234555,
+        account: 'truexin@163.com',
+        ['list-id']: 1370651396,
+        list: [
+            [...arr],
+            {
+                name: 'xiaoming',
+                age: 0,
+                gender: 'male',
+                arr: [1, 2, 3, 4, 5, 6]
+            },
+            [
+                {
+                    type: 'arr',
+                    length: 1,
+                    arr: arr
+                },
+                ['arr']
+            ],
+            null,
+            undefined,
+            NaN,
+            Symbol,
+            String,
+            Number,
+            true,
+        ],
+        [Symbol]: 'My Name Is Truexinology!',
+        Symbol: Symbol
+    };
+
+    var arr1 = deepClone(arr);
+    var obj1 = deepClone(obj);
+    console.log('--arr1--:', arr1);
+    console.log('--log--:', '\n');
+    console.log('--obj1--:', obj1)
+</script>
+</body>
+</html>

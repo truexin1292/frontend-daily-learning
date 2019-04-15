@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>instanceof</title>
+</head>
+<body>
+<script>
+    // null 不是对象，只是基础类型之一，只不过typeof 为 object而已；
+    var Person = function (name, age) {
+        this.age = age;
+        this.name = name;
+    }
+    var p = new Person();
+    console.log('p extend form Person / Object', p instanceof Person); // true
+    console.log('p extend form Person / Object', p instanceof Object); // true
+    console.log('p extend form Person / Object', p.__proto__ === Person.prototype); // true
+
+    var instance_of = function (L, R) {
+        var O = R.prototype;
+        L = L.__proto__;
+        while (true) {
+            if (L === null) {
+                return false;
+            } else if (L === O) {
+                return true
+            }
+            L = L.__proto__;
+        }
+    }
+
+    console.log('--instance_of--:', instance_of(p, Person)) // true
+    console.log('--instance_of--:', instance_of(p, Object)) // true
+    console.log('--instance_of--:', instance_of(Object.prototype, Object)) // false
+</script>
+</body>
+</html>

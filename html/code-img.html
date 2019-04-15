@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="" alt="" id="icon"/>
+<script>
+    function show_pic() {
+        function getImageBase64(img, ext) {
+            //创建canvas DOM元素，并设置其宽高和图片一样
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            //使用画布画图
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var dataURL = canvas.toDataURL("image/" + ext);
+            //返回的是一串Base64编码
+            canvas = null;
+            return dataURL;
+        }
+
+        var img_path = "./img/img.png";
+        //网页中需提前设定一个id为icon的img元素
+        var user_icon = document.getElementById('icon');
+        fileExt = "";
+        //获取base64编码
+        user_icon.src = img_path;
+        user_icon.onload = function () {
+            base64 = getImageBase64(user_icon, fileExt);
+            console.log(base64);
+        }
+    }
+
+    var pass = prompt('请输入口令', '');
+    if (pass != "123") {
+        history.go(-1);
+        alert("口令错误。");
+    } else {
+        show_pic();
+    }
+</script>
+</body>
+</html>
