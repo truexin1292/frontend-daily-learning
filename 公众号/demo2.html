@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>share-friends</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    // var imgUrl = 'http://f.fengchaoli.com/plug-in/fcl/images/guideRegister3.png';
+    var imgUrl = 'http://e-fcl.test.fengchaoli.com/plug-in/fcl/images/guideRegister1.png';
+    // var lineLink = 'http://f.fengchaoli.com/registerController.do?guide';
+    var lineLink = 'http://e-fcl.test.fengchaoli.com/registerController.do?guide';
+    var descContent = '人类天生就爱玩游戏，游戏为什么吸引人？如果借助游戏的规律，是否可以让工作学习变得更精彩？';
+    var shareTitle = '游戏化学习工作坊第四站-北京清华科技园';
+    // var data = {
+    //     // url: location.href.split('#')[0],
+    //     url: encodeURIComponent(location.href.split('#')[0])
+    // };
+
+    $.ajax({
+        type: 'GET',
+        url: "http://4d125132.ngrok.io/token",
+        dataType: "json",
+        // data: data,
+        // timeout: 15000,
+        success: function (response) {
+            var appId = response.appId;
+            var timestamp = response.timestamp;
+            var nonceStr = response.nonceStr;
+            var signature = response.signature;
+            // var ticket = response.ticket;
+            // var ticket = response.jsapi_ticket;
+
+            wx.config({
+                debug: false,
+                appId: appId,
+                timestamp: timestamp,
+                nonceStr: nonceStr,
+                signature: signature,
+                jsApiList: [
+                    // 'checkJsApi',
+                    // 'updateAppMessageShareData',
+                    // 'onMenuShareTimeline',
+                    'onMenuShareAppMessage'
+                ]
+            });
+            wx.ready(function () {
+                // wx.checkJsApi({
+                //     jsApiList: ['onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                //     success: function (res) {
+                //         console.log('--onMenuShareAppMessage--:', res)
+                //         // 以键值对的形式返回，可用的api值true，不可用为false
+                //         // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+                //     }
+                // });
+                // wx.updateAppMessageShareData({
+                //     title: shareTitle, // 分享标题
+                //     desc: descContent, // 分享描述
+                //     link: lineLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                //     imgUrl: imgUrl, // 分享图标
+                //     // type: "link", // 分享类型,music、video或link，不填默认为link
+                //     // dataUrl: "", // 如果type是music或video，则要提供数据链接，默认为空
+                //     success: function (res) {
+                //         console.log('--onMenuShareAppMessage--:', res)
+                //         // 用户确认分享后执行的回调函数
+                //         console.log("分享配置完成");
+                //     },
+                //     cancel: function (res) {
+                //         console.log('--error--:', res)
+                //         // 用户取消分享后执行的回调函数
+                //         console.log('分享取消')
+                //     }
+                // });
+                // wx.onMenuShareTimeline({
+                //     title: shareTitle, // 分享标题
+                //     link: lineLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                //     imgUrl: imgUrl, // 分享图标
+                //     success: function () {
+                //         // 用户确认分享后执行的回调函数
+                //     },
+                //     cancel: function () {
+                //         // 用户取消分享后执行的回调函数
+                //     }
+                // });
+                wx.onMenuShareAppMessage({
+                    title: shareTitle, // 分享标题
+                    desc: descContent, // 分享描述
+                    link: lineLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: imgUrl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+        },
+        error: function (response) {
+            console.log("失败", response);
+        }
+    });
+
+    function shareOnWechat() {
+        wx.onMenuShareAppMessage({
+            title: shareTitle, // 分享标题
+            desc: descContent, // 分享描述
+            link: lineLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function (res) {
+                // 用户确认分享后执行的回调函数
+                alert(res)
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                alert('error', res)
+            }
+        });
+    }
+</script>
+<div onclick="shareOnWechat()">
+    分享到朋友圈和朋友👬
+</div>
+</body>
+</html>

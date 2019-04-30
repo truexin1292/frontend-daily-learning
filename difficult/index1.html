@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    // demo1
+    var obj = { a: 1 }
+    obj.b = obj = { a: 2 }
+
+    console.log('--log--:', obj.b); // undefined
+
+    // demo2
+    var obj = {
+        a: 1,
+        b: {
+            name: 'alex'
+        }
+    }
+    obj.b = obj = { a: 2 };
+
+    console.log('--log--:', obj.b); // undefined
+
+    // demo3
+    var obj = {
+        a: 1,
+        b: {
+            name: 'alex'
+        }
+    }
+    obj.b = obj = { a: 2, b: 44 };
+
+    console.log('--log--:', obj.b); // 44
+
+    // demo4
+    var obj = { a: 1 }
+    // 创建cobj指向obj
+    var cobj = obj
+    obj.b = obj = { a: 2 }
+    console.log(obj.b) // undefined
+    console.log(cobj.b) // {a: 2}
+
+    // demo5
+    var obj = { a: 1 }
+    // 创建cobj指向obj
+    var cobj = obj
+    obj.b = obj = { a: 2 }
+    console.log(obj, obj.b) // {a: 2} undefined
+    console.log(cobj, cobj.b) // {a: 2, b: { a: 2 }}   {a: 2}
+
+</script>
+</body>
+</html>

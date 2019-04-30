@@ -29,3 +29,26 @@ cnpm install npm -g
 ```
 ### 闭包异步面试题
 https://www.jianshu.com/p/76857b595f80
+
+** 箭头函数与普通函数对比分析？
+https://blog.csdn.net/OBKoro1/article/details/88732010
+
+1. 箭头函数没有prototype(原型)，所以箭头函数本身没有this
+let a = () =>{};
+console.log(a.prototype); // undefined
+
+2.函数的length属性，不包括 rest 参数
+(function(...a) {}).length  // 0
+(function(a, ...b) {}).length  // 1
+(function(a, b, ...c) {}).length  // 2
+
+3.使用new调用箭头函数会报错
+let a = () => {};
+let b = new  a(); // a is not a constructor
+
+![](.README_images/b98df26c.png)
+
+** 浏览器重绘重排与优化
+https://blog.csdn.net/OBKoro1/article/details/85057490
+
+![](.README_images/b05697f0.png)

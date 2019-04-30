@@ -15,3 +15,17 @@ document.createDocumentFragment
 
 3.data - > observe 监听- > Dep 回调- > < -监听 Watcher 观察- > view
 
+* my-mvvm
+https://github.com/xuqiang521/overwrite/tree/master/src/my-mvvm
+* mvvm
+https://jsbin.com/tixekufaha/edit?html,js,output
+https://www.jianshu.com/p/f673fbbd889a
+https://twiknight.gitbooks.io/blog/content/write_a_mvvm_framework_from_scratch_1.html
+* own-react
+https://github.com/jackiewillen/build-your-own-react
+* virtual dom
+https://juejin.im/post/5cb66fdaf265da0384128445
+* biu.js:
+https://github.com/veedrin/biu/blob/master/src/biu.js
+* xue.js
+https://github.com/xuqiang521/xuejs

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>每天一题</title>
+</head>
+<body>
+</body>
+<script>
+    // 1-12月份的销售额；
+    var obj = {
+        1: 222,
+        2: 123,
+        5: 888,
+    }
+    var arr = new Array(12).fill(null);
+    var finalArr = arr.map((v, i, curr) => {
+        if (obj[i + 1]) {
+            return obj[i + 1];
+        } else {
+            return null;
+        }
+    });
+    console.log('--log--:', finalArr)
+
+</script>
+</html>

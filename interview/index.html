@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var str = 'aaaabb33333ffd0kkg05520eldosgoodmyname sialex';
+    var arr = str.split('');
+    var obj = {};
+    arr.forEach((v, i, curr) => {
+        if (obj[v]) {
+            obj[v] = obj[v] + 1;
+        } else {
+            obj[v] = 1;
+        }
+    })
+    let values = Object.values(obj);
+    let max = Math.max(...values);
+    let min = Math.min(...values);
+    var resultNameList = Object.entries(obj).filter((v) => {
+        // return v[1] === min;
+        return v[1] === max;
+    });
+    console.log('--resultNameList--:', resultNameList) // [['a',5],['3',5]]
+</script>
+</body>
+</html>

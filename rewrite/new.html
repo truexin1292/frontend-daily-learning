@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const newOperator = function (func) {
+        if (typeof func !== 'function') {
+            throw 'newOperator function the first param must be a function';
+        }
+        newOperator.target = func;
+        var newObj = Object.create(func.prototype);
+        var argsArr = [].slice.call(arguments, 1);
+        var funcReturnResult = func.apply(newObj, argsArr);
+        var isObject = typeof funcReturnResult === 'object' && funcReturnResult !== null;
+        var isFunction = typeof funcReturnResult === 'function';
+        if (isObject || isFunction) {
+            return funcReturnResult;
+        }
+        return newObj;
+    }
+
+    function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        console.log('--target--:', new.target);
+    }
+
+    class Person1 {
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+            console.log('--target--:', new.target);
+        }
+    }
+
+    var p = newOperator(Person, 'alex1', 21);
+    var p1 = new Person('alex2', 24);
+    var p2 = new Person1('alex2', 24);
+    console.log('--log--:', p, p1,p2);
+
+
+    // function Foo() {
+    //     if (!new.target) throw "Foo() must be called with new";
+    //     console.log("Foo instantiated with new");
+    // }
+    //
+    // Foo(); // throws "Foo() must be called with new"
+    // new Foo(); // logs "Foo instantiated with new"
+
+    // class A {
+    //     constructor() {
+    //         console.log(new.target.name);
+    //     }
+    // }
+    //
+    // class B extends A { constructor() { super(); } }
+    //
+    // var a = new A(); // logs "A"
+    // var b = new B(); // logs "B"
+    //
+    // class C { constructor() { console.log(new.target); } }
+    // class D extends C { constructor() { super(); } }
+    //
+    // var c = new C(); // logs class C{constructor(){console.log(new.target);}}
+    // var d = new D(); // logs class D extends C{constructor(){super();}}
+</script>
+</body>
+</html>

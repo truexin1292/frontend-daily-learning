@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+</head>
+<body>
+
+<script>
+    // alert(location.href.split('#')[0])
+    $(function () {
+        var timestamps;
+        var nonceStrs;
+        var signatures;
+        var url = encodeURIComponent(location.href.split('#')[0]);
+        $.ajax({
+            async: false,
+            url: 'http://sunadver.tunnel.2bdata.com/jimitd/jsSdk/getJsSdk',
+            type: "get",
+            dataType: "json",
+            data: { url: url },
+            success: function (data) {
+                timestamps = data.timestamp;
+                nonceStrs = data.nonceStr;
+                signatures = data.signature;
+            },
+            error: function (xhr) {
+                alert("error");
+            }
+        });
+
+        wx.config({
+            debug: false,
+            appId: 'xxxxxxxx',
+            timestamp: timestamps,
+            nonceStr: nonceStrs,
+            signature: signatures,
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
+// 功能列表，我们要使用JS-SDK的什么功能  
+        });
+        wx.ready(function () {
+            wx.onMenuShareAppMessage({
+                title: '吉米壹號 私人定制', // 分享标题
+                desc: '您专属的，长白山下一亩田', // 分享描述
+                link: 'https:xxxx?appid=xxxxx&redirect_uri=xxx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
+                imgUrl: xxx / logo2.png', // 分享图标 
+            });
+            wx.onMenuShareTimeline({
+                title: '吉米壹號  私人定制', // 分享标题
+                link: xxx ? appid = xxx & redirect_uri = xxx & response_type = code & scope = snsapi_userinfo & state = STATE#wechat_redirect
+                ', // 分享链接
+                imgUrl
+        :
+            'xxxx/logo2.png', // 分享图标  
+        })
+            ;
+
+        });
+
+    });
+
+</script>
+</body>
+</html>

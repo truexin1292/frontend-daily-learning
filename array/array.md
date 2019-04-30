@@ -94,6 +94,11 @@ console.log(arr2.flat(3)); // [123, 3, 666, 23, 1, 1, 0, 4];
 
 ## [].slice.call(arguments,1)的理解
 [参考](https://segmentfault.com/q/1010000005643934)
+
+如果不给slice()传递任何参数，它就会从头到尾截取所有元素。
+利用这一点，我们可以很容易地复制一个Array：深克隆
+
+
 ## bind call apply区别说明
 https://segmentfault.com/a/1190000012772040
 ![](.array_images/ee49221d.png)

@@ -43,6 +43,18 @@
     // }
     // myObject.fun();
     // console.log(myObject.value); // 6
+
+    function foo(a) {
+        console.log(this.a, a);
+    }
+
+    let obj = {
+        a: 2
+    };
+    foo.call(obj); // 2 , undefined
+    foo.call(null, 1); // undefined , 1
+
+
 </script>
 </body>
 </html>

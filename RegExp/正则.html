@@ -30,6 +30,11 @@
     var num2 = num1.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');//当前数字保留，后面加一个逗号；
     var num3 = num1.replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");//直接在当前数字边界（即非单词边界）后面加一个逗号；
     var num4 = num1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // var num = 12223333.566;
+    // var b =num.toString().replace(/\B(?=(\d{3})+\b)/g, ',');
+    // console.log(b);
+    // //12,223,333.566
     document.write(num1);
     document.write('<br/>');
     document.write(num2);

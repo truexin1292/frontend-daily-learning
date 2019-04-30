@@ -1,4 +1,8 @@
 # 面试题：
+https://www.zybuluo.com/mdeditor#1458375
+
+https://www.jianshu.com/p/f1f39d5b2a2e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
 ## 1.form提交和ajax提交区别？
 -
 
@@ -314,4 +318,410 @@ let personName2 = newCreate(Person)('tom').name;
 console.log('personName',personName);
 console.log('personName2',personName2);
 console.log(personName == personName2);
+```
+
+
+# 2019面试题整理
+
+标签（空格分隔）： js css html node webpack nginx
+
+---
+### 1. javascript的typeof返回哪些数据类型.
+```
+基础类型：string, number, boolean, symbol, undefined,
+引用类型：object, function // 其中object包括Array,RegExp,Math,Date...
+特殊基础类型：null; // 指向空指针 var str = null; typeof str === 'object' && str === null // true
+```
+
+### 2. 例举3种强制类型转换和2种隐式类型转换?
+```
+强制转换：String(),Number(),Boolean(),parseInt(),parseFloat()...
+隐式转换：==,+,-,*,/,!!...
+```
+
+注意:
+`
+有两个奇葩需要注意:
+undefined==null，虽然undefined转换成数字为NaN，null转换成数字为0，但是它们是相等的
+空白字符串" "，要与空字符串区别开，空白字符串转换成数字为0，转换成布尔类型为true，但是" "==false，把==两端都转换成数字就好理解了 
+虽然if语句和==会自动转换数据类型，但是写代码的时候要避免这种容易引起歧义的写法，判断相等尽量使用===
+`
+字符串类型转换成数字类型过程，先将字符串类型的值进行var str1 = str.trim();即前后空格去掉再调用var num = Number(str1)方法；//所以空白字符串‘ ’去掉前后空格就是空字符串‘’；
+```
+var a = ' ';
+var b = false;
+console.log(!!a,!!b,a==b); // true false true
+```
+
+### 3.IE和标准下有哪些兼容性的写法
+http://www.fly63.com/article/detial/665
+```
+1. 取消冒泡和阻止浏览器的默认行为 ：
+function stopBubble(e) { 
+    //如果提供了事件对象，则这是一个非IE浏览器 
+    if ( e && e.stopPropagation ) 
+        //因此它支持W3C的stopPropagation()方法 
+        e.stopPropagation(); 
+    else 
+        //否则，我们需要使用IE的方式来取消事件冒泡 
+        window.event.cancelBubble = true; 
+}
+//阻止浏览器的默认行为 
+function stopDefault( e ) { 
+    //阻止默认浏览器动作(W3C) 
+    if ( e && e.preventDefault ) 
+        e.preventDefault(); 
+    //IE中阻止函数器默认动作的方式 
+    else 
+        window.event.returnValue = false; 
+    return false; 
+}
+
+2. 事件和目标元素：
+var ev = ev || window.event；
+Var target = ev.srcElement||ev.target
+//获取事件对象的兼容性写法
+ getEvent: function(event){
+     return event ? event : window.event;
+ },
+ //获取事件对象目标的兼容性写法
+ getTarget: function(event){
+     return event.target || event.srcElement;
+ }
+3. 浏览器滚动距离以及浏览器可视窗口获取：
+function getScrollTop(){     
+    var scrollTop=0;     
+    if(document.documentElement && document.documentElement.scrollTop){     
+        scrollTop=document.documentElement.scrollTop;     
+    }else if(document.body){     
+        scrollTop=document.body.scrollTop;     
+    }     
+    return scrollTop;     
+} 
+
+document.documentElement.clientWidth || document.body.clientWidth；
+
+4. css hack：
+5. 盒子模型box-sizing:
+6. 事件绑定和取消
+//添加事件监听兼容函数  
+function addHandler(target, eventType, handler){  
+    if(target.addEventListener){//主流浏览器  
+        addHandler = function(target, eventType, handler){  
+            target.addEventListener(eventType, handler, false);  
+        };  
+    }else{//IE  
+        addHandler = function(target, eventType, handler){  
+            target.attachEvent("on"+eventType, handler);  
+        };        
+    }  
+    //执行新的函数  
+    addHandler(target, eventType, handler);  
+}  
+addHandler：function(element,type,handler){
+    if(element.addEventListener){//检测是否为DOM2级方法
+        element.addEventListener(type, handler, false);
+    }else if (element.attachEvent){//检测是否为IE级方法
+        element.attachEvent("on" + type, handler);
+    } else {//检测是否为DOM0级方法
+        element["on" + type] = handler;
+    }
+}
+//删除事件监听兼容函数  
+function removeHandler(target, eventType, handler){  
+    if(target.removeEventListener){//主流浏览器  
+        removeHandler = function(target, eventType, handler){  
+            target.removeEventListener(eventType, handler, false);  
+        }         
+    }else{//IE  
+        removeHandler = function(target, eventType, handler){  
+            target.detachEvent("on"+eventType, handler);  
+        }         
+    }  
+    //执行新的函数  
+    removeHandler(target, eventType, handler);  
+}  
+removeHandler：function(element, type, handler){
+       if (element.removeEventListener){
+           element.removeEventListener(type, handler, false);
+       } else if (element.detachEvent){
+           element.detachEvent("on" + type, handler);
+       } else {
+           element["on" + type] = null;
+       }
+}
+
+```
+
+### 4.手写document.getElementsByClassName()
+```
+1.
+/MSIE\s*(\d+)/i.test(navigator.userAgent);
+var isIE=parseInt(RegExp.$1?RegExp.$1:0);
+if(isIE>0&&isIE<9){
+    document.getElementsByClassName=function(cls){
+        var els=this.getElementsByTagName('*');
+        var ell=els.length;
+        var elements=[];
+        for(var n=0;n<ell;n++){
+            var oCls=els[n].className||'';
+            if(oCls.indexOf(cls)<0)        continue;
+            oCls=oCls.split(/\s+/);
+            var oCll=oCls.length;
+            for(var j=0;j<oCll;j++){
+                if(cls==oCls[j]){
+                    elements.push(els[n]);
+                    break;
+                }
+            }
+        }
+        return elements;
+    }
+}
+2.
+function getByClassName(obj,cls){//obj目标元素，cls要获得的class名
+    var element = obj.getElementsByTagName('*');//将目标下的所有子元素获取到
+    var result = []; //定义一个数组，存放获得的classname = "cls" 的所有值
+    for(var i = 0; i< element.length; i++){
+        if(element[i].className == cls){
+            result.push(element[i]);
+        }
+    }
+    return result;
+}
+```
+
+### 请写出隐藏一个html元素的各种方式？
+```md
+input type = 'hidden' {脱离文档流，不可绑定事件}
+div hidden
+div display = 'none'
+div visibility = 'hidden'
+div opacity = 0
+div position = 'absolute' , left = '-100000px'
+```
+
+### 已知年月，求该月共多少天？
+* new Date() 日期格式处理:
+https://blog.csdn.net/qq_39759115/article/details/78893853
+
+```js
+function getMonthLength(date) {
+    let d = new Date(date);
+    // 将日期设置为下月一号
+    d.setMonth(d.getMonth()+1);
+    d.setDate('1');
+    // 获取本月最后一天
+    d.setDate(d.getDate()-1);
+    return d.getDate();
+}
+getMonthLength('2019-04-18');
+new Date(2009,1,1);      //错误 Sun Feb 01 2009 00:00:00 GMT+0800 (中国标准时间)
+new Date(2009,0,1);      //正确 Sun Jan 04 2009 00:00:00 GMT+0800 (中国标准时间)
+new Date("2009/1/1");    //正确  
+new Date("2009-1-1");    //正确  
+new Date("2009.1.1");    //正确  
+new Date("2009 1 1");    //正确  
+new Date().getMonth();   //正确  //获取当前月份(0-11,0代表1月)   
+new Date.getMonth();     //错误❎ 点操作符优先；
+(new Date).getMonth();   //正确     
+// 获取当前月份是new Date().getMonth()+1;   
+
+function getDate(year,month) {
+    return new Date(year, month + 1 , 0).getDate();  
+    // todo
+    //  date的值域在1～31之间；  
+    //  但是：使用 new Date() 创建时间对象时，如果 date 传入 0，
+    //  就能直接通过 getDate() 获取到最后一天的日期                                                  
+}
+getDate(2019,4)
+```
+
+### 已经知道秒数，请写出转换为时分秒的函数；
+```js
+function getTime (num) {
+	const hours = Math.floor(num / 3600)
+    const minutes = Math.floor(num % 60 / 60)
+    const seconds = Math.floor(num % 60)
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+}
+function getTime(seconds) {
+  return [seconds / 3600, seconds % 60 / 60, seconds % 60].map(v => {
+    return `${Math.floor(v).toString().padStart(2, '0')}`
+  }).join(':')
+}
+```
+
+### 请用js计算1-10000中出现的0 的次数
+```js
+// todo "_"(下划线)，可以简单理解为赋值但以后不再使用,
+//  一般来说加下划线的变量为私有变量，这是大家都比较遵守的一种代码规范吧
+//  例如变量命名前面加个下划线表示私有。
+//  使用下划线作为命名的意义一般是，这个变量是调用需要的，
+//  但是我并不想使用，也懒得起名字了，避免制造信息噪音
+
+function getZeroCount(num){
+    return new Array(num)
+        .fill('') // ['',...,''] 10000个空字符串的数组
+        .map((_,index) => index + 1) // [1,...,10000] 1-10000数字字符串的数组, _表示占位符号，不需要使用；
+        .filter(item => /0/.test(item)) // 所有包含0数字的字符串的数组组合
+        .reduce( // 包含0数字的字符串里面可能还有0，所以需要全部计算起来
+            (count, item) => { 
+                return count + (String(item).match(/0/g) || []).length 
+                // str.match匹配不到会返回null；
+            }
+            ,
+            0 // 初始值为0
+        )
+}
+
+function getZeroCount(num) {
+    return Array.from({length: num}, (v, i) => i + 1) // [1,...,10000] 1-10000数字字符串的数组,
+    .join() // [1,...,10000] 1-10000数字字符串拼接的长字符串,
+    .split("0") // 分隔符，一个分隔符将字符串分成两段；刚好比段数少1；
+    .length - 1; //一个分隔符将字符串分成两段；刚好比段数少1；
+}
+
+console.log(getZeroCount(10000));
+```
+
+### 将url的查询参数解析成字典对象
+```js
+function getQueryObject(url) {
+    url = url == null ? window.location.href : url;
+    let search = url.substring(url.lastIndexOf("?") + 1);
+    let obj = {};
+    let reg = /([^?&=]+)=([^?&=]*)/g;
+    search.replace(reg, function (rs, $1, $2) {
+        let name = decodeURIComponent($1);
+        let val = decodeURIComponent($2);                
+        val = String(val);
+        obj[name] = val;
+        return rs;
+    });
+    return obj;
+}
+getQueryObject();
+
+/**
+ * 解析url参数
+ * @search ?id=12345&a=b
+ * @return Object {id:12345, a:b}
+ * */
+function urlParse(search) {
+  let url = search || window.location.search;
+  let obj = {};
+  let reg = /[^?&]+=[^?&]*/g;
+  let arr = url.match(reg);
+  if (arr) {
+    arr.forEach(item => {
+      let tempArr = item.split('=');
+      let key = decodeURIComponent(tempArr[0]);
+      let val = decodeURIComponent(tempArr[1]);
+      obj[key] = val;
+    })
+  }
+  return obj;
+}
+```
+
+### 判断一个字符串中出现次数最多的字符，统计这个次数
+https://www.jianshu.com/p/85afc31175d9
+
+
+学习：
+var str = 'qweqrtyuiqqqwrtyudfgerqtywer';
+
+1.str.charAt(5) == str[5];
+2.var obj = {};
+var json = str.split('').reduce((m, n) => (m[n]++ || (m[n] = 1), m), {});
+3.var obj = {};
+str.replace(
+    /(\w{1})/g,
+    function($1){ //1.()=>$1,一个括号匹配一个$ 2.匹配到多少次就执行多少次callback
+       ++obj[$1] || obj[$1] = 1;
+    }
+)
+4.使用打擂算法统计需要的值
+var name = '';
+var num = 0;
+for(var key in obj){
+   if(obj[key]>num){
+       num = obj[key];
+       name = key;
+   }
+}
+return {
+    name,
+    num
+}
+
+
+例子：
+String.prototype.trim = function(){
+  /**
+   * @param rs：匹配结果
+   * @param $1:第1个()提取结果
+   * @param $2:第2个()提取结果
+   * @param offset:匹配开始位置
+   * @param source：原始字符串
+   */
+  this.replace(/(^\s+)|(\s+$)/g,function(rs,$1,$2,offset,source){
+    //arguments中的每个元素对应一个参数
+    console.log(arguments,$1,$2);
+  });
+};
+" abcd ".trim();
+//输出结果：[" ", " ", undefined, 0, " abcd "] //第1次匹配结果
+//[" ", undefined, " ", 5, " abcd "] //第2次匹配结果
+
+```js
+var str = 'abcdefgaddda';
+var arr = str.split('');   //将字符串转为数组
+var newArr = [];      //声明一个数组保存去重后的字符
+var numArr = [];      //声明一个数组保存字符对应的个数
+arr.forEach(function(element,index,array){
+    var index1 = newArr.indexOf(element);    //获取当前元素在去重数组中的索引,如果存在则大于等于0,不存在则为-1
+    if(index1==-1){
+        newArr.push(element);   //判断去重数组里没有当前元素,所以往数组里面追加
+        numArr.push(1);          //同步更新个数组对应的字符个数,刚追加进去都为1
+    }else{
+        numArr[index1]++;        //如果当前元素已存在,则更新个数数组对应的字符个数自增1
+    }
+})
+console.log(arr,newArr,numArr);
+//["a", "b", "c", "d", "e", "f", "g", "a", "d", "d", "d", "a"] 原字符数组
+//["a", "b", "c", "d", "e", "f", "g"]  去重后的字符的数组
+//[3, 1, 1, 4, 1, 1, 1]   去重后的字符数组对应的个数数组
+
+//得到去重后的字符数组及对应的字符个数后,找个数最大的数及对应的字符
+function sortNumber(a,b){
+    return b-a;   //规定排序规则
+}
+var numArr1 = [].concat(numArr);   
+//创建一个新数组并连接原数组,这样改变原数组才不会影响复制后的数组
+numArr1.sort(sortNumber);  //将每个字符的个数从大到小排序
+var maxNum = numArr1[0];   //获取最大个数
+var index = numArr.indexOf(maxNum);   //最大个数对应原数组的位置
+var maxStr = newArr[index];           //根据最大个数的位置找到出现次数最多的字符
+console.log('字符串"'+str+'",'+maxStr+'出现次数最多,次数为'+maxNum);
+```
+
+### 求一个字符串的字节长度
+```js
+//假设一个中文占两个字节
+var str = '22两是';
+console.log(getStrLen(str));
+function getStrLen(str){
+    var json = {
+        len: 0
+    }
+    var re = /[\u4e00-\u9fa5]/;
+    for (var i = 0; i < str.length; i++) {
+        if(re.test(str.charAt(i))){
+            json['len']++;
+        }
+    }
+    return json['len'] + str.length;
+}
 ```

@@ -12,28 +12,6 @@ https://jsbin.com/tipofu/edit?js,console
 ![](.util_images/4006625c.png)
 
 
-## 2.模拟实现new 操作符
-[参考](https://juejin.im/post/5bde7c926fb9a049f66b8b52)
-```js
-// 去除了注释
-function newOperator(ctor){
-    if(typeof ctor !== 'function'){
-      throw 'newOperator function the first param must be a function';
-    }
-    newOperator.target = ctor;
-    var newObj = Object.create(ctor.prototype);
-    var argsArr = [].slice.call(arguments, 1);
-    var ctorReturnResult = ctor.apply(newObj, argsArr);
-    var isObject = typeof ctorReturnResult === 'object' && ctorReturnResult !== null;
-    var isFunction = typeof ctorReturnResult === 'function';
-    if(isObject || isFunction){
-        return ctorReturnResult;
-    }
-    return newObj;
-}
-
-```
-
 注意： 对于不支持ES5的浏览器，MDN上提供了ployfill方案。
 ---
 ```js

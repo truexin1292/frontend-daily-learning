@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作符operand</title>
+</head>
+<body>
+
+<script>
+//直接在浏览器输入；
+    [] + 1 // '1'
+    {} + 1 // + 1 = 》1 // the first {} as an empty code block and 【ignores】 it.
+
+    var a = {};
+    1 + a // "1[object Object]"
+    a + 1 // "[object Object]1"
+
+    (1 + {}) // "1[object Object]"
+    ({} + 1) // "[object Object]1"
+
+    console.log(1 + {}) // "1[object Object]"
+    console.log({} + 1) // "[object Object]1"
+    {} + {} // chrome: "[object Object][object Object]"   firefox/IE: NaN
+    //todo 执行顺序:+{}
+    //Number({})
+    //Number({}.toString())  // {}.valueOf() isn’t primitive => {}
+    //Number("[object Object]")
+    //NaN
+    [] + [] // '' + ''
+
+    {} + [] // + [] => + '' => + Number('') => 0
+    //todo 执行顺序:+[]
+    //+[]
+    //Number([])
+    //Number([].toString())  // [].valueOf() isn’t primitive => []
+    //Number("")
+    //0
+    [] + {} // '' + [object Object] = "[object Object]"
+</script>
+</body>
+</html>

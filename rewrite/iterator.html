@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // TODO demo1
+
+    var it = makeIterator(['a', 'b']);
+
+    var a = it.next() // { value: "a", done: false }
+    var b = it.next() // { value: "b", done: false }
+    var c = it.next() // { value: undefined, done: true }
+    console.log('--a--:', a)
+    console.log('--b--:', b)
+    console.log('--c--:', c)
+
+    function makeIterator(array) {
+        var nextIndex = 0;
+        return {
+            next: function () {
+                return nextIndex < array.length ?
+                    {
+                        value: array[nextIndex++],
+                        done: false
+                    } :
+                    {
+                        value: undefined,
+                        done: true
+                    };
+            }
+        };
+    }
+
+    // function makeIterator(array) { // 简化版
+    //     var nextIndex = 0;
+    //     return {
+    //         next: function () {
+    //             return nextIndex < array.length ?
+    //                 { value: array[nextIndex++] } :
+    //                 { done: true };
+    //         }
+    //     };
+    // }
+
+    // TODO demo2
+    class RangeIterator {
+        constructor(start, stop) {
+            this.value = start;
+            this.stop = stop;
+        }
+
+        [Symbol.iterator]() {
+            return this;
+        }
+
+        next() {
+            var value = this.value;
+            if (value < this.stop) {
+                this.value++;
+                return {
+                    done: false,
+                    value: value
+                };
+            }
+            return {
+                done: true,
+                value: undefined
+            };
+        }
+    }
+
+    function range(start, stop) {
+        return new RangeIterator(start, stop);
+    }
+
+    for (var value of range(0, 3)) {
+        console.log(value); // 0, 1, 2
+    }
+
+
+</script>
+</body>
+</html>

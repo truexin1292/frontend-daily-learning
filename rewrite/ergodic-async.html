@@ -93,6 +93,24 @@ return await asyncWorker(item);
     //     console.log('end')
     // } // 1,2,3,end
 
+    // todo 参考 http://es6.ruanyifeng.com/#docs/iterator
+    // let arr = ['a', 'b', 'c'];
+    // let iter = arr[Symbol.iterator]();
+    // 原生具备 Iterator 接口的数据结构如下。
+    // Array
+    // Map
+    // Set
+    // String
+    // TypedArray
+    // 函数的 arguments 对象
+    // NodeList 对象
+
+    //
+    // iter.next() // { value: 'a', done: false }
+    // iter.next() // { value: 'b', done: false }
+    // iter.next() // { value: 'c', done: false }
+    // iter.next() // { value: undefined, done: true }
+
     // iterator
     // async function test() {
     //     let arr = [3, 2, 1]
