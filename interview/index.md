@@ -712,16 +712,35 @@ console.log('字符串"'+str+'",'+maxStr+'出现次数最多,次数为'+maxNum);
 //假设一个中文占两个字节
 var str = '22两是';
 console.log(getStrLen(str));
+
 function getStrLen(str){
     var json = {
         len: 0
     }
-    var re = /[\u4e00-\u9fa5]/;
+    var re = /[\u4e00-\u9fa5]/; // todo 1
     for (var i = 0; i < str.length; i++) {
         if(re.test(str.charAt(i))){
+            //方法 charCodeAt() 与 charAt() 方法执行的操作相似，
+            // 只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。
             json['len']++;
         }
     }
     return json['len'] + str.length;
 }
+
+function GetBytes(str){     
+    var len = str.length;        
+    var bytes = len;        
+    for(var i=0; i<len; i++){
+        if (str.charCodeAt(i) > 255) { // todo 2
+            //遍历判断字符串中每个字符的Unicode码,大于255则为中文
+            //注释：字符串中第一个字符的下标是 0。
+            // 如果 index 是负数，或大于等于字符串的长度，则 charCodeAt() 返回 NaN。
+            bytes++;    
+        }
+    }       
+    return bytes;  
+}
+
+
 ```

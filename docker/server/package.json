@@ -1,0 +1,12 @@
+{
+    "name": "server",
+    "version": "0.1.0",
+    "scripts": {
+        "make": "docker build -t nodewebserver .",
+        "app": "sh start.sh",
+        "start": "node server.js"
+    },
+    "devDependencies": {
+        "express": "^4.16.4"
+    }
+}
