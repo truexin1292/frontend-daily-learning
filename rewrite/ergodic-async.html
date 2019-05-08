@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>循环遍历异步处理</title>
 </head>
 <body>
 
@@ -14,7 +14,6 @@ let results = await Promise.all(arr.map(async (item) => {
 // 等待异步操作完成，返回执行结果
 return await asyncWorker(item);
 }));
-
 
 <script>
     // for 循环

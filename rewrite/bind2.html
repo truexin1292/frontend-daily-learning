@@ -10,7 +10,9 @@
 
     var write = document.write; // document
     // write('hello'); // 报错 // window
+
     write.bind(document)('hello');
+    write.bind(document, 'hello')();
     write.call(document, 'hello');
     write.apply(document, ['hello']);
 
@@ -22,7 +24,6 @@
     mySetTimeout(function () {
         console.log('--log--:', 1);
     }, 1000)
-
 
     var obj = {};
     console.log(typeof Function.prototype.bind); // function

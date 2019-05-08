@@ -18,3 +18,16 @@
 
 ### 效果4.去除inline-block间隙
 参考：https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/
+
+### 效果5.border实现三角形
+![](.codepen_images/90212cc7.png)
+```css
+span {
+    width: 0;
+    height: 0;
+    border-top: 40px solid transparent;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid #ff0000;
+}
+```

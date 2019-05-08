@@ -3,6 +3,8 @@ https://www.zybuluo.com/mdeditor#1458375
 
 https://www.jianshu.com/p/f1f39d5b2a2e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 
+https://juejin.im/post/5cb92d9a5188254160581b87
+
 ## 1.form提交和ajax提交区别？
 -
 

@@ -66,6 +66,54 @@
 
     inp.addEventListener('change', debounce(sayHi)); // 防抖
     btn.addEventListener('click', debounce(writeValue)); // 防抖
+
+
+    function myDebouce(func, wait, isImmediate) {
+        var timeout = null;
+        return function () {
+            var args = arguments;
+            var context = this;
+            timeout && clearTimeout(timeout);
+            if (isImmediate) {
+                var nowTime = !timeout;
+                timeout = setTimeout(() => {
+                    timeout = null;
+                }, wait);
+                nowTime && func.apply(context, args);
+            } else {
+                timeout = setTimeout(() => {
+                    func.apply(context, args);
+                }, wait);
+            }
+        }
+    }
+
+    function myThrottle(func, wait, type) {
+        if (type === 1) { // 1:时间戳
+            var timestamp = 0;
+        } else if (type === 2) { // 2:计算器
+            var timeout = null;
+        }
+        return function () {
+            var args = arguments;
+            var context = this;
+            if (type === 1) {
+                var now = Date.now(); // 1557278104160
+                // var now = performance.now() + performance.timing.navigationStart // 更加精准 1557278104141.875
+                if (now - timestamp > wait) {
+                    func.apply(context, args);
+                    timestamp = now;
+                }
+            } else if (type === 2) {
+                if (!timeout) {
+                    timeout = setTimeout(() => {
+                        timeout = null;
+                        func.apply(context, args);
+                    }, wait);
+                }
+            }
+        }
+    }
 </script>
 </body>
 </html>
