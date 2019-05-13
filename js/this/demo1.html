@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var value = 1;
+
+    var foo = {
+        value: 2,
+        bar: function () {
+            return this.value;
+        }
+    }
+
+    //试验1
+    console.log(foo.bar()); //2
+    //试验2
+    console.log((foo.bar)()); //2 The Grouping Operator //试验1
+    //试验3
+    console.log((foo.bar = foo.bar)()); //1 有赋值操作符 : Simple Assignment ( = )
+    //试验4
+    console.log((false || foo.bar)()); //1 逻辑云算法 : Binary Logical Operators
+    console.log((true && foo.bar)()); //1 逻辑云算法 : Binary Logical Operators
+    console.log((1 && foo.bar)()); //1 逻辑云算法 : Binary Logical Operators
+    console.log((0 || foo.bar)()); //1 逻辑云算法 : Binary Logical Operators
+    //试验5
+    console.log((foo.bar, foo.bar, foo.bar)()); //1 逗号操作符 : Comma Operator ( , )
+    //试验5
+    console.log((q = foo.bar)()); //1 试验3 与 试验5 其实是一样的原理
+</script>
+</body>
+</html>

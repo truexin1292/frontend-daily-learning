@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise</title>
+</head>
+<body>
+
+<script>
+    //version 1
+    function Promise1(fn) {
+        this.fulFilledCallbacks = [];
+        this.rejectedCallbacks = [];
+        this.status = 'pending';
+        this.data = null;
+
+        this.then = function (onResolve, onReject) {
+            var promise2;
+            onResolve = typeof onResolve === 'function' ? onResolve : function (value) {
+                return value;
+            }
+            onReject = typeof onReject === 'function' ? onReject : function (error) {
+                throw error;
+            };
+
+            if (this.status === 'fulfilled') {
+                return promise2 = new Promise1((resolve, reject) => {
+                    setTimeout(() => {
+                        var x = onResolve(this.data);
+                        handle(promise2, x, resolve, reject);
+                    })
+                })
+            }
+            if (this.status === 'rejected') {
+                return promise2 = new Promise1((resolve, reject) => {
+                    setTimeout(() => {
+                        var x = onReject(this.data);
+                        handle(promise2, x, resolve, reject);
+                    })
+                })
+            }
+            if (this.status === 'pending') {
+                return promise2 = new Promise1((resolve, reject) => {
+                    this.fulFilledCallbacks.push((value) => {
+                        var x = resolve(value);
+                        handle(promise2, x, resolve, reject);
+                    });
+                    this.rejectedCallbacks.push((error) => {
+                        var x = onReject(error);
+                        handle(promise2, x, resolve, reject);
+                    });
+                })
+            }
+        }
+
+        this.catch = function (reject) {
+            this.then(null, reject);
+        }
+
+        function resolve(value) {
+            if (value instanceof Promise1) {
+                return value.then(resolve, reject);
+            }
+            setTimeout(() => {
+                if (this.status === 'pending') {
+                    this.status = 'fulfilled';
+                    this.data = value;
+                    this.fulFilledCallbacks.forEach((callback) => {
+                        callback(value);
+                    })
+                }
+            })
+        }
+
+        function reject(error) {
+            setTimeout(() => {
+                if (this.status === 'pending') {
+                    this.status = 'rejected';
+                    this.data = error;
+                    this.rejectedCallbacks.forEach((callback) => {
+                        callback(value);
+                    })
+                }
+            })
+        }
+
+        function handle(promise2, x, resolve, reject) {
+            var then;
+            var thenCalledOrThrow = false;
+
+            if (promise2 === x) {
+                return reject(new Error('ERROR!'));
+            }
+            if (x instanceof Promise1) {
+                if (x.status === 'pending') {
+                    x.then(
+                        function (v) {
+                            handle(promise2, v, resolve, reject);
+                        },
+                        reject
+                    )
+                } else {
+                    x.then(resolve, reject);
+                }
+                return;
+            }
+            if ((x !== null) && ((typeof x === 'object') || (typeof x === 'function'))) {
+                then = x.then;
+                if (typeof then === 'function') {
+                    then.call(
+                        x,
+                        function rs(value) {
+                            if (thenCalledOrThrow) {
+                                return
+                            }
+                            thenCalledOrThrow = true;
+                            return handle(promise2, value, resolve, reject);
+                        },
+                        function rj(error) {
+                            if (thenCalledOrThrow) {
+                                return
+                            }
+                            thenCalledOrThrow = true;
+                            return reject(error);
+                        }
+                    )
+                } else {
+                    resolve(x);
+                }
+            } else {
+                resolve(x);
+            }
+
+        }
+
+        try {
+            fn(resolve, reject);
+        } catch (reason) {
+            reject(reason);
+        }
+
+    }
+
+    // function foo() {
+    //     console.log('--foo is function!--:', true)
+    // }
+
+    // var p = new Promise1(function (resolve, reject) {
+    //     if (typeof foo === 'function') {
+    //         resolve('yes!');
+    //     } else {
+    //         reject('wrong!');
+    //     }
+    // }).then(
+    //     function rs(v) {
+    //         console.log(v);
+    //         return 'yes yes';
+    //     },
+    //     function rj(e) {
+    //         console.log(e);
+    //         return 'no no';
+    //     }
+    // ).then(
+    //     function rs(v) {
+    //         console.log(v);
+    //     },
+    //     function rj(e) {
+    //         console.log(e);
+    //     }
+    // )
+    // console.log('--log--:', p);
+
+    function want0() {
+        console.log('这是你想要执行的代码my');
+    }
+
+    function fn0(want) {
+        console.log('这里表示执行了一大堆各种代码my');
+
+        // 返回Promise对象
+        return new Promise1(function (resolve, reject) {
+            if (typeof want == 'function') {
+                resolve(want);
+            } else {
+                reject('TypeError: ' + want + '不是一个函数my')
+            }
+        })
+    }
+
+    fn0(want0)
+        .then(function (want) {
+            want();
+            return 'alex';
+        })
+        .then(function (name) {
+            console.log('--log--:', name)
+            return name + ' chou';
+        })
+        .then(function (name1) {
+            console.log('--log--:', name1)
+        })
+
+    fn0('1234').catch(function (err) {
+        console.log(err);
+    })
+</script>
+</body>
+</html>

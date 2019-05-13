@@ -61,10 +61,20 @@
     // 简化版call
     Function.prototype.call11 = function (context) {
         // var fn = +new Date() + '' + Math.random(); // +new Date() 相当于 Number(new Date())
-        var fn = Symbol('fn'); // 利用Symbol唯一值
+        var fn = Symbol('fn'); // 利用Symbol唯一值 es6
         context[fn] = this;
-        [context, ...args] = [...arguments];
+        [context, ...args] = [...arguments]; // es6
         return context[fn](...args);
+    }
+
+    Function.prototype.call11 = function (context) {
+        context.fn = this;
+        var args = [];
+        for(var i = 1, len = arguments.length; i < len; i++) {
+            // args.push(arguments[i]); // todo 不可以 arguments => ['a',1,2,3,length:3]
+            args.push('arguments[' + i + ']'); // todo 关键1
+        }
+        return eval('context.fn(' + args + ')'); // todo 关键2 eval之后会变成变量，如何未定义就会报错。故只能使已知的arguments
     }
 
     // 升级版call

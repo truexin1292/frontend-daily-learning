@@ -1,5 +1,6 @@
 # NodejsGetScreenshotSend
 Nodejs获取桌面截图，并定时发送给指定邮箱
+https://nodemailer.com/about/
 
 ## 1.安装相关包
 ```

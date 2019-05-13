@@ -6,94 +6,464 @@
 </head>
 <body>
 <script>
-    class Promise {
-        constructor() {
-            this.callbacks = []
-            this.oncatch = null
+    // class Promise1 {
+    //     constructor() {
+    //         this.callbacks = []
+    //         this.oncatch = null
+    //     }
+    //
+    //     reject(result) {
+    //         this.complete('reject', result)
+    //     }
+    //
+    //     resolve(result) {
+    //         this.complete('resolve', result)
+    //     }
+    //
+    //     complete(type, result) {
+    //         if (type === 'reject' && this.oncatch) {
+    //             this.callbacks = []
+    //             this.oncatch(result)
+    //         } else if (this.callbacks[0]) {// 判断第一个
+    //             var handlerObj = this.callbacks.shift() // 取出第一个，修改原数组；
+    //             if (handlerObj[type]) {
+    //                 handlerObj[type](result)
+    //             }
+    //         }
+    //     }
+    //
+    //     then(onsuccess, onfail) {
+    //         this.callbacks.push({
+    //             resolve: onsuccess,
+    //             reject: onfail
+    //         })
+    //         return this
+    //     }
+    //
+    //     catch(onfail) {
+    //         this.oncatch = onfail
+    //         return this
+    //     }
+    // }
+    //
+    // var promise = new Promise1()
+    //
+    // function fn1() {
+    //     setTimeout(function () {
+    //         var random = Math.random();
+    //         console.log('--log--:', random)
+    //         if (random > 0.5) {
+    //             promise.resolve('杭州')
+    //         } else {
+    //             promise.reject('杭州')
+    //         }
+    //     })
+    //     return promise
+    // }
+    //
+    // function success1(city) {
+    //     setTimeout(function () {
+    //         promise.resolve(city + '晴天')
+    //         console.log(city + '晴天')
+    //     }, 1000)
+    // }
+    //
+    // function error1(city) {
+    //     setTimeout(function () {
+    //         promise.reject(city + '下雨🌧天')
+    //         console.log(city + '下雨🌧天')
+    //     }, 1000)
+    // }
+    //
+    // function success2(weather) {
+    //     setTimeout(function () {
+    //         console.log(weather + '，天气不错，可携女友与狗出行')
+    //     }, 1000)
+    // }
+    //
+    // function error2(weather) {
+    //     setTimeout(function () {
+    //         console.log(weather + '，无法带狗狗玩了！')
+    //     }, 1000)
+    // }
+    //
+    // function onerror() {
+    //     console.log('错误❎啦')
+    // }
+    //
+    // fn1().then(success1, error1)
+    //     .then(success2, error2)
+    //     .catch(onerror)
+
+    /*Promise 的简单实现*/
+    class MyPromise {
+        constructor(fn) {
+            this.resolvedCallbacks = [];
+            this.rejectedCallbacks = [];
+            this.state = "PADDING";
+            this.value = "";
+            fn(this.resolve.bind(this), this.reject.bind(this));
         }
 
-        reject(result) {
-            this.complete('reject', result)
-        }
-
-        resolve(result) {
-            this.complete('resolve', result)
-        }
-
-        complete(type, result) {
-            if (type === 'reject' && this.oncatch) {
-                this.callbacks = []
-                this.oncatch(result)
-            } else if (this.callbacks[0]) {// 判断第一个
-                var handlerObj = this.callbacks.shift() // 取出第一个，修改原数组；
-                if (handlerObj[type]) {
-                    handlerObj[type](result)
-                }
+        resolve(value) {
+            if (this.state === "PADDING") {
+                this.state = "RESOLVED";
+                // setTimeout(() => {
+                this.value = value;
+                this.resolvedCallbacks.forEach(cb => cb());
+                // })
+                // return this;
             }
         }
 
-        then(onsuccess, onfail) {
-            this.callbacks.push({
-                resolve: onsuccess,
-                reject: onfail
-            })
-            return this
+        reject(value) {
+            if (this.state === "PADDING") {
+                this.state = "REJECTED";
+                // setTimeout(() => {
+                this.value = value;
+                this.rejectedCallbacks.forEach(cb => cb());
+                // })
+                // return this;
+            }
         }
 
-        catch(onfail) {
-            this.oncatch = onfail
-            return this
+        then(
+            resolve = function () {
+            },
+            reject = function () {
+            }
+        ) {
+            if (this.state === "PADDING") {
+                this.resolvedCallbacks.push(resolve);
+                this.rejectedCallbacks.push(reject);
+            }
+            if (this.state === "RESOLVED") {
+                resolve(this.value);
+            }
+            if (this.state === "REJECTED") {
+                reject(this.value);
+            }
+        }
+
+        catch(
+            reject = function () {
+            }
+        ) {
+            reject(this.value);
         }
     }
 
-    var promise = new Promise()
+    // function Promiseo(fn) {
+    //     var state = 'pending';
+    //     var doneList = [];
+    //     var failList = [];
+    //     this.then = function (done, fail) {
+    //         switch (state) {
+    //             case "pending":
+    //                 doneList.push(done);
+    //                 //每次如果没有推入fail方法，我也会推入一个null来占位
+    //                 failList.push(fail || null);
+    //                 return this;
+    //                 break;
+    //             case 'fulfilled':
+    //                 done();
+    //                 return this;
+    //                 break;
+    //             case 'rejected':
+    //                 fail();
+    //                 return this;
+    //                 break;
+    //         }
+    //     }
+    //
+    //     function resolve(newValue) {
+    //         state = "fulfilled";
+    //         setTimeout(function () {
+    //             var value = newValue;
+    //             for (var i = 0; i < doneList.length; i++) {
+    //                 var temp = doneList[i](value);
+    //                 if (temp instanceof Promise) {
+    //                     var newP = temp;
+    //                     for (i++; i < doneList.length; i++) {
+    //                         newP.then(doneList[i], failList[i]);
+    //                     }
+    //                 } else {
+    //                     value = temp;
+    //                 }
+    //             }
+    //         }, 0);
+    //     }
+    //
+    //     function reject(newValue) {
+    //         state = "rejected";
+    //         setTimeout(function () {
+    //             var value = newValue;
+    //             var tempRe = failList[0](value);
+    //             //如果reject里面传入了一个promise，那么执行完此次的fail之后，将剩余的done和fail传入新的promise中
+    //             if (tempRe instanceof Promise) {
+    //                 var newP = tempRe;
+    //                 for (i = 1; i < doneList.length; i++) {
+    //                     newP.then(doneList[i], failList[i]);
+    //                 }
+    //             } else {
+    //                 //如果不是promise，执行完当前的fail之后，继续执行doneList
+    //                 value = tempRe;
+    //                 doneList.shift();
+    //                 failList.shift();
+    //                 resolve(value);
+    //             }
+    //         }, 0);
+    //     }
+    //
+    //     fn(resolve, reject);
+    // }
 
-    function fn1() {
-        setTimeout(function () {
-            var random = Math.random();
-            console.log('--log--:', random)
-            if (random > 0.5) {
-                promise.resolve('杭州')
+    class Promiseo {
+        constructor(executor) {
+            this.status = 'pending';
+            this.onResolvedCallback = [];
+            this.onRejectedCallback = [];
+            try {
+                executor(resolve, reject);
+            } catch (reason) {
+                this.reject(reason);
+            }
+        }
+
+        resolve(value) {
+            let self = this;
+            if (value instanceof Promiseo) {
+                return value.then(self.resolve, self.reject);
+            }
+            setTimeout(function () { // 异步执行所有的回调函数
+                if (self.status === 'pending') {
+                    self.status = 'resolved';
+                    self.data = value;
+                    self.onResolvedCallback.forEach(v => {
+                        v(value);
+                    })
+                }
+            })
+        }
+
+        reject(reason) {
+            let self = this;
+            setTimeout(function () { // 异步执行所有的回调函数
+                if (self.status === 'pending') {
+                    self.status = 'rejected';
+                    self.data = reason;
+                    self.onRejectedCallback.forEach(v => {
+                        v(reason);
+                    })
+                }
+            })
+        }
+
+        resolvePromise(promise2, x, resolve, reject) {
+            var then;
+            var thenCalledOrThrow = false;
+            var self = this;
+            if (promise2 === x) {
+                return reject(new TypeError('Chaining cycle detected for promise!'));
+            }
+
+            if (x instanceof Promiseo) {
+                if (x.status === 'pending') { //because x could resolved by a Promise Object
+                    x.then(function (v) {
+                        self.resolvePromise(promise2, v, resolve, reject);
+                    }, reject)
+                } else { //but if it is resolved, it will never resolved by a Promise Object but a static value;
+                    x.then(resolve, reject);
+                }
+                return;
+            }
+
+            if ((x !== null) && ((typeof x === 'object') || (typeof x === 'function'))) {
+                try {
+                    then = x.then //because x.then could be a getter
+                    if (typeof then === 'function') {
+                        then.call(x, function rs(y) {
+                            if (thenCalledOrThrow) return;
+                            thenCalledOrThrow = true;
+                            return self.resolvePromise(promise2, y, resolve, reject);
+                        }, function rj(r) {
+                            if (thenCalledOrThrow) return;
+                            thenCalledOrThrow = true;
+                            return reject(r);
+                        })
+                    } else {
+                        resolve(x);
+                    }
+                } catch (e) {
+                    if (thenCalledOrThrow) return;
+                    thenCalledOrThrow = true;
+                    return reject(e);
+                }
             } else {
-                promise.reject('杭州')
+                resolve(x);
+            }
+        }
+
+        then(onResolved, onRejected) {
+            var self = this;
+            var promise2;
+            onResolved = typeof onResolved === 'function' ? onResolved :
+                function (v) {
+                    return v;
+                }
+            onRejected = typeof onRejected === 'function' ? onRejected :
+                function (r) {
+                    throw r;
+                }
+
+            if (self.status === 'resolved') {
+                return promise2 = new Promiseo(function (resolve, reject) {
+                    setTimeout(function () { // 异步执行onResolved
+                        try {
+                            var x = onResolved(self.data);
+                            self.resolvePromise(promise2, x, resolve, reject);
+                        } catch (reason) {
+                            reject(reason);
+                        }
+                    })
+                })
+            }
+
+            if (self.status === 'rejected') {
+                return promise2 = new Promiseo(function (resolve, reject) {
+                    setTimeout(function () { // 异步执行onRejected
+                        try {
+                            var x = onRejected(self.data);
+                            self.resolvePromise(promise2, x, resolve, reject);
+                        } catch (reason) {
+                            reject(reason);
+                        }
+                    })
+                })
+            }
+
+            if (self.status === 'pending') {
+                // 这里之所以没有异步执行，是因为这些函数必然会被resolve或reject调用，
+                // 而resolve或reject函数里的内容已是异步执行，构造函数里的定义
+                return promise2 = new Promiseo(function (resolve, reject) {
+                    self.onResolvedCallback.push(function (value) {
+                        try {
+                            var x = onResolved(value);
+                            self.resolvePromise(promise2, x, resolve, reject);
+                        } catch (r) {
+                            reject(r);
+                        }
+                    })
+
+                    self.onRejectedCallback.push(function (reason) {
+                        try {
+                            var x = onRejected(reason);
+                            self.resolvePromise(promise2, x, resolve, reject);
+                        } catch (r) {
+                            reject(r);
+                        }
+                    })
+                })
+            }
+        }
+
+        catch(onRejected) {
+            return this.then(null, onRejected);
+        }
+
+        all(arr) {
+            return new Promiseo((resolve, reject) => {
+                let values = [];
+                let len = arr.length;
+                for (var i = 0; i < len; i++) {
+                    let promise = arr[i];
+                    if (typeof promise.then == 'function') {
+                        promise.then(res => {
+                            values.push(res);
+                            if (values.length == len) {
+                                resolve(values);
+                            }
+                        })
+                    }
+                }
+            })
+        }
+
+        race(arr) {
+            return new Promiseo((resolve, reject) => {
+                let len = arr.length;
+                for (var i = 0; i < len; i++) {
+                    let promise = arr[i];
+                    if (typeof promise.then == 'function') {
+                        promise.then(res => {
+                            resolve(res);
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    function want() {
+        console.log('这是你想要执行的代码');
+    }
+
+    function fn(want) {
+        console.log('这里表示执行了一大堆各种代码');
+
+        // 返回Promise对象
+        return new Promise(function (resolve, reject) {
+            if (typeof want == 'function') {
+                resolve(want);
+            } else {
+                reject('TypeError: ' + want + '不是一个函数')
             }
         })
-        return promise
     }
 
-    function success1(city) {
-        setTimeout(function () {
-            promise.resolve(city + '晴天')
-            console.log(city + '晴天')
-        }, 1000)
+    fn(want).then(function (want) {
+        want();
+    })
+
+    // fn('1234').then(
+    //     function (want) {
+    //         want();
+    //     },
+    //     function (err) {
+    //         console.log(err);
+    //     }
+    // )
+    //then(null, function() {}) 就等同于catch(function() {})
+
+    fn('1234').catch(function (err) {
+        console.log(err);
+    })
+
+    function want1() {
+        console.log('这是你想要执行的代码my');
     }
 
-    function error1(city) {
-        setTimeout(function () {
-            promise.reject(city + '下雨🌧天')
-            console.log(city + '下雨🌧天')
-        }, 1000)
+    function fn2(want) {
+        console.log('这里表示执行了一大堆各种代码my');
+
+        // 返回Promise对象
+        return new Promiseo(function (resolve, reject) {
+            if (typeof want == 'function') {
+                resolve(want);
+            } else {
+                reject('TypeError: ' + want + '不是一个函数my')
+            }
+        })
     }
 
-    function success2(weather) {
-        setTimeout(function () {
-            console.log(weather + '，天气不错，可携女友与狗出行')
-        }, 1000)
-    }
+    fn2(want1).then(function (want) {
+        want();
+    })
 
-    function error2(weather) {
-        setTimeout(function () {
-            console.log(weather + '，无法带狗狗玩了！')
-        }, 1000)
-    }
+    fn2('1234').catch(function (err) {
+        console.log(err);
+    })
 
-    function onerror() {
-        console.log('错误❎啦')
-    }
-
-    fn1().then(success1, error1)
-        .then(success2, error2)
-        .catch(onerror)
 </script>
 </body>
 </html>

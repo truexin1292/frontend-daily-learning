@@ -41,3 +41,25 @@ var json = str.split('').reduce((m, n) => {
 
 ## 4.词法作用域（静态作用域）和动态作用域
 https://www.jianshu.com/p/70b38c7ab69c
+
+```js
+var value = 1;
+
+var foo = {
+  value: 2,
+  bar: function () {
+    return this.value;
+  }
+}
+
+//试验1
+console.log(foo.bar()); //2
+//试验2
+console.log((foo.bar)()); //2
+//试验3
+console.log((foo.bar = foo.bar)()); //1
+//试验4
+console.log((false || foo.bar)()); //1
+//试验5
+console.log((foo.bar, foo.bar)()); //1
+```

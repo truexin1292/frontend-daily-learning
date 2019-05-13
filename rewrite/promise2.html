@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    //then 和 catch顺序有可能有问题
+    function Promise1(fn) {
+        var state = 'pending',
+            value = null,
+            callbacks = [];
+
+        this.then = function (onFulfilled, onRejected) {
+            return new Promise1(function (resolve, reject) {
+                setTimeout(() => {
+                    handle({
+                        onFulfilled: onFulfilled || null,
+                        onRejected: onRejected || null,
+                        resolve: resolve,
+                        reject: reject
+                    });
+                }, 2);
+            });
+        };
+
+        this.catch = function (onRejected) {
+            this.then(null, onRejected);
+        };
+
+        function handle(callback) {
+            if (state === 'pending') {
+                callbacks.push(callback);
+                return;
+            }
+
+            var cb = state === 'fulfilled' ? callback.onFulfilled : callback.onRejected;
+            var ret = null;
+
+            if (cb === null) {
+                cb = state === 'fulfilled' ? callback.resolve : callback.reject;
+                cb(value);
+                return;
+            }
+            ret = cb(value);
+            callback.resolve(ret);
+        }
+
+        function resolve(newValue) {
+            if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
+                var then = newValue.then;
+                if (typeof then === 'function') {
+                    then.call(newValue, resolve, reject);
+                    return;
+                }
+            }
+            state = 'fulfilled';
+            value = newValue;
+            execute();
+        }
+
+        function reject(reason) {
+            state = 'rejected';
+            value = reason;
+            execute();
+        }
+
+        function execute() {
+            setTimeout(function () {
+                callbacks.forEach(function (callback) {
+                    handle(callback);
+                });
+            }, 1);
+        }
+
+        fn(resolve, reject);
+
+        this.all = function (arr) {
+            return new Promise1((resolve, reject) => {
+                let values = [];
+                let len = arr.length;
+                for (var i = 0; i < len; i++) {
+                    let promise = arr[i];
+                    if (typeof promise.then == 'function') {
+                        promise.then(res => {
+                            values.push(res);
+                            if (values.length == len) {
+                                resolve(values);
+                            }
+                        })
+                    }
+                }
+            })
+        }
+
+        this.race = function (arr) {
+            return new Promise1((resolve, reject) => {
+                let len = arr.length;
+                for (var i = 0; i < len; i++) {
+                    let promise = arr[i];
+                    if (typeof promise.then == 'function') {
+                        promise.then(res => {
+                            resolve(res);
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    function Promise0(executor) { //todo 最接近版本promise
+        var self = this;
+        self.data = null;
+        self.status = 'pending';
+        self.onResolvedCallback = [];
+        self.onRejectedCallback = [];
+
+        function resolve(value) {
+            if (value instanceof Promise0) {
+                return value.then(resolve, reject);
+            }
+            setTimeout(function () { // 异步执行所有的回调函数
+                if (self.status === 'pending') {
+                    self.status = 'fulfilled';
+                    self.data = value;
+                    // for (var i = 0; i < self.onResolvedCallback.length; i++) {
+                    //     self.onResolvedCallback[i](value);
+                    // }
+                    self.onResolvedCallback.forEach(v => {
+                        v(value);
+                    })
+                }
+            })
+        }
+
+        function reject(reason) {
+            setTimeout(function () { // 异步执行所有的回调函数
+                if (self.status === 'pending') {
+                    self.status = 'rejected';
+                    self.data = reason;
+                    // for (var i = 0; i < self.onRejectedCallback.length; i++) {
+                    //     self.onRejectedCallback[i](reason);
+                    // }
+                    self.onRejectedCallback.forEach(v => {
+                        v(reason);
+                    })
+                }
+            })
+        }
+
+        try {
+            executor(resolve, reject);
+        } catch (reason) {
+            reject(reason);
+        }
+
+        function resolvePromise(promise2, x, resolve, reject) {
+            var then;
+            var thenCalledOrThrow = false;
+
+            if (promise2 === x) {
+                return reject(new TypeError('Chaining cycle detected for promise!'));
+            }
+
+            if (x instanceof Promise0) {
+                if (x.status === 'pending') { //because x could resolved by a Promise Object
+                    x.then(
+                        function (v) {
+                            resolvePromise(promise2, v, resolve, reject);
+                        },
+                        reject
+                    )
+                } else { //but if it is resolved, it will never resolved by a Promise Object but a static value;
+                    x.then(resolve, reject);
+                }
+                return;
+            }
+
+            if ((x !== null) && ((typeof x === 'object') || (typeof x === 'function'))) {
+                try {
+                    then = x.then; //because x.then could be a getter
+                    if (typeof then === 'function') {
+                        then.call(
+                            x,
+                            function rs(y) {
+                                if (thenCalledOrThrow) return;
+                                thenCalledOrThrow = true;
+                                return resolvePromise(promise2, y, resolve, reject);
+                            },
+                            function rj(r) {
+                                if (thenCalledOrThrow) return;
+                                thenCalledOrThrow = true;
+                                return reject(r);
+                            }
+                        )
+                    } else {
+                        resolve(x);
+                    }
+                } catch (e) {
+                    if (thenCalledOrThrow) return;
+                    thenCalledOrThrow = true;
+                    return reject(e);
+                }
+            } else {
+                resolve(x);
+            }
+        }
+
+        this.then = function (onResolved, onRejected) {
+            var self = this;
+            var promise2;
+            onResolved = typeof onResolved === 'function' ? onResolved :
+                function (v) {
+                    return v;
+                }
+            onRejected = typeof onRejected === 'function' ? onRejected :
+                function (r) {
+                    throw r;
+                }
+
+            if (self.status === 'fulfilled') {
+                return promise2 = new Promise0(function (resolve, reject) {
+                    setTimeout(function () { // 异步执行onResolved
+                        try {
+                            var x = onResolved(self.data);
+                            resolvePromise(promise2, x, resolve, reject);
+                        } catch (reason) {
+                            reject(reason);
+                        }
+                    })
+                })
+            }
+
+            if (self.status === 'rejected') {
+                return promise2 = new Promise0(function (resolve, reject) {
+                    setTimeout(function () { // 异步执行onRejected
+                        try {
+                            var x = onRejected(self.data);
+                            resolvePromise(promise2, x, resolve, reject);
+                        } catch (reason) {
+                            reject(reason);
+                        }
+                    })
+                })
+            }
+
+            if (self.status === 'pending') {
+                // 这里之所以没有异步执行，是因为这些函数必然会被resolve或reject调用，
+                // 而resolve或reject函数里的内容已是异步执行，构造函数里的定义
+                return promise2 = new Promise0(function (resolve, reject) {
+                    self.onResolvedCallback.push(function (value) {
+                        try {
+                            var x = onResolved(value);
+                            resolvePromise(promise2, x, resolve, reject);
+                        } catch (r) {
+                            reject(r);
+                        }
+                    })
+
+                    self.onRejectedCallback.push(function (reason) {
+                        try {
+                            var x = onRejected(reason);
+                            resolvePromise(promise2, x, resolve, reject);
+                        } catch (r) {
+                            reject(r);
+                        }
+                    })
+                })
+            }
+        }
+
+        //其实catch方法就是then方法的简写
+        this.catch = function (onRejected) {
+            return this.then(null, onRejected);
+        }
+
+        //Promise.all可以将多个Promise实例包装成一个新的Promise实例。
+        // 同时，成功和失败的返回值是不同的，成功的时候返回的是一个结果数组
+        // ，而失败的时候则返回最先被reject失败状态的值
+        this.all = function (arr) {
+            return new Promise0((resolve, reject) => {
+                let values = [];
+                let len = arr.length;
+                for (var i = 0; i < len; i++) {
+                    let promise = arr[i];
+                    if (typeof promise.then == 'function') {
+                        promise.then(res => {
+                            values.push(res);
+                            if (values.length == len) {
+                                resolve(values);
+                            }
+                        })
+                    }
+                }
+            })
+        }
+
+        //顾名思义，Promse.race就是赛跑的意思，意思就是说
+        // ，Promise.race([p1, p2, p3])里面哪个结果获得的快，
+        // 就返回那个结果，不管结果本身是成功状态还是失败状态。
+        this.race = function (arr) {
+            return new Promise0((resolve, reject) => {
+                let len = arr.length;
+                for (var i = 0; i < len; i++) {
+                    let promise = arr[i];
+                    if (typeof promise.then == 'function') {
+                        promise.then(res => {
+                            resolve(res);
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    function want0() {
+        console.log('这是你想要执行的代码my');
+    }
+
+    function fn0(want) {
+        console.log('这里表示执行了一大堆各种代码my');
+
+        // 返回Promise对象
+        return new Promise0(function (resolve, reject) {
+            if (typeof want == 'function') {
+                resolve(want);
+            } else {
+                reject('TypeError: ' + want + '不是一个函数my')
+            }
+        })
+    }
+
+    fn0(want0)
+        .then(function (want) {
+            want();
+            return 'alex';
+        })
+        .then(function (name) {
+            console.log('--log--:', name)
+            return name + ' chou';
+        })
+        .then(function (name1) {
+            console.log('--log--:', name1)
+        })
+
+    fn0('1234').catch(function (err) {
+        console.log(err);
+    })
+
+    //todo 原生promise
+    function want() {
+        console.log('这是你想要执行的代码');
+    }
+
+    function fn(want) {
+        console.log('这里表示执行了一大堆各种代码');
+
+        // 返回Promise对象
+        return new Promise(function (resolve, reject) {
+            if (typeof want == 'function') {
+                resolve(want);
+            } else {
+                reject('TypeError: ' + want + '不是一个函数')
+            }
+        })
+    }
+
+    fn(want)
+        .then(function (want) {
+            want();
+            return 'alex';
+        })
+        .then(function (name) {
+            console.log('--log--:', name)
+            return name + ' chou';
+        })
+        .then(function (name1) {
+            console.log('--log--:', name1)
+        })
+
+    fn('1234').catch(function (err) {
+        console.log(err);
+    })
+
+    let p1 = new Promise((resolve, reject) => {
+        resolve('成功了')
+    })
+
+    let p2 = new Promise((resolve, reject) => {
+        resolve('success')
+    })
+
+    let p3 = Promise.reject('失败')
+
+    Promise.all([p1, p2]).then((result) => {
+        console.log(result)               //['成功了', 'success']
+    }).catch((error) => {
+        console.log(error)
+    })
+
+    // Promise.all([p1,p3,p2]).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)      // 失败了，打出 '失败'
+    // })
+    //
+    // let p4 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('success')
+    //     },1000)
+    // })
+    //
+    // let p5 = new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         reject('failed')
+    //     }, 500)
+    // })
+    //
+    // Promise.race([p4, p5]).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)  // 打开的是 'failed'
+    // })
+
+
+    // class Promise1 { // todo 失败 ，Uncaught TypeError: Cannot read property 'status' of undefined
+    //     constructor(executor) {
+    //         this.status = 'pending';
+    //         this.onResolvedCallback = [];
+    //         this.onRejectedCallback = [];
+    //         this.resolve.bind(this);
+    //         this.reject.bind(this);
+    //         try {
+    //             executor(this.resolve, this.reject);
+    //         } catch (reason) {
+    //             this.reject(reason);
+    //         }
+    //     }
+    //
+    //     resolve(value) {
+    //         let self = this;
+    //         console.log('--log--:', this)
+    //         if (value instanceof Promise1) {
+    //             return value.then(self.resolve, self.reject);
+    //         }
+    //         setTimeout(function () { // 异步执行所有的回调函数
+    //             if (self.status === 'pending') {
+    //                 self.status = 'resolved';
+    //                 self.data = value;
+    //                 self.onResolvedCallback.forEach(v => {
+    //                     v(value);
+    //                 })
+    //             }
+    //         })
+    //     }
+    //
+    //     reject(reason) {
+    //         let self = this;
+    //         setTimeout(function () { // 异步执行所有的回调函数
+    //             if (self.status === 'pending') {
+    //                 self.status = 'rejected';
+    //                 self.data = reason;
+    //                 self.onRejectedCallback.forEach(v => {
+    //                     v(reason);
+    //                 })
+    //             }
+    //         })
+    //     }
+    //
+    //     resolvePromise(promise2, x, resolve, reject) {
+    //         var then;
+    //         var thenCalledOrThrow = false;
+    //         var self = this;
+    //         if (promise2 === x) {
+    //             return reject(new TypeError('Chaining cycle detected for promise!'));
+    //         }
+    //
+    //         if (x instanceof Promise1) {
+    //             if (x.status === 'pending') { //because x could resolved by a Promise Object
+    //                 x.then(function (v) {
+    //                     self.resolvePromise(promise2, v, resolve, reject);
+    //                 }, reject)
+    //             } else { //but if it is resolved, it will never resolved by a Promise Object but a static value;
+    //                 x.then(resolve, reject);
+    //             }
+    //             return;
+    //         }
+    //
+    //         if ((x !== null) && ((typeof x === 'object') || (typeof x === 'function'))) {
+    //             try {
+    //                 then = x.then //because x.then could be a getter
+    //                 if (typeof then === 'function') {
+    //                     then.call(x, function rs(y) {
+    //                         if (thenCalledOrThrow) return;
+    //                         thenCalledOrThrow = true;
+    //                         return self.resolvePromise(promise2, y, resolve, reject);
+    //                     }, function rj(r) {
+    //                         if (thenCalledOrThrow) return;
+    //                         thenCalledOrThrow = true;
+    //                         return reject(r);
+    //                     })
+    //                 } else {
+    //                     resolve(x);
+    //                 }
+    //             } catch (e) {
+    //                 if (thenCalledOrThrow) return;
+    //                 thenCalledOrThrow = true;
+    //                 return reject(e);
+    //             }
+    //         } else {
+    //             resolve(x);
+    //         }
+    //     }
+    //
+    //     then(onResolved, onRejected) {
+    //         var self = this;
+    //         var promise2;
+    //         onResolved = typeof onResolved === 'function' ? onResolved :
+    //             function (v) {
+    //                 return v;
+    //             }
+    //         onRejected = typeof onRejected === 'function' ? onRejected :
+    //             function (r) {
+    //                 throw r;
+    //             }
+    //
+    //         if (self.status === 'resolved') {
+    //             return promise2 = new Promise1(function (resolve, reject) {
+    //                 setTimeout(function () { // 异步执行onResolved
+    //                     try {
+    //                         var x = onResolved(self.data);
+    //                         self.resolvePromise(promise2, x, resolve, reject);
+    //                     } catch (reason) {
+    //                         reject(reason);
+    //                     }
+    //                 })
+    //             })
+    //         }
+    //
+    //         if (self.status === 'rejected') {
+    //             return promise2 = new Promise1(function (resolve, reject) {
+    //                 setTimeout(function () { // 异步执行onRejected
+    //                     try {
+    //                         var x = onRejected(self.data);
+    //                         self.resolvePromise(promise2, x, resolve, reject);
+    //                     } catch (reason) {
+    //                         reject(reason);
+    //                     }
+    //                 })
+    //             })
+    //         }
+    //
+    //         if (self.status === 'pending') {
+    //             // 这里之所以没有异步执行，是因为这些函数必然会被resolve或reject调用，
+    //             // 而resolve或reject函数里的内容已是异步执行，构造函数里的定义
+    //             return promise2 = new Promise1(function (resolve, reject) {
+    //                 self.onResolvedCallback.push(function (value) {
+    //                     try {
+    //                         var x = onResolved(value);
+    //                         self.resolvePromise(promise2, x, resolve, reject);
+    //                     } catch (r) {
+    //                         reject(r);
+    //                     }
+    //                 })
+    //
+    //                 self.onRejectedCallback.push(function (reason) {
+    //                     try {
+    //                         var x = onRejected(reason);
+    //                         self.resolvePromise(promise2, x, resolve, reject);
+    //                     } catch (r) {
+    //                         reject(r);
+    //                     }
+    //                 })
+    //             })
+    //         }
+    //     }
+    //
+    //     catch(onRejected) {
+    //         return this.then(null, onRejected);
+    //     }
+    //
+    //     all(arr) {
+    //         return new Promise1((resolve, reject) => {
+    //             let values = [];
+    //             let len = arr.length;
+    //             for (var i = 0; i < len; i++) {
+    //                 let promise = arr[i];
+    //                 if (typeof promise.then == 'function') {
+    //                     promise.then(res => {
+    //                         values.push(res);
+    //                         if (values.length == len) {
+    //                             resolve(values);
+    //                         }
+    //                     })
+    //                 }
+    //             }
+    //         })
+    //     }
+    //
+    //     race(arr) {
+    //         return new Promise1((resolve, reject) => {
+    //             let len = arr.length;
+    //             for (var i = 0; i < len; i++) {
+    //                 let promise = arr[i];
+    //                 if (typeof promise.then == 'function') {
+    //                     promise.then(res => {
+    //                         resolve(res);
+    //                     })
+    //                 }
+    //             }
+    //         })
+    //     }
+    // }
+    // function want1() {
+    //     console.log('这是你想要执行的代码my');
+    // }
+    //
+    // function fn1(want) {
+    //     console.log('这里表示执行了一大堆各种代码my');
+    //
+    //     // 返回Promise对象
+    //     return new Promise1(function (resolve, reject) {
+    //         if (typeof want == 'function') {
+    //             resolve(want);
+    //         } else {
+    //             reject('TypeError: ' + want + '不是一个函数my')
+    //         }
+    //     })
+    // }
+    //
+    // fn1(want1).then(function (want) {
+    //     want();
+    // })
+    //
+    // fn1('1234').catch(function (err) {
+    //     console.log(err);
+    // })
+
+</script>
+</body>
+</html>
