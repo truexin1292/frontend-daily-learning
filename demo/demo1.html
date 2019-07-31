@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>题目</title>
+</head>
+
+<body>
+    <script>
+        let yxlist = [{
+            name: '张三',
+            id: '1',
+            age: 18
+        }, {
+            name: '李四',
+            id: '2',
+            age: 19
+        }, {
+            name: '王五',
+            id: '3',
+            age: 20
+        }, ];
+        let azlist = [{
+            name: '张三',
+            id: '1',
+            hobby: "篮球"
+        }, {
+            name: '李四',
+            id: '2',
+            hobby: "足球"
+        }, {
+            name: '王五',
+            id: '3',
+            hobby: "羽毛球"
+        }, ];
+
+        let ages = [],
+            names = [],
+            hobbys = [];
+        yxlist.forEach((v, i) => {
+            azlist.forEach((o, j) => {
+                if (v.id === o.id) {
+                    ages.push(v.age);
+                    names.push(o.name);
+                    hobbys.push(o.hobby);
+                }
+            })
+        })
+        console.log(ages, names, hobbys);
+    </script>
+</body>
+
+</html>

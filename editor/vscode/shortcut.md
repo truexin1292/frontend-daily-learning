@@ -35,3 +35,6 @@ shift + alt +f : 代码格式化
 ```
 
 ----
+
+## 7.command + shift + p
+修改中文 configure language 

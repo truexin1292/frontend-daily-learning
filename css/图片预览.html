@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,target-densitydpi=device-dpi"/>
+    <style type="text/css">
+        .ml-i-view {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, .86);
+            -webkit-transition: opacity .3s ease-out, -webkit-transform .3s ease-out;
+            transition: opacity .3s ease-out, -webkit-transform .3s ease-out;
+            transition: opacity .3s ease-out, transform .3s ease-out;
+            transition: opacity .3s ease-out, transform .3s ease-out, -webkit-transform .3s ease-out;
+            padding: 1px;
+        }
+
+        .ml-i-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .ml-i-img img {
+            display: block;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, -50%, 0);
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            background-color: #fff;
+        }
+
+        .ii-scale {
+            -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            transition: all .3s cubic-bezier(.645, .045, .355, 1);
+            opacity: 1;
+        }
+
+        .dd-warp {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .warp-content {
+            padding: 0 20px;
+            top: 50%;
+            position: absolute;
+            width: 100%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        .dd-ii-img2 {
+            width: 200px;
+            margin: 0 auto 20px;
+        }
+
+        .dd-ii-img2 img {
+            height: 200px;
+            display: block;
+        }
+
+        .dd-ii-img {
+            width: 200px;
+            margin: 0 auto 20px;
+        }
+
+        .dd-ii-img img {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+<body>
+
+<div class="dd-body">
+    <div data-v-7e26b34c="" class="demo-top">
+        <a data-v-7e26b34c="" href="javascript:;" class="demo-back">
+            <i
+                data-v-7e26b34c="" class="ml-icon iconfont icon-back"></i>
+        </a>
+        <div data-v-7e26b34c="" class="demo-top-title">IView</div>
+    </div>
+    <div class="dd-warp">
+        <div class="warp-content">
+            <div class="dd-ii-img"><img src="https://img-np.xkeshi.cn/dev/crm/1f/08/8243bb1371ce6e155c09260b7c3d.jpeg">
+            </div>
+            <div class="dd-ii-img2"><img src="https://img-np.xkeshi.cn/dev/crm/28/c0/780d017b31de80bcad69d5403fda.jpeg">
+            </div>
+            <div class="dd-ii-img"><img src="https://img-np.xkeshi.cn/dev/crm/32/02/37457b4e4053f3d635e0d4a3e6d7.png">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ml-i-view" style="z-index: 1002; display: none;">
+    <div class="ml-i-img">
+        <img src="https://img-np.xkeshi.cn/dev/crm/1f/08/8243bb1371ce6e155c09260b7c3d.jpeg"
+             class="ii-scale" style="width: 375px; margin-top: 0px; margin-left: 0px;">
+        <div class="ii-text" style="display: none;">正在加载...</div>
+        <div class="ii-text" style="display: none;">图片出错了!</div>
+    </div>
+</div>
+<div class="ml-i-view" style="z-index: 1002; display: none;">
+    <div class="ml-i-img">
+        <img src="https://img-np.xkeshi.cn/dev/crm/28/c0/780d017b31de80bcad69d5403fda.jpeg"
+             class="ii-scale" style="width: 375px; margin-top: 0px; margin-left: 0px;">
+        <div class="ii-text" style="display: none;">正在加载...</div>
+        <div class="ii-text" style="display: none;">图片出错了!</div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    //http://www.ml-ui.com/#/demo/i-view
+    $(function () {
+        var parent = $('.ml-i-view')
+        var child = $('.dd-ii-img')
+        child.click(function () {
+            parent.show()
+        })
+        parent.click(function () {
+            parent.hide()
+        })
+    })
+</script>
+</body>
+</html>

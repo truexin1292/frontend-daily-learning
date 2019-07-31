@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>响应式原理</title>
+</head>
+<body>
+<div id="app">
+	1
+</div>
+<input type="text">
+<script>
+	// window.onload = function () {
+	// 	let data = {
+	// 		num: 1
+	// 	};
+	// 	var app = document.getElementById('app');
+	// 	app.addEventListener('click', function () {
+	// 		var initValue = 2;
+	// 		Object.defineProperty(data, "num", {
+	// 			get: function () {
+	// 				//当获取值的时候触发的函数
+	// 				return initValue;
+	// 			},
+	// 			set: function (value) {
+	// 				//当设置值的时候触发的函数,设置的新值通过参数value拿到
+	// 				initValue = value;
+	// 				app.innerText = value;
+	// 			}
+	// 		});
+	// 	});
+	// }
+
+	let data = {
+		num: 1
+	};
+	Object.defineProperty(data, 'num',{
+		value: 2,
+		set: function( newVal ){
+			// document.getElementById('app').value = newVal;
+			return 333
+		}
+	});
+	console.log('--log--:',data.num)
+	var input = document.getElementsByTagName('input')[0];
+	input.addEventListener('input', function(){
+		data.num = 2;
+	});
+
+</script>
+</body>
+</html>

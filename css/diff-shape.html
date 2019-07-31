@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css形状</title>
+    <style>
+        .parent {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lsosceles_triangle {
+            content: "";
+            display: block;
+            width: 0px;
+            height: 0px;
+            border-width: 0px 100px 50px;
+            border-style: none solid solid;
+            border-color: transparent transparent #011629;
+        }
+
+        .right_triangle {
+            content: "";
+            display: block;
+            width: 0px;
+            height: 0px;
+            border-width: 0px 0px 200px 200px;
+            border-style: none solid solid;
+            border-color: transparent transparent #011629;
+        }
+
+        .right_trapezoid {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 0px;
+            border-width: 0px 0px 70px 90px;
+            border-style: none solid solid;
+            border-color: transparent transparent #011629;
+        }
+
+        .lsosceles_trapezoid {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 0px;
+            border-width: 0px 45px 45px;
+            border-style: none solid solid;
+            border-color: transparent transparent #011629;
+        }
+
+        .rotate_trapezoid {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 0px;
+            border-width: 0px 45px 45px;
+            border-style: none solid solid;
+            border-color: transparent transparent #011629;
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        .diff_trapezoid {
+            margin-top: 150px;
+            margin-bottom: 150px;
+            content: "";
+            display: block;
+            width: 200px;
+            height: 0px;
+            border-width: 0px 0px 70px 90px;
+            border-style: none solid solid;
+            border-color: transparent transparent #011629;
+            transform: rotate(90deg);
+        }
+
+        .mask1 {
+            height: 0;
+            width: 100px;
+            border-top: 100px solid red;
+            border-right: 37px solid transparent;
+        }
+
+        .mask2 {
+            width: 100px;
+            height: 0;
+            border-width: 0 37px 100px 37px;
+            border-style: none solid solid;
+            border-color: transparent transparent red;
+        }
+
+        .mask3 {
+            width: 100px;
+            height: 0;
+            border-top: 100px solid red;
+            border-right: 37px solid transparent;
+            border-left: 37px solid transparent;
+        }
+
+        .mask4 {
+            width: 100px;
+            height: 0;
+            border-top: 100px solid red;
+            border-left: 37px solid transparent;
+        }
+
+        .mask5 {
+            width: 100px;
+            height: 0;
+            border-bottom: 100px solid red;
+            border-left: 37px solid transparent;
+            margin-left: -30px;
+        }
+
+        .mask6 {
+            width: 100px;
+            height: 0;
+            border-bottom: 100px solid red;
+            border-left: 37px solid transparent;
+            margin-left: -30px;
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+<div class="parent">
+    <div class="left">
+        <!--等腰三角形-->
+        <span class="lsosceles_triangle"></span><br>
+        <!--直角三角形-->
+        <span class="right_triangle"></span><br>
+        <!--直角梯形-->
+        <span class="right_trapezoid"></span><br>
+        <!--等腰梯形-->
+        <span class="lsosceles_trapezoid"></span><br>
+        <!--旋转梯形-->
+        <span class="rotate_trapezoid"></span>
+
+        <!--diff梯形-->
+        <span class="diff_trapezoid"></span>
+    </div>
+    <div class="right">
+        <div class="mask1"></div>
+        <br>
+        <div class="mask2"></div>
+        <br>
+        <div class="mask3"></div>
+        <br>
+        <div class="mask4"></div>
+        <br>
+        <div class="mask5"></div>
+        <br>
+        <div class="mask6"></div>
+    </div>
+</div>
+</body>
+</html>

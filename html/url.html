@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的主题</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</head>
+<body>
+
+<script>
+
+    /*将json对象转成地址栏参数*/
+    function toQueryString(obj) {
+        var ret = [];
+
+        function toQueryPair(key, value) {
+            if (typeof value == 'undefined') {
+                return key;
+            }
+            return key + '=' + encodeURIComponent(value === null ? '' : String(value));
+        }
+
+        for (var key in obj) {
+            key = encodeURIComponent(key);
+            var values = obj[key];
+            if (values && values.constructor == Array) {//数组
+                var queryValues = [];
+                for (var i = 0, len = values.length, value; i < len; i++) {
+                    value = values[i];
+                    queryValues.push(toQueryPair(key, value));
+                }
+                ret = ret.concat(queryValues);
+            } else { //字符串
+                ret.push(toQueryPair(key, values));
+            }
+        }
+        return ret.join('&');
+    }
+
+    window.history.replaceState(
+        null,
+        document.title,
+        window.location.href.split('?')[0] + '?' +
+        toQueryString(
+            $.extend(
+                {},
+                {
+                    paymentNo: '123444',
+                    type: 'sdh'
+                }
+            )
+        )
+    );
+
+</script>
+</body>
+</html>
