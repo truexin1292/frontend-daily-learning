@@ -1,0 +1,204 @@
+/* Reset */
+html, body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-family: Arial, sans-serif;
+  color: #222;
+  line-height: 1.5;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+}
+
+a {
+  color: #3473ee;
+}
+
+.controls {
+  display: grid;
+  grid-template-areas: ".    up   ." "left down right";
+  /* Limit the size of the controls by the viewport size. */
+  width: 75vmin;
+  height: 50vmin;
+  margin: 10px auto;
+}
+
+#up {
+  grid-area: up;
+}
+
+#down {
+  grid-area: down;
+}
+
+#left {
+  grid-area: left;
+}
+
+#right {
+  grid-area: right;
+}
+
+.controls button {
+  color: #888;
+  font-size: 8vmin;
+  background: none;
+  border: 2px solid;
+  margin: 2px;
+  border-radius: 5vmin;
+}
+
+.controls button:focus {
+  outline: none;
+}
+
+@media (min-width: 10cm) and (min-height: 8cm) {
+  /* Avoid controls getting too big on larger touch devices. */
+  .controls {
+    position: absolute;
+    width: 7.5cm;
+    height: 5cm;
+    bottom: 1.5cm;
+    right: 1.5cm;
+  }
+
+  .controls button {
+    font-size: 0.8cm;
+    border-radius: 0.5cm;
+  }
+}
+
+#max-score-grid {
+  background: #8883;
+}
+
+#share {
+  display: inline-block;
+}
+
+footer {
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+
+.invisible {
+  display: none !important;
+}
+
+:root.touch .no-touch-only,
+:root:not(.touch) .touch-only {
+  display: none;
+}
+
+/* Expandable "component". Uses the checkbox hack to expand and collapse their
+   content without JS */
+.expandable {
+  overflow: hidden;
+}
+
+.expandable-checkbox {
+  display: none;
+}
+
+.expandable-content,
+.expand-toggle,
+.collapse-toggle {
+  transition: all .4s;
+}
+
+.expandable-content {
+  position: relative;
+  display: inline-block;
+}
+
+.expand-toggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(100%);
+}
+
+.expand-toggle,
+.collapse-toggle {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.help-toggle {
+  color: #0bc3ff;;
+}
+
+.high-score-toggle {
+  color: #ff8c0b;
+}
+
+.collapse-toggle {
+  color: #aaa;
+  opacity: 0;
+}
+
+.expandable-checkbox:not(:checked) ~ .expandable-content {
+  transform: translateX(-100%);
+}
+
+.expandable-checkbox:checked ~ .expandable-content .collapse-toggle {
+  opacity: 1;
+}
+
+.expandable-checkbox:checked ~ .expandable-content .expand-toggle {
+  opacity: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background: #222;
+    color: #eee;
+  }
+}
+
+/* Icon font styles copied from Fontello. */
+@font-face {
+  font-family: 'icons';
+  src: url('icons-40046441.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-share:before {
+  content: '\e811';
+}

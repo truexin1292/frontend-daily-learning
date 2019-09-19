@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>start - checkbox</title>
+</head>
+
+<body>
+    <script src="../../../dist/san.js"></script>
+    <script>
+    var MyApp = san.defineComponent({
+        template: '<div>'
+            + '<label><input type="checkbox" value="errorrik" checked="{= online =}">errorrik</label>'
+            + '<label><input type="checkbox" value="otakustay" checked="{= online =}">otakustay</label>'
+            + '<label><input type="checkbox" value="firede" checked="{= online =}">firede</label>'
+            + '<br>{{online}}'
+            + '</div>',
+        initData: function () {
+            return {
+                online: []
+            };
+        },
+
+        attached: function () {
+            this.data.set('online', ['errorrik', 'otakustay']);
+        }
+    });
+
+    var myApp = new MyApp();
+    myApp.attach(document.body);
+    </script>
+</body>
+</html>
+

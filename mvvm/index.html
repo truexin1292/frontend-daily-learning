@@ -18,18 +18,18 @@
 
 <script>
     var vm = new MVVM({
-        el: '#mvvm',
-        data: {
-            a: 'test model',
-            b: 'hello MVVM',
-            flag: true
-        },
-        methods: {
-            testToggle: function () {
-                this.flag = !this.flag;
-                this.b = this.flag ? 'hello MVVM' : 'test success'
-            }
+      el: '#mvvm',
+      data: {
+        a: 'test model',
+        b: 'hello MVVM',
+        flag: true
+      },
+      methods: {
+        testToggle: function () {
+          this.flag = !this.flag;
+          this.b = this.flag ? 'hello MVVM' : 'test success'
         }
+      }
     });
 </script>
 </body>

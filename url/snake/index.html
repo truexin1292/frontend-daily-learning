@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>URL Snake!</title>
+<meta name=description content="Play the classic snake game on the browser URL." />
+<meta name=viewport content="width=device-width, initial-scale=1.0" />
+<link rel=canonical href="index.html">
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel=stylesheet href="style.css">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-35084691-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'UA-35084691-2');
+</script>
+<script>
+  if ('ontouchstart' in document.documentElement) {
+    document.documentElement.classList.add('touch')
+  }
+</script>
+</head>
+<noscript>⚠ Sorry, this game requires JavaScript.</noscript>
+<label class=expandable>
+  <input type=checkbox class=expandable-checkbox>
+  <span class=expandable-content>
+    <span class="help-toggle expand-toggle">?</span>
+    <span class=no-touch-only>Use the arrow keys or WASD to control the snake on the URL.</span>
+    <span class=touch-only>Use the arrows to control the snake on the URL.</span>
+    <span class=collapse-toggle>〈</span>
+  </span>
+</label>
+<label id=max-score-container class="expandable invisible">
+  <input type=checkbox class=expandable-checkbox>
+  <span class=expandable-content>
+    <span class="high-score-toggle expand-toggle">!</span>
+    Your highest score is <span id=max-score></span> points!
+    <span id=max-score-grid></span>
+    <a id=share class=invisible href="index.html#">
+      <i class=icon-share></i>
+      Share
+    </a>
+    <span class=collapse-toggle>〈</span>
+    </span>
+  </span>
+</label>
+<div class="controls touch-only">
+  <button id=up>▲&#xFE0E;</button>
+  <button id=left>◀&#xFE0E;</button>
+  <button id=down>▼&#xFE0E;</button>
+  <button id=right>▶&#xFE0E;</button>
+</div>
+<footer>
+  Made with (⠠⠇) by <a href="https://twitter.com/epidemian">@epidemian</a> |
+  <a href="https://github.com/epidemian/snake">Code</a>
+</footer>
+<script src="snake.js"></script>
