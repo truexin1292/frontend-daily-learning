@@ -32,3 +32,9 @@ if (typeof Object.create !== "function") {
 }
 ```
 ![](.util_images/5640aed6.png)
+
+### 方法：
+--
+- 1.https://lodash.com/docs
+
+- 2.https://juejin.im/post/5da1a04ae51d45783d6122bf#heading-86

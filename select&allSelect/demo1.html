@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue全选例子</title>
+  <!-- 引入element样式 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.12.0/theme-chalk/index.css">
+  <style type="text/css">
+    body, html {
+      width: 100%;
+      height: 100%;
+    }
+
+    #app {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box-card {
+      width: 800px;
+      height: 400px;
+    }
+
+    .check-all {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .box-card i {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #000;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
+
+    .check-list {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .check-item {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #000;
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <el-card class="box-card">
+    <div class="check-all" @click="checkedOrCancelAll()">
+      <i :class="{ 'el-icon-check' : checkedAll }"></i>
+      <p>全选</p>
+    </div>
+    <div class="check-list">
+      <div class="check-item"
+           v-for="(item, index) in checkList"
+           :key="index"
+           @click="checkOrCancelItem(item)"
+      >
+        <i :class="{ 'el-icon-check' : item.checked }"></i>
+      </div>
+    </div>
+  </el-card>
+</div>
+
+<!-- 引入vue -->
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<!-- 引入element组件库 -->
+<script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        // 全选标识
+        checkedAll: false,
+        // 列表项，每一项选中标识默认置为false
+        checkList: [
+          {
+            checked: false
+          },
+          {
+            checked: false
+          },
+          {
+            checked: false
+          },
+          {
+            checked: false
+          }
+        ]
+      }
+    },
+    methods: {
+      // 全选或取消全选
+      checkedOrCancelAll() {
+        this.checkedAll = !this.checkedAll;
+        // 遍历列表修改checked状态，跟随全选标识
+        this.checkList.forEach((item) => {
+          item.checked = this.checkedAll;
+        });
+      },
+      // 选中或取消项目
+      checkOrCancelItem(item) {
+        // 当前选中标识取反
+        item.checked = !item.checked;
+        // 任意列表项取消选择必定触发取消全选
+        if (!item.checked) {
+          this.checkedAll = false;
+        } else {
+          // 遍历列表项判断是否已全选，先将全选标识置为true
+          this.checkedAll = true;
+
+          // 遍历列表项，任意选项未选中则全选标识置为false，同时结束遍历
+          this.checkList.forEach((item) => {
+            if (item.checked === false) {
+              this.checkedAll = false;
+              // 结束forEach循环
+              return false;
+            }
+          });
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
+

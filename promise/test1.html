@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>promise</title>
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+</head>
+
+<body>
+  <script>
+    {
+      const p1 = axios.get('https://easy-mock.com/mock/5b0525349ae34e7a89352191/example/promise1')
+        .then(({
+                 data
+               }) => {
+          console.log('p1成功啦');
+          return data.data
+        })
+
+      const p2 = axios.get('https://easy-mock.com/mock/5b0525349ae34e7a89352191/example/promise2')
+        .then(({
+                 data
+               }) => {
+          console.log('p2成功啦');
+          return data.data
+        })
+
+      const p3 = axios.get('https://easy-mock.com/mock/5b0525349ae34e7a89352191/example/mock')
+        .then(({
+                 data
+               }) => {
+          console.log('p3成功啦');
+          return data.data
+        })
+
+      const p = Promise.all([p3, p1, p2])
+        .then(arr => {
+          console.log(arr);
+          console.log('Promise.all成功啦');
+        })
+        .catch(err=>{
+          console.log(err,'Promise.all错啦');
+        })
+    }
+  </script>
+</body>
+
+</html>

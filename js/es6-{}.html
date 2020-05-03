@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  var infoData = {
+    name: 'alex',
+    age: 23,
+    gender: 0,
+    class1: null,
+    grade: false,
+    school: '',
+    num: NaN,
+    arr: [],
+    obj: {},
+    right: undefined,
+  };
+
+  var { // 只有undefined
+    age = 'test',
+    gender = 'test',
+    class1 = 'test',
+    grade = 'test',
+    school = 'test',
+    num = 'test',
+    arr = 'test',
+    obj = 'test',
+    right = 'test',
+  } = infoData;
+  var reqData = {
+    name,
+    school,
+    class1,
+    grade,
+    age,
+    gender,
+    num,
+    arr,
+    obj,
+    right,
+  }
+  console.log('reqData', reqData);
+</script>
+</body>
+</html>
