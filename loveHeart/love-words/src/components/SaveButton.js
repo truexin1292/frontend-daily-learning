@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-05-03 09:19:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: /frontend-daily-learning/loveHeart/honeyed-words-generator/src/components/SaveButton.js
+ * @FilePath: /frontend-daily-learning/loveHeart/love-words/src/components/SaveButton.js
  */
 import React, { useState } from 'react';
 import styled from 'styled-components';

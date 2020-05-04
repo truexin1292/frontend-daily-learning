@@ -1,16 +1,12 @@
 {
-  "name": "honeyed-words-generator",
-  "version": "1.3.0",
+  "name": "love-words",
+  "version": "1.4.0",
   "description": "土味情话",
   "main": "index.js",
   "scripts": {
     "start": "node scripts/start.js",
     "dev": "yarn start",
     "build": "node scripts/build.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zerosoul/honeyed-words-generator.git"
   },
   "keywords": [
     "css3",
@@ -20,12 +16,8 @@
     "tool",
     "love"
   ],
-  "author": "tristan",
+  "author": "truexin",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zerosoul/honeyed-words-generator/issues"
-  },
-  "homepage": "https://zerosoul.github.io/honeyed-words-generator",
   "dependencies": {
     "@ungap/url-search-params": "^0.1.4",
     "canvas2image": "^1.0.5",

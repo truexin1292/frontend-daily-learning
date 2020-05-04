@@ -74,22 +74,22 @@ const Modal = ({ visible = false }) => (
     <div className="line title">土味情话在线生成器</div>
     <div className="line github">
       <GitHubButton
-        href="https://github.com/zerosoul/honeyed-words-generator"
+        href="https://github.com/zerosoul/love-words"
         data-color-scheme="no-preference: light; light: light; dark: dark;"
         data-icon="octicon-star"
         data-size="large"
         data-show-count="true"
-        aria-label="Star zerosoul/honeyed-words-generator on GitHub"
+        aria-label="Star zerosoul/love-words on GitHub"
       >
         Star
       </GitHubButton>
       <GitHubButton
-        href="https://github.com/zerosoul/honeyed-words-generator/fork"
+        href="https://github.com/zerosoul/love-words/fork"
         data-color-scheme="no-preference: light; light: light; dark: dark;"
         data-icon="octicon-repo-forked"
         data-size="large"
         data-show-count="true"
-        aria-label="Fork zerosoul/honeyed-words-generator on GitHub"
+        aria-label="Fork zerosoul/love-words on GitHub"
       >
         Fork
       </GitHubButton>

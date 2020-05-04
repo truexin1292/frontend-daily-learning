@@ -87,7 +87,7 @@ const Modal = ({ visible = false }) => {
           <p className="con">
             如果你知道Github并且会如何使用，可以通过
             <a
-              href="https://github.com/zerosoul/honeyed-words-generator#%E8%B4%A1%E7%8C%AE%E5%9C%9F%E5%91%B3%E6%83%85%E8%AF%9D"
+              href="https://github.com/zerosoul/love-words#%E8%B4%A1%E7%8C%AE%E5%9C%9F%E5%91%B3%E6%83%85%E8%AF%9D"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -95,7 +95,7 @@ const Modal = ({ visible = false }) => {
             </a>
             ，或者直接提
             <a
-              href="https://github.com/zerosoul/honeyed-words-generator/issues"
+              href="https://github.com/zerosoul/love-words/issues"
               target="_blank"
               rel="noopener noreferrer"
             >

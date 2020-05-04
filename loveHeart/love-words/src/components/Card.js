@@ -221,7 +221,7 @@ export default function Card({ visible = false }) {
           <CodeQR
             renderAs="svg"
             imageSettings={{ width: 10, height: 10, src: ImageLogo, excavate: true }}
-            size={30}
+            size={50}
             bgColor="#f2f2f2"
             level="Q"
             fgColor="#000"

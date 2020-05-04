@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-05-03 10:19:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: /frontend-daily-learning/loveHeart/honeyed-words-generator/src/App.js
+ * @FilePath: /frontend-daily-learning/loveHeart/love-words/src/App.js
  */
 import React, { lazy, Suspense, useState } from 'react';
 
