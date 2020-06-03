@@ -56,7 +56,7 @@ git checkout . && git clean -xdf
 （5）git stash apply :应用某个存储,但不会把存储从存储列表中删除，默认使用第一个存储,即 stash@{0}，num从0开始，如果要使用其他个，git stash apply stash@{$num} ， 比如第二个：git stash apply stash@{1}
 
 （6）git stash pop ：命令恢复之前缓存的工作目录，将缓存堆栈中的对应 stash 删除，并将对应修改应用到当前的工作目录下,默认为第一个 stash,即 stash@{0}，如果要应用并删除其他 stash，命令：git stash pop stash@{$num} ，比如应用并删除第二个：git stash pop stash@{1}
-
+    需要将本地代码push先，否则会可能提示merge冲突等
 （7）git stash drop stash@{$num} ：丢弃stash@{$num}存储，从列表中删除这个存储
 
 （8）git stash clear ：删除所有缓存的 stash
