@@ -1,0 +1,99 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta
+    name="viewport"
+    content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no"
+  />
+  <meta
+    name="description"
+    content="-"
+  />
+</head>
+<body>
+<div id='app'>
+  <router-link to="/login?id=333&name=alex">登录</router-link>
+  <router-link to="/register?id=33">注册</router-link>
+  <router-link to="/home">首页</router-link>
+  <router-link :to="{path:'/home/query',query:{num:1}}">home/query</router-link>
+  <router-link :to="{name:'/home/params',params:{num:2}}">home/params</router-link>
+  <router-view></router-view>
+</div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.2.0/vue-router.js"></script>
+<script>
+  let login = {
+    template: '<h3>这是登录子组件，这个组件是奔波开发的</h3>'
+  };
+  let register = {
+    template: '<h3>这是注册子组件，这个组件是霸波奔开发的</h3>'
+  };
+  let home = {
+    template: '<h3><router-link to="/home/list/2222">list</router-link>这是首页子组件，这个组件是首页开发的</h3>'
+  };
+  let list = {
+    template: '<h3>这是首页子组件，这个组件是llist开发的</h3>'
+  };
+  let none = {
+    template: '<h3>没有数据</h3>'
+  };
+  let router = new VueRouter({
+    routes: [
+      { path: "/", redirect: '/login' },
+      { path: '/login', component: login },
+      { path: '/register', component: register },
+      { path: '/home/params', component: none },
+      { path: '/home/query', component: none },
+      {
+        path: '/home',
+        component: home,
+        children: [
+          { path: "/home/list/:num", component: list }
+        ]
+      },
+    ]
+  });
+  let vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {},
+    router,
+    watch: {
+      // this.$route.path
+      // 1
+      // '$route.path': function (newVal, oldVal) {
+      //   //console.log(newVal+"---"+oldVal);
+      //   if (newVal === '/login') {
+      //     console.log('欢迎进入登录页面');
+      //   } else if (newVal === '/register') {
+      //     console.log('欢迎进入注册页面');
+      //   }
+      // },
+      // 2
+      // '$route': {
+      //   handler(newVal, oldVal) {
+      //     const { path } = newVal;
+      //     if (path === '/login') {
+      //       console.log('欢迎进入登录页面');
+      //     } else if (path === '/register') {
+      //       console.log('欢迎进入注册页面');
+      //     }
+      //   },
+      //   // immediate: true,
+      //   // deep: true,
+      // },
+      // 3
+      $route(to, from) {
+        const { path, query, params, fullPath, hash, matched, meta, name } = to;
+        console.log(path, query, params, to);
+        if (path === '/login') {
+          console.log('欢迎进入登录页面');
+        } else if (path === '/register') {
+          console.log('欢迎进入注册页面');
+        }
+      }
+    }
+  })
+</script>
+</html>

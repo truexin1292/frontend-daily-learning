@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS隐藏元素 display visibility opacity的区别</title>
+</head>
+<style>
+  div {
+    background: lightblue;
+    width: 300px;
+    height: 300px;
+  }
+
+  .display {
+    display: none;
+  }
+
+  .visibility {
+    visibility: hidden;
+  }
+
+  .opacity {
+    opacity: 0;
+  }
+
+  .absolute {
+    position: absolute;
+    top: -100%;
+  }
+
+  .overflow {
+    height: 0;
+    overflow: hidden;
+  }
+</style>
+<body>
+<div class="display">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+  A est laboriosam maxime ratione rem reprehenderit rerum vero! Ab aut consequatur dicta doloribus eius,
+  eum ex, maiores, nobis odio reprehenderit similique?
+</div>
+<br/>
+
+<div class="visibility">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+  A est laboriosam maxime ratione rem reprehenderit rerum vero! Ab aut consequatur dicta doloribus eius,
+  eum ex, maiores, nobis odio reprehenderit similique?
+</div>
+<br/>
+
+<div class="opacity">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A est laboriosam maxime ratione
+  rem reprehenderit rerum vero!
+  Ab aut consequatur dicta doloribus eius, eum ex, maiores, nobis odio reprehenderit similique?
+</div>
+<br/>
+
+<div class="absolute">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A est laboriosam maxime ratione
+  rem reprehenderit rerum vero!
+  Ab aut consequatur dicta doloribus eius, eum ex, maiores, nobis odio reprehenderit similique?
+</div>
+<br/>
+
+<div class="overflow">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A est laboriosam maxime ratione
+  rem reprehenderit rerum vero!
+  Ab aut consequatur dicta doloribus eius, eum ex, maiores, nobis odio reprehenderit similique?
+</div>
+<br/>
+
+<script>
+  document.querySelector('.display').addEventListener('click', function () {
+    console.log(this);
+  })
+  document.querySelector('.visibility').addEventListener('click', function () {
+    console.log(this);
+  })
+  document.querySelector('.opacity').addEventListener('click', function () {
+    console.log(this);
+  })
+  document.querySelector('.absolute').addEventListener('click', function () {
+    console.log(this);
+  })
+  document.querySelector('.overflow').addEventListener('click', function () {
+    console.log(this);
+  })
+</script>
+</body>
+</html>
