@@ -18,6 +18,7 @@
   <router-link :to="{path:'/home/query',query:{num:1}}">home/query</router-link>
   <router-link :to="{name:'/home/params',params:{num:2}}">home/params</router-link>
   <router-view></router-view>
+  <!-- router-view 路由出口, 路由匹配到的组件将渲染在这里 -->
 </div>
 </body>
 <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
@@ -30,7 +31,12 @@
     template: '<h3>这是注册子组件，这个组件是霸波奔开发的</h3>'
   };
   let home = {
-    template: '<h3><router-link to="/home/list/2222">list</router-link>这是首页子组件，这个组件是首页开发的</h3>'
+    template: '<div>' +
+      // '<router-link to="/home/list/2222">list</router-link>' +
+      '<router-link to="name:'list1',params:{num:2222}">list</router-link>' +
+      '这是首页子组件，这个组件是首页开发的' +
+      '<router-view></router-view>' +
+      '</div>'
   };
   let list = {
     template: '<h3>这是首页子组件，这个组件是llist开发的</h3>'
@@ -49,7 +55,8 @@
         path: '/home',
         component: home,
         children: [
-          { path: "/home/list/:num", component: list }
+          // { path: "/home/list/:num", component: list }, // 设置别名，防止pc易修改url，造成安全隐患
+          { name: 'list1', path: "/home/list/:num", component: list }
         ]
       },
     ]
