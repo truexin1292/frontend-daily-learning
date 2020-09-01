@@ -1,0 +1,22 @@
+Product Unique ID,Product Category,Product Title,Product Description,Product Condition,Product Brand,Product Material,Variation Unique ID,Variation Size,Variation Color,Variation Quantity,Starting Bid,Retail Price,Target Price,Buy Now Price,Reserve Price,Shipping Price,Campaign Name,Ships From Country,Shipping Weight In Ounces,Days To Process Order,Expedited Shipping Price,Expedited Delivery Time,Buy One Get One Price,Buy One Get One Available,Accessory Price,Accessory Description,Accessory Unique ID,Primary Image URL,Extra Image URL 1,Extra Image URL 2,Extra Image URL 3,Extra Image URL 4,Status
+RING-1,Jewelry | Rings,CSV Example - [Actual Product Title],"Ring in platinum with a pear-shaped rubellite and round brilliant diamonds.
+
+Rubellite, carat weight 1.50. Diamonds, carat total weight .45.",New,Elite Jewelry Studio,Platinum,RING-1-6,6,,100,1,49,20,22,,5,My First Campaign,United States,5,3,,,,,15,18k White Gold Earrings,velvet-box-5321,https://d38eepresuu519.cloudfront.net/e40973404de30afb1be04ea118348a96/original.jpg,https://d38eepresuu519.cloudfront.net/1b9d8e9eec122afcf550ebda306484d4/original.jpg,,,,Enabled
+RING-1,,,,,,,RING-1-7,7,,100,,,,,,,,,,,,,,,,,,,,,,,
+RING-1,,,,,,,RING-1-8,8,,100,,,,,,,,,,,,,,,,,,,,,,,
+RING-1,,,,,,,RING-1-9,9,,100,,,,,,,,,,,,,,,,,,,,,,,
+NX-TOTE-1,Accessories | Bags | Shoulder Bags & Hobos,CSV Example - [Actual Product Title],"- Faux leather.
+- Zip top closure.
+- Gold-tone hardware.
+- Detachable shoulder strap.
+- L 9 * H 7 * W 4 (5.5 D)",New with Tags,NX,Faux Leather,NX-TOTE-1-WHITE,,White,5,1,129,50,52,,10,,United States,80,2,,,70,Y,,,,https://d38eepresuu519.cloudfront.net/e40973404de30afb1be04ea118348a96/original.jpg,https://d38eepresuu519.cloudfront.net/1b9d8e9eec122afcf550ebda306484d4/original.jpg,,,,Disabled
+NX-TOTE-1,,,,,,,NX-TOTE-1-BROWN,,Brown,5,,,,,,,,,,,,,,,,,,,,,,,
+TOP-1,Apparel | Tops | Shirts,CSV Example - [Actual Product Title],"This sexy and stylish one piece swimsuit is a must have!
+
+The features include a one piece with sleeveless design, cut out design with woven lace up ties throughout, and finished with padding.",New with Tags,ZXZY,,TOP-1-S-WHITE,Small,White,10,1,29,15,17,,3,,China,64,3,7,5,,,,,,https://d38eepresuu519.cloudfront.net/e40973404de30afb1be04ea118348a96/original.jpg,https://d38eepresuu519.cloudfront.net/1b9d8e9eec122afcf550ebda306484d4/original.jpg,,,,
+TOP-1,,,,,,,TOP-1-M-WHITE,Medium,White,10,,,,,,,,,,,,,,,,,,,,,,,
+TOP-1,,,,,,,TOP-1-S-BLACK,Small,Black,10,,,,,,,,,,,,,,,,,,,,,,,
+TOP-1,,,,,,,TOP-1-M-BLACK,Medium,Black,10,,,,,,,,,,,,,,,,,,,,,,,
+HEADPHONES-1,Electronics | Audio | Headphones,CSV Example - [Actual Product Title],"- Comfortable and easy to use. No more knots!
+- Bass Boost System: Superior sound with enhanced bass.
+- Mic and Controls: Built-in High-Grade Mic and Controls.",New,LG,,HEADPHONES-1,,,100,1,19,6,8,,3,,China,100,3,,,,,,,,https://d38eepresuu519.cloudfront.net/e40973404de30afb1be04ea118348a96/original.jpg,https://d38eepresuu519.cloudfront.net/1b9d8e9eec122afcf550ebda306484d4/original.jpg,,,,

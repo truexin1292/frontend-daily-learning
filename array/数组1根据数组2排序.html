@@ -1,0 +1,197 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta
+    name="viewport"
+    content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no"
+  />
+  <style>
+    .list {
+      width: 1050px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    li {
+      list-style: none;
+      float: left;
+      width: 100px;
+      height: 50px;
+      line-height: 50px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      text-align: center;
+      background: #ccc;
+    }
+
+    li:nth-of-type(2n) {
+      background: #eee;
+    }
+
+    li span {
+      padding-right: 10px;
+      color: #f40;
+    }
+  </style>
+  <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+  <script>
+    new VConsole();
+  </script>
+</head>
+<body>
+<ul id="list" class="list"></ul>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="">
+
+</script>
+<script>
+  // 如果省略，元素按照转换为的字符串的各个字符的Unicode位点进行排序。
+  // 原来，V8 引擎 sort 函数只给出了两种排序 InsertionSort 和 QuickSort，数量小于10的数组使用 InsertionSort，比10大的数组则使用 QuickSort
+  // https://blog.csdn.net/weixin_42714574/article/details/105909564
+  // Array.sort([compareFunction])
+
+  // To sort numbers
+  // in ascending order (1, 2, 3...): function(a, b){return a - b;}
+  // in descending order (9, 8, 7...): function(a, b){return b - a;}
+  //
+  // To sort strings
+  // in ascending order (A, B, C...): function(a, b){return a > b? 1: -1;}
+  // in descending order (Z, Y, X...): function(a, b){return b > a? 1: -1;}
+  //
+  // To sort objects add them to an array,
+  //   then sort by key: function(a, b){return a.key - b.key;}
+
+  // https://stackoverflow.com/questions/9831330/how-does-the-javascript-sort-function-workas-an-algorithm
+
+  // 注意：
+  var arr = [ 2, 6, 8, 8, 2, 10 ];
+  console.log(arr.sort());  //[ 10, 2, 2, 6, 8, 8 ]
+
+  let list = [];
+  for (let i = 0; i < 148; i++) {
+    list.push({
+      id: i + 1,
+      name: 'test' + (i + 1)
+    });
+  }
+
+  let sortList = [ 50, 142, 52, 33, 66 ];
+
+  list.sort((a, b) => {
+    let aIndex = sortList.indexOf(a.id);
+    let bIndex = sortList.indexOf(b.id);
+    if (aIndex !== -1) {
+      if (bIndex !== -1) {
+        return aIndex < bIndex ? -1 : 1;
+      }
+      return -1;
+    }
+    return 1;
+  });
+
+  let listHtml = '';
+  for (let j = 0; j < list.length; j++) {
+    listHtml += `
+		<li><span>${ list[j].id }</span>${ list[j].name }</li>
+	`;
+  }
+  $('#list').append(listHtml);
+
+  const arr1 = [ 1, 2, 3, 4, 6, 4, 5, 6, 7, 8, 9, 10 ];
+  const arr2 = [ 3, 6, 9, 4 ];
+  const arr3 = [ 3, 1, 6, 9 ];
+  // arr1.sort((a, b) => b - a); // 负数-> 倒序 b小
+  // console.log('arr===', arr1);
+  //
+  // arr1.sort((a, b) => a - b); // 正数-> 正序 b大
+  // console.log('arr===', arr1);
+
+  arr1.sort((a, b) => { // return ±数字 决定排序，负数-倒序，正数正序，
+    let aIndex = arr2.indexOf(a);
+    let bIndex = arr2.indexOf(b);
+
+    // let aIndex = arr3.indexOf(a);
+    // let bIndex = arr3.indexOf(b);
+
+    console.log(a, b, aIndex, bIndex);
+
+    if (aIndex >= 0) { // arr2和arr3都有效果
+      if (bIndex >= 0) { // arr2 无效果，arr3 有效果
+        return aIndex < bIndex ? -2 : 2;
+      }
+      return -2;
+    }
+    return 2;
+  });
+  console.log('arr===', arr1);
+
+  // 原生js实现sort
+
+  // version1：
+  function mysSort1(arr, fn) {
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = 0; j < arr.length - 1 - i; j++) {
+        if (fn(arr[j], arr[j + 1]) > 0) {
+          let temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+      }
+    }
+    return arr;
+  }
+
+  // version2：
+  function mysSort2(fn) {
+    const arr = this;
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = 0; j < arr.length - 1 - i; j++) {
+        if (fn(arr[j], arr[j + 1]) > 0) {
+          let temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+      }
+    }
+    return arr;
+  }
+
+  // version3：
+  function mysSort3(fn) {
+    const arr = this;
+    for (let i = 0; i < arr.length - 1; i++) {
+      let flag = true;
+      for (let j = 0; j < arr.length - 1 - i; j++) {
+        if (typeof fn === 'function' && fn(arr[j], arr[j + 1]) > 0) {
+          flag = false;
+          let temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        } else if (arr[j + 1] - arr[j] > 0) {
+          flag = false;
+          let temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+      }
+      if (flag) {
+        break;
+      }
+    }
+    return arr;
+  }
+
+  const myArr = [ 6, 64, 5, 1, 8 ];
+
+  // mysSort(myArr, (a, b) => b - a); // 形参，传递函数
+
+  // Array.prototype.mysSort = mysSort1;
+  // Array.prototype.mysSort = mysSort2;
+  Array.prototype.mysSort = mysSort3;
+  // myArr.mysSort(false, (a, b) => b - a);
+  myArr.mysSort();
+
+  console.log('myArr:--', myArr); // [ 64, 8, 6, 5, 1 ]
+</script>
+</html>

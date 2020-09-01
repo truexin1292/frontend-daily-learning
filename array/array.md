@@ -332,3 +332,7 @@ isParensBalanced('(asdfds)') //0 <-- balanced
 isParensBalanced('(()') // 1 <-- not balanced
 isParensBalanced(')(') // -1 <-- not balanced
 ```
+
+
+### Array.sort()
+![](.array_images/5b330528.png)

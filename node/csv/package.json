@@ -1,0 +1,21 @@
+{
+  "name": "csv",
+  "version": "1.0.0",
+  "main": "csv",
+  "scripts": {
+    "csv": "node demo.js",
+    "check": "json2csv -i file/test.json -f carModel,price,color",
+    "gen": "json2csv -i file/test.json -f carModel,price,color -o file/out.csv"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "jschardet": "^2.2.1",
+    "request": "^2.88.2",
+    "chardet": "^1.2.1",
+    "iconv-lite": "^0.6.2",
+    "json-2-csv": "^3.7.6",
+    "json2csv": "^5.0.1"
+  }
+}

@@ -75,7 +75,12 @@
   >
     {{ tab }}
   </button>
-
+<!--include exclude max-->
+<!--  include定义缓存白名单，keep-alive会缓存命中的组件；
+      exclude定义缓存黑名单，被命中的组件将不会被缓存；
+      max定义缓存组件上限，超出上限使用LRU的策略置换缓存数据。
+      -->
+<!--  LRU = least recently used 最近最少使用的 缓存策略清除-->
   <keep-alive>
     <component v-bind:is="currentTabComponent" class="tab"></component>
   </keep-alive>
