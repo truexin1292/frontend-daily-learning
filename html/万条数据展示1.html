@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+</head>
+<body>
+<div id="root">
+  <search/>
+</div>
+<script type="text/babel">
+  //列表数据接口: http://apicloud.mypaas.com.cn/mockview/appdesign?path=%2Fapi%2Flistdata&api=%2Fapi%2Flistdata
+  //列表数据搜索
+  const Search = {
+    data() {
+      return {
+        serarchWord: '',
+        listData: [],
+      }
+    },
+    methods: {
+      getData() {
+        axios({
+          url: 'http://apicloud.mypaas.com.cn/mockview/appdesign?path=%2Fapi%2Flistdata&api=%2Fapi%2Flistdata',
+          // url: 'http://apicloud.mypaas.com.cn/mockview/appdesign?path=%2Fapi%2Flistdata',
+          // url: 'http://apicloud.mypaas.com.cn/mockview/appdesign',
+          method: 'GET',
+          params: {
+            keyWord: this.serarchWord
+          }
+        }).then(res => {
+          let data = res.data.data;
+          let groupData = this.group(data);
+          for (let i = 0; i < groupData.length; i++) {
+            setTimeout(() => {
+              this.listData.push(...groupData[i]);
+            }, 1000 * i);
+          }
+        })
+      },
+      group(data) {
+        const result = [];
+        let groupItem;
+        for (let i = 0; i < data.length; i++) {
+          if (i % 1000 === 0) {
+            groupItem != null && result.push(groupItem);
+            groupItem = [];
+          }
+          groupItem.push(data[i]);
+        }
+        result.push(groupItem);
+        return result;
+      },
+      inputChange() {
+        this.debounceSearch();
+      },
+      debounce(fn, wait) {
+        let timeout = null;
+        return function () {
+          if (timeout !== null) {
+            clearTimeout(timeout);
+          }
+          timeout = setTimeout(fn, wait);
+        }
+      }
+    },
+    mounted() {
+      this.debounceSearch = this.debounce(this.getData, 800);
+      this.debounceSearch();
+    },
+    template: `
+        <div>
+          <input v-model="serarchWord" @input="inputChange"/>
+          <ul>
+            <li v-for="(item, index) in listData" :key="item.id">{{item.title}}</li>
+          </ul>
+        </div>
+      `
+  };
+  new Vue({
+    el: '#root',
+    components: {
+      'search': Search
+    }
+  })
+</script>
+</body>
+</html>

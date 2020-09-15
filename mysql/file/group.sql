@@ -1,10 +1,3 @@
-# 文档说明
-
-数据表students => test.sql; 
-数据表结构students => abc.sql;
-数据表employee_tbl => group.sql
-
-```shell script
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -28,4 +21,3 @@ INSERT INTO `employee_tbl` VALUES ('1', '小明', '2016-04-22 15:25:33', '1'), (
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
-```

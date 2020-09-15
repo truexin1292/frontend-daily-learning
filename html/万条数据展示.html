@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="content"></div>
+<script>
+  const dateStart = Date.now();
+  $.get('./data/thousands.json', function (res) {
+    let html = '';
+    for (let i = 0; i < res.data.length; i++) {
+      const item = res.data[i];
+      html += "<li>title:" + item.title + i + " content:" + item.content + i + "</li>";
+    }
+    $("#content").append(html);
+    const dateEnd = Date.now();
+    console.log((dateEnd - dateStart) / 1000 + 's');
+  });
+</script>
+</body>
+</html>

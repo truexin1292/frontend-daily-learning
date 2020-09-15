@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="content"></div>
+<script>
+  (function () {
+    const response = [];
+    for (let i = 0; i < 99999; i++) {
+      response.push({
+        "id": "807e7720-575447538218-b1c8195" + i + response.length,
+        "title": "列表项-" + i + ":抹户批戺抽找扯拇扣拄"
+      })
+    }
+    console.log('mock data starting!response里大概有100万条数据');
+    loadAll(response);
+  })();
+
+  // $.get('./data/thousands.json', function (response) {
+  //   //response里大概有40万条数据
+  //   loadAll(response.data);
+  // });
+
+  // $.get("http://apicloud.mypaas.com.cn/mockview/appdesign?path=%2Fapi%2Flistdata&api=%2Fapi%2Flistdata",
+  //   function (response) {
+  //     //response里大概有10万条数据
+  //     loadAll(response.data);
+  //   });
+
+  function loadAll(response) {
+    //将13万条数据分组， 每组500条，一共260组
+    let groups = group(response);
+    for (let i = 0; i < groups.length; i++) {
+      //闭包， 保持i值的正确性
+      window.setTimeout(function () {
+        let group = groups[i];
+        let index = i + 1;
+        return function () {
+          //分批渲染
+          loadPart(group, index);
+        }
+      }(), 1);
+    }
+  }
+
+  //数据分组函数（每组500条）
+  function group(data) {
+    let result = [];
+    let groupItem;
+    for (let i = 0; i < data.length; i++) {
+      if (i % 500 === 0) {
+        groupItem != null && result.push(groupItem);
+        groupItem = [];
+      }
+      groupItem.push(data[i]);
+    }
+    result.push(groupItem);
+    return result;
+  }
+
+  let currIndex = 0;
+
+  //加载某一批数据的函数
+  function loadPart(group, index) {
+    const dateStart = Date.now();
+    let html = "";
+    for (let i = 0; i < group.length; i++) {
+      let item = group[i];
+      html += "<li>title:" + item.title + index + " content:" + item.content + index + "</li>";
+    }
+    //保证顺序不错乱
+    while (index - currIndex === 1) {
+      $("#content").append(html);
+      const dateEnd = Date.now();
+      console.log((dateEnd - dateStart) / 1000 + 's');
+      currIndex = index;
+    }
+  }
+</script>
+</body>
+</html>
