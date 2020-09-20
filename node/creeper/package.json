@@ -1,0 +1,15 @@
+{
+  "name": "creeper",
+  "version": "1.0.0",
+  "description": "爬虫公众号文章",
+  "scripts": {
+    "dev": "node index.js",
+    "createF": "node create.js",
+    "deleteF": "node delete.js"
+  },
+  "author": "truexin",
+  "license": "ISC",
+  "dependencies": {
+    "we-extract": "^1.2.27"
+  }
+}
