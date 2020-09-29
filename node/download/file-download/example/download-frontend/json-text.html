@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>file-dowanload</title>
+</head>
+
+<body>
+<textarea name="" id="text" cols="30" rows="10"></textarea>
+<button id="textBtn">下载文本</button>
+<p></p>
+<textarea name="" id="json" cols="30" rows="10" disabled>
+{
+    "name": "秋风的笔记"
+}
+</textarea>
+<button id="jsonBtn">下载JSON</button>
+<script type="module">
+    import {downloadByContent, downloadByDataURL} from '../js/utils.js';
+    textBtn.onclick = () => {
+        const value = text.value;
+        downloadByContent(value, 'hello.txt', 'text/plain');
+        // downloadByDataURL(value, 'hello.txt', 'text/plain');
+
+    }
+    jsonBtn.onclick = () => {
+        const value = json.value;
+        downloadByContent(value, 'hello.json', 'application/json');
+        // downloadByDataURL(value, 'hello.json', 'application/json');
+    }
+</script>
+</body>
+
+</html>

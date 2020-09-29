@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/axios/0.19.2/axios.min.js"></script>
+</head>
+<body>
+    <button id="oBtnDownload">点击下载</button>
+<script type="module">
+import {base64ToBlob, downloadByBlob} from '../js/utils.js';
+function download({ base64, filename, type }) {
+    const blob = base64ToBlob(blob, type);
+    downloadByBlob(blob, filename);
+}
+oBtnDownload.onclick = function(){
+    axios.get('http://localhost:8888/api/base64?filename=1597375650384.jpg').then(res => {
+        if(res.data.code === 0) {
+            download(res.data.data);
+        }
+    })
+}
+</script>
+</body>
+</html>

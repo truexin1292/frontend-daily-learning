@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <title>微信浏览器字体放大禁止</title>
+  <style>
+    body {
+      width: 100vw !important;
+      padding: 0;
+      margin: 0;
+      -webkit-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important;
+    }
+
+    .content {
+      padding: .2rem;
+      overflow: auto;
+      font-size: .26rem;
+      color: #999;
+    }
+
+    .title {
+      font-size: .3rem;
+      color: #666;
+      word-break: break-all; /*按字符截断换行 !* 支持IE和chrome，FF不支持*!*/
+      word-wrap: break-word; /*按英文单词整体截断换行  !* 以上三个浏览器均支持 *!*/
+    }
+
+    .loading-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #fff;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loading-mask .loading {
+      height: 40px;
+    }
+
+    .loading-mask .loading span {
+      display: inline-block;
+      width: 8px;
+      height: 100%;
+      border-radius: 4px;
+      background: lightgreen;
+      -webkit-animation: load 1s ease infinite;
+    }
+
+    @-webkit-keyframes load {
+      0%, 100% {
+        height: 40px;
+        background: lightgreen;
+      }
+      50% {
+        height: 70px;
+        margin: -15px 0;
+        background: lightblue;
+      }
+    }
+
+    .loading-mask .loading span:nth-child(2) {
+      -webkit-animation-delay: 0.2s;
+    }
+
+    .loading-mask .loading span:nth-child(3) {
+      -webkit-animation-delay: 0.4s;
+    }
+
+    .loading-mask .loading span:nth-child(4) {
+      -webkit-animation-delay: 0.6s;
+    }
+
+    .loading-mask .loading span:nth-child(5) {
+      -webkit-animation-delay: 0.8s;
+    }
+
+  </style>
+</head>
+<body>
+<div class="content">
+  <h1 class="title">麻烦你来修改我的字体大小啦，你看行不行，哈哈哈哈哈</h1>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+  Aperiam consectetur consequatur eius eligendi facilis hic
+  laboriosam molestias odit omnis quae,
+  quaerat reiciendis reprehenderit rerum suscipit ullam vel, veritatis vitae voluptate?
+</div>
+<div class="loading-mask" id="loadingMask">
+  <div class="loading">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<script>
+  ;(function (doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        if (clientWidth >= 750) {
+          clientWidth = 750;
+          doc.body.style.width = 750 + 'px';
+        } else {
+          doc.body.style.width = clientWidth + 'px';
+        }
+        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        docEl.dataset.percent = 100 * (clientWidth / 750);
+      };
+    recalc();
+    doc.documentElement.classList.add('iosx' + win.devicePixelRatio);
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+  })(document, window);
+</script>
+<script>
+  // 页面加入这段代码可使Android机器页面不再受到用户字体缩放强制改变大小
+  // 但是会有一个1秒左右的延迟，期间可以考虑通过loading展示
+  // 仅供参考
+  var isAndroid = /(?:Android)/.test(navigator.userAgent);
+  if (isAndroid) {
+    var timer = null;
+    document.getElementById('loadingMask').style.display = 'flex';
+
+    ;(function () {
+      if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+        handleFontSize();
+      } else {
+        if (document.addEventListener) {
+          document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
+        } else if (document.attachEvent) {
+          document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+          document.attachEvent("onWeixinJSBridgeReady", handleFontSize);
+        }
+      }
+
+      function handleFontSize() {
+        // 直接修改用户设置的/默认字体
+        WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize': 0 });
+        // 重写设置网页字体大小的事件
+        WeixinJSBridge.on('menu:setfont', function () {
+          WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize': 0 });
+        });
+      }
+    })();
+
+    timer = setTimeout(function () {
+      document.getElementById('loadingMask').style.display = 'none';
+      timer.clearTimeout();
+      timer = null;
+    }, 500);
+  }
+</script>
+</body>
+</html>
