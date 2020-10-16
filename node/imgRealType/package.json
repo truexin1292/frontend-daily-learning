@@ -1,0 +1,14 @@
+{
+  "name": "imgrealtype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test2": "node test2.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "imageinfo": "^1.0.4"
+  }
+}

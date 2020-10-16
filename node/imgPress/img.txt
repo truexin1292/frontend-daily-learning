@@ -1,0 +1,49 @@
+* ./img/hh.gif 22 images
+  logical screen 300x186
+  global color table [128]
+  background 0
+  loop forever
+  + image #0 300x186
+    disposal asis delay 0.10s
+  + image #1 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #2 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #3 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #4 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #5 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #6 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #7 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #8 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #9 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #10 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #11 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #12 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #13 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #14 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #15 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #16 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #17 300x186 transparent 67
+    disposal asis delay 0.10s
+  + image #18 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #19 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #20 300x186 transparent 68
+    disposal asis delay 0.10s
+  + image #21 300x186 transparent 68
+    disposal asis delay 0.10s

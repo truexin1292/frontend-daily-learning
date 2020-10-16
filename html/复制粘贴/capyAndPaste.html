@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>原生js实现-复制粘贴</title>
+</head>
+<body>
+<input type="text" id="input-copy"/>
+<input type="text" id="input-paste">
+<button type="button" id="clipboardCopy">复制</button>
+<button type="button" id="clipboardPaste">粘贴</button>
+<script>
+  document.getElementById('clipboardCopy').addEventListener('click', clipboardCopy);
+  document.getElementById("clipboardPaste").addEventListener('click', clipboardPaste);
+
+  async function clipboardCopy() {
+    const text = document.querySelector("#input-copy").value;
+    await navigator.clipboard.writeText(text);
+  }
+
+  function clipboardPaste() {
+    navigator.clipboard.readText().then(clipText => {
+      document.querySelector("#input-paste").value = clipText;
+    })
+  }
+</script>
+</body>
+</html>

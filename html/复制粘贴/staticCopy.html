@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>静态复制</title>
+  <style>
+    body {
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+<script>
+  const taoPassword = {
+    "data": {
+      "officialPassword": "",
+      "ownPassword": [
+        "##aNUhYSdVHb8##",
+        "##ldOlpdzQzb8##",
+        "##6s4Qvls3Mb8##",
+        "##Ndi2ce4VHb8##",
+        "##u1vpzuuoUb8##",
+        "##57GoLEKKQb8##"
+      ]
+    }
+  };
+
+  // 获取cookie
+  function getCookie(name) {
+    if (document.cookie.length > 0) {
+      let start = document.cookie.indexOf(`${name}=`);
+      if (start !== -1) {
+        start = start + name.length + 1;
+        let end = document.cookie.indexOf(';', start);
+        if (end === -1) {
+          end = document.cookie.length;
+        }
+        return unescape(document.cookie.substring(start, end));
+      }
+    }
+    return '';
+  }
+
+  class SilentCopy {
+    constructor() {
+      this.ownPasswordArr = taoPassword.data.ownPassword; // 自己淘口令
+      this.officialPassword = taoPassword.data.officialPassword; // 官方淘口令
+      if (!getCookie('SLIENT_COPY')) {
+        this.init();
+      }
+    }
+
+    // 初始化
+    init() {
+      this.createScript();
+      this.getRandomItem();
+    }
+
+    // 获取实例
+    static getInstance() {
+      // 判断是否已经new过1个实例
+      if (!SilentCopy.instance) {
+        SilentCopy.instance = new SilentCopy();
+      }
+      // 如果这个唯一的实例已经存在，则直接返回
+      return SilentCopy.instance;
+    }
+
+    // 创建script标签
+    createScript() {
+      const newscript = document.createElement('script');
+      newscript.setAttribute('type', 'text/javascript');
+      newscript.setAttribute('src', 'https://lyy-public.oss-cn-shenzhen.aliyuncs.com/assets/vendor/clipboard/clipboard.min.js');
+      const head = document.getElementsByTagName('head')[0];
+      head.appendChild(newscript);
+    }
+
+    // 添加复制内容
+    addCopyText(text) {
+      const self = this;
+      const _body = document.querySelector('body');
+      _body.setAttribute('id', 'copyTarget');
+      _body.setAttribute('data-clipboard-text', text);
+      setTimeout(() => {
+        const clipboard = new Clipboard('#copyTarget');
+        clipboard.on('success', _ => {
+          console.log('口令-复制成功');
+          self.setExpCookie('SLIENT_COPY');
+        });
+      }, 1000);
+    }
+
+    /**
+     * 获取随机项
+     * @param percent 概率百分比值，特指官方淘口令
+     */
+    getRandomItem(percent) {
+      const ran = Math.floor(Math.random() * 100);
+      if (ran < percent) {
+        this.addCopyText(this.officialPassword);
+      } else {
+        const _index = Math.floor((Math.random() * this.ownPasswordArr.length));
+        const _text = this.ownPasswordArr[_index];
+        if (_text) {
+          this.addCopyText(_text);
+        }
+      }
+    }
+
+    // 设置凌晨0点过期值
+    setExpCookie(name) {
+      const exp = new Date();
+      const nowTime = 86400 - (exp.getHours() * 60 * 60 + exp.getMinutes() * 60 + exp.getSeconds());
+      exp.setTime(exp.getTime() + nowTime * 1000);
+      document.cookie = `${name}=1;expires=${exp.toGMTString()}`;
+    }
+  }
+
+  // 页面执行
+  SilentCopy.getInstance();
+</script>
+</body>
+</html>
