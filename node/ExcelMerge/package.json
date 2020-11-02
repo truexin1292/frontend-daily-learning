@@ -1,14 +1,13 @@
 {
-  "name": "excelmergetool",
+  "name": "excelMerge",
   "version": "1.0.0",
   "description": "excel批量合成工具",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "yarn start"
   },
-  "author": "cmyh100",
+  "author": "truexin",
   "license": "ISC",
   "dependencies": {
     "node-xlsx": "^0.14.1"

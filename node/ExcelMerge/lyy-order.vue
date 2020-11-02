@@ -24,9 +24,9 @@
                     v-model="search.value">
           </el-input>
         </filter-panel>
-        <filter-panel label="订单号：">
-          <el-input placeholder="请填写订单号"
-                    style="width: 148px;"
+        <filter-panel label="交易单号/商户单号：">
+          <el-input placeholder="请填写交易单号/商户单号"
+                    style="width: 180px;"
                     class="input-devide"
                     v-model="search.outTradeNo">
           </el-input>
@@ -44,6 +44,8 @@
               :key="item.group_id"
               :label="item.group_name"
               :value="item.group_id">
+              {{ item.group_name }}
+              <span class="delete-place-color" v-show="item.isactive === 'N'">已删除</span>
             </el-option>
           </el-select>
         </filter-panel>
@@ -72,180 +74,43 @@
         <filter-panel class="right_filter_panpel">
           <el-button
             type="primary"
-            @click="getTableData(true)">
+            @click="getTableData()">
             搜索
           </el-button>
           <el-button
             type="primary"
-            @click="exportExcel(true)">
+            @click="exportExcel">
             导出
           </el-button>
           <el-button
             type="primary"
-            @click="clearFilterPicker(true)">
+            @click="clearFilterPicker">
             清空搜索条件
           </el-button>
         </filter-panel>
         <filter-panel class="right_filter_panpel">
-          <el-button
-            type="primary"
-            class="status-button status-button-today"
-            :class="{'active': currentStatus === 1}"
-            @click="getTableData('day')">
-            今天
-          </el-button>
-          <el-button
-            type="primary"
-            class="status-button"
-            :class="{'active': currentStatus === 2}"
-            @click="getTableData('week')">
-            近7天
-          </el-button>
-          <el-button
-            type="primary"
-            class="status-button"
-            :class="{'active': currentStatus === 3}"
-            @click="getTableData('month')">
-            近一个月
-          </el-button>
+          <TimeQuickSelect @changeList="getTableData" @getInitDate="getInitDate"/>
         </filter-panel>
       </filter-picker>
-      <el-table
-        :border="true"
-        :data="shjDeviceList"
-        :header-cell-style="{
-          backgroundColor: '#F3F3F3'
-        }"
-        v-loading="tableOptions.loading">
-        <el-table-column
-          label="序号"
-          type="index"
-          align="center"
-          width="50"/>
-        <el-table-column
-          label="订单号"
-          prop="outTradeNo"
-          align="center"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          label="所属场地"
-          prop="name"
-          show-overflow-tooltip
-          align="center">
-        </el-table-column>
-        <el-table-column
-          label="设备编号"
-          prop="value"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          label="商品名称"
-          show-overflow-tooltip
-          align="center">
-          <template slot-scope="scope">
-            {{
-            (scope.row.businessType == 61) ? '套餐充值' : scope.row.lyyMaterialName
-            }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="支付方式"
-          align="center"
-          width="70px">
-          <template slot-scope="scope">
-            {{scope.row.tradeType | tradeTypeFilter}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="订单金额"
-          align="center"
-          width="70px">
-          <template slot-scope="scope">
-            {{scope.row.originalFee | moneyFilter}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="优惠金额"
-          align="center"
-          width="70px">
-          <template slot-scope="scope">
-            {{
-            (scope.row.actualFee === null &&
-            (scope.row.couponFee || scope.row.discountFee || scope.row.platformFee) ?
-            (scope.row.couponFee || scope.row.discountFee || scope.row.platformFee)
-            : scope.row.actualFee) | moneyFilter
-            }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="实付金额"
-          align="center"
-          width="70px">
-          <template slot-scope="scope">
-            {{scope.row.totalFee | moneyFilter}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="支付状态"
-          align="center">
-          <template slot-scope="scope">
-            <span :class="scope.row.type === 'Pay'?'success':'error'">{{scope.row.typeText}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="下单时间"
-          prop="created"
-          align="center"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          label="客户ID"
-          prop="lyyUserId"
-          align="center">
-          <template slot-scope="scope">
-          <span class="link-color cursor-pointer"
-                @click="toCustomerPage(scope.row.lyyUserId)">{{scope.row.lyyUserId}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="设备备注"
-          prop="remarks"
-          show-overflow-tooltip
-          align="center">
-          <template slot-scope="scope">
-            <span>{{scope.row.remarks}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="操作"
-          align="center">
-          <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="toOrderDetail(scope.row)">查看</el-button>
-            <el-button
-              size="mini"
-              type="text"
-              @click="showRefundModal(scope.row)"
-              v-if="scope.row.type === 'Pay'
-              && +scope.row.businessType !== 61 // 普通售货机 - 账号充值
-              && +scope.row.businessType !== 62 // 重感售货机 - 购物支付
-              && +scope.row.businessType !== 39 // 重感售货机 - icCard充值
-              && new Date(scope.row.created).getTime() > todayTimeStamp"
-            >
-              退款
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="tableOptions.pageIndex"
-        :page-sizes="[20, 50, 100, 200, 300]"
-        :page-size="tableOptions.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="tableOptions.total">
-      </el-pagination>
+
+      <v-table :tableData="tableData" :tableOptions="tableOptions" @paginationEvent="paginationEvent">
+        <template slot="handle" slot-scope="scope">
+          <el-button size="mini" type="text" @click="toOrderDetail(scope.row)">查看</el-button>
+          <!--          PC端屏蔽退款功能-->
+          <!--          v-if="scope.row.type === 'Pay'-->
+          <!--          && +scope.row.businessType !== 61 // 普通售货机 - 账号充值-->
+          <!--          && +scope.row.businessType !== 39 // 重感售货机 - icCard充值-->
+          <!--          && new Date(scope.row.created).getTime() > todayTimeStamp"-->
+          <el-button
+            size="mini"
+            type="text"
+            @click="showRefundModal(scope.row)"
+            v-if="false"
+          >
+            退款
+          </el-button>
+        </template>
+      </v-table>
       <el-dialog
         title="订单退款"
         width="856px"
@@ -258,8 +123,8 @@
               <span class="number">{{refundData.lyyUserId}}</span>
             </el-col>
             <el-col :span="12">
-              <span class="name">订单号:</span>
-              <span class="number">{{refundData.outTradeNo}}</span>
+              <span class="name">交易单号:</span>
+              <span class="number">{{refundData.wechatTrxid}}</span>
             </el-col>
           </el-row>
           <el-row>
@@ -289,7 +154,8 @@
                 align="center"
                 label="单价">
                 <template slot-scope="scope">
-                  <span>{{scope.row.price/100 | moneyFilter}}</span>
+                  <span v-if="+scope.row.pricingMode === 1">{{scope.row.goodPrice | moneyFilter}}</span>
+                  <span v-else>{{scope.row.price/100 | moneyFilter}}</span>
                 </template>
               </el-table-column>
               <el-table-column
@@ -297,7 +163,9 @@
                 align="center"
                 label="数量">
                 <template slot-scope="scope">
+                  <span v-if="+scope.row.pricingMode === 1">{{ goodsCount(scope.row.quantity)}}</span>
                   <el-input-number
+                    v-else
                     v-model="scope.row.quantity"
                     :disabled="isUsePlatForm !== 0"
                     @change="handleChangeQuantity('a')"
@@ -312,7 +180,8 @@
                 align="center"
                 show-overflow-tooltip>
                 <template slot-scope="scope">
-                  <span>{{(scope.row.amountPrice * scope.row.quantity) | moneyFilter}}元</span>
+                  <span v-if="+scope.row.pricingMode === 1">{{(scope.row.amount / 100) | moneyFilter}}元</span>
+                  <span v-else>{{(scope.row.amountPrice * scope.row.quantity) | moneyFilter}}元</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -352,16 +221,21 @@
   </div>
 </template>
 <script>
-  import { getDefaultDate } from "@utils/index";
+  import { getFourSelectDay } from "@utils";
   import { filterTableMixin } from "@utils/mixin";
   import { mapGetters } from 'vuex';
   import { vendingOrderExportApi } from "@api/device-management/";
-  import { orderManualRefund } from "@api/transaction-management/";
+  import { orderManualRefund, getOrderList } from "@api/transaction-management/";
+  import TimeQuickSelect from '../../components/TimeQuickSelect';
 
   export default {
+    components: {
+      TimeQuickSelect
+    },
     mixins: [ filterTableMixin ],
     data() {
       return {
+        exportFileloading: false,
         questionList: [
           {
             value: '能否支持订单数据导出？', flag: 41, type: '交易订单', code: 'dealOrder',
@@ -378,15 +252,6 @@
           },
         ],
         todayTimeStamp: new Date(new Date().toLocaleDateString()).getTime(),
-        tableOptions: {
-          pageIndex: 1,
-          pageSize: 300
-        },
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          }
-        },
         refundData: {
           detailList: [],
           amountAll: 0,
@@ -395,14 +260,12 @@
         refundDataAmountAll: 0, //退款金额
         multipleSelection: [], //订单退款
         isShowRefundModal: false, //是否显示退款弹窗
-        shjDeviceList: [],
         search: {
           outTradeNo: "",
           lyyEquipmentGroupId: "",
           type: "",
           lyyUserId: "",
           value: "",
-          // remarks: "",
           date: []
         },
         typeDict: {
@@ -411,24 +274,118 @@
           Prepare: "待支付"
         },
         rowData: {},
-        currentStatus: 3,
+        currentStatus: 1,
         isUsePlatForm: false,
-        exportFileloading: false,
         siteList: [],
+        tableOptions: {
+          pageSize: 300,
+          pageIndex: 1,
+          total: 0,
+          handleWidth: 100,
+          pageSizeList: [ 300 ],
+          columnDefs: [
+            {
+              field: "wechatTrxid",
+              displayName: "交易单号",
+              align: "center",
+            },
+            {
+              field: "outTradeNo",
+              displayName: "商户单号",
+              align: "center",
+            },
+            {
+              field: "name",
+              displayName: "所属场地",
+              align: "center",
+            },
+            {
+              field: "value",
+              displayName: "设备编号",
+              align: "center",
+            },
+            {
+              field: "lyyMaterialName",
+              displayName: "商品名称",
+              align: "center",
+            },
+            {
+              field: "tradeType",
+              displayName: "支付方式",
+              width: 70,
+              align: "center",
+              cellTemplate: `<span>{{row.tradeType | tradeTypeFilter}}</span>`
+            },
+            {
+              field: "originalFee",
+              displayName: "订单金额",
+              width: 70,
+              align: "center",
+              cellTemplate: `<span>{{row.originalFee | moneyFilter}}</span>`
+            },
+            {
+              field: "actualFee",
+              displayName: "优惠金额",
+              width: 70,
+              align: "center",
+              cellTemplate: `<span>{{
+            (row.actualFee === null &&
+            (row.couponFee || row.discountFee || row.platformFee) ?
+            (row.couponFee || row.discountFee || row.platformFee)
+            : row.actualFee) | moneyFilter
+            }}</span>`
+            },
+            {
+              field: "totalFee",
+              displayName: "实付金额",
+              width: 70,
+              align: "center",
+              cellTemplate: `<span>{{row.totalFee | moneyFilter}}</span>`
+            },
+            {
+              field: "type",
+              displayName: "支付状态",
+              align: "center",
+              cellTemplate: `<span :class="row.type === 'Pay'?'success':'error'">{{row.typeText}}</span>`
+            },
+            {
+              field: "created",
+              displayName: "下单时间",
+              align: "center",
+            },
+            {
+              field: "lyyUserId",
+              displayName: "客户ID",
+              align: "center",
+              handleClick: (row) => {
+                this.toCustomerPage(row.lyyUserId);
+              },
+              cellTemplate: `<span class="link-color cursor-pointer">{{row.lyyUserId}}</span>`
+            },
+            {
+              field: "remarks",
+              displayName: "设备备注",
+              align: "center",
+            },
+          ]
+        }
       };
     },
     computed: {
       ...mapGetters([ 'placeList' ]),
+      goodsCount() {
+        return function (data) {
+          return `${ data / 1000 } kg`
+        }
+      },
     },
     watch: {
       placeList(val) {
-        this.siteList = val.filter(v => v.isactive !== 'N')
+        this.siteList = val;
       },
     },
     created() {
-      let defaultDate = getDefaultDate('month')
-      this.search.date = [ defaultDate.start, defaultDate.end ];
-      this.$store.dispatch('GetPlaceList')
+      this.$store.dispatch('GetPlaceList');
     },
     mounted() {
       this.$nextTick(() => {
@@ -436,37 +393,56 @@
       });
     },
     methods: {
+      getInitDate({ start, end }) {
+        this.search.date = [ start, end ];
+      },
       exportExcel() {
-        this.exportFileloading = true;
-        let pageIndex = this.tableOptions.pageIndex;
-        const exportFile = () => {
-          let params = {
-            pageIndex,
-            pageSize: this.tableOptions.pageSize,
-            startDate: this.search.date[0],
-            endDate: this.search.date[1],
-            lyyUserId: this.search.lyyUserId,
-            outTradeNo: this.search.outTradeNo,
-            lyyEquipmentGroupId: this.search.lyyEquipmentGroupId,
-            type: this.search.type,
-            value: this.search.value,
+        if (this.tableData.length === 0) {
+          this.$message({
+            message: '暂无数据',
+            type: 'error'
+          });
+          return;
+        }
+        this.$confirm(
+          '确定要导出数据么？',
+          '导出数据', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+          }).then(() => {
+          this.exportFileloading = true;
+          let pageIndex = this.tableOptions.pageIndex;
+          const exportFile = () => {
+            let params = {
+              pageIndex,
+              pageSize: this.tableOptions.pageSize,
+              startDate: this.search.date[0],
+              endDate: this.search.date[1],
+              lyyUserId: this.search.lyyUserId,
+              outTradeNo: this.search.outTradeNo,
+              lyyEquipmentGroupId: this.search.lyyEquipmentGroupId,
+              type: this.search.type,
+              value: this.search.value,
+            };
+            vendingOrderExportApi(params);
           };
-          vendingOrderExportApi(params);
-        };
 
-        exportFile();
-
-        let timer = setInterval(() => {
-          if (this.tableOptions.total <= pageIndex * this.tableOptions.pageSize) {
-            clearInterval(timer);
-            timer = null;
-            this.exportFileloading = false;
-            console.log('page:', pageIndex);
-            return;
-          }
-          pageIndex++;
           exportFile();
-        }, 5000)
+
+          let timer = setInterval(() => {
+            if (this.tableOptions.total <= pageIndex * this.tableOptions.pageSize) {
+              clearInterval(timer);
+              timer = null;
+              this.exportFileloading = false;
+              console.log('page:', pageIndex);
+              return;
+            }
+            pageIndex++;
+            exportFile();
+          }, 5000)
+        }).catch(() => {
+          this.loading = false;
+        });
       },
       clearFilterPicker() {
         this.search = {
@@ -475,12 +451,11 @@
           type: "",
           lyyUserId: "",
           value: "",
-          // remarks: "",
           date: [],
-        }
-        let defaultDate = getDefaultDate('month')
-        this.search.date = [ defaultDate.start, defaultDate.end ];
-        this.getTableData()
+        };
+        const dateMap = getFourSelectDay('today');
+        this.getInitDate(dateMap);
+        this.getTableData();
       },
       toCustomerPage(lyyUserId) {
         this.$router.push({
@@ -505,44 +480,10 @@
         this.tableOptions.pageIndex = pageIndex;
         this.getTableData()
       },
-      getTableData(time) {
-        //交易订单查询
-        let url = "/vending/order/list";
-        let _this = this;
-        let date = new Date();
-        const getFullDate = function (date) {
-          let month = date.getMonth() + 1;
-          let day = date.getDate();
-          if (month < 10) {
-            month = '0' + month;
-          }
-          if (day < 10) {
-            day = '0' + day;
-          }
-          return `${ date.getFullYear() }-${ month }-${ day }`;
+      async getTableData(dateMap) {
+        if (dateMap) {
+          this.search.date = [ dateMap.start, dateMap.end ];
         }
-        let endDate = this.search.date[1];
-        let startDate = this.search.date[0];
-        switch (time) {
-          case 'day':
-            endDate = getFullDate(date);
-            startDate = endDate;
-            this.currentStatus = 1;
-            break;
-          case 'week':
-            endDate = getFullDate(date);
-            date.setTime(date.getTime() - 7 * 24 * 60 * 60 * 1000); // 一个星期
-            startDate = getFullDate(date);
-            this.currentStatus = 2;
-            break;
-          case 'month':
-            endDate = getFullDate(date);
-            date.setTime(date.getTime() - 30 * 24 * 60 * 60 * 1000); // 一个月
-            startDate = getFullDate(date);
-            this.currentStatus = 3;
-            break;
-        }
-        this.search.date = [ startDate, endDate ];
         let params = {
           pageIndex: this.tableOptions.pageIndex,
           pageSize: this.tableOptions.pageSize,
@@ -553,32 +494,18 @@
           lyyEquipmentGroupId: this.search.lyyEquipmentGroupId,
           type: this.search.type,
           value: this.search.value,
-          // remarks: this.search.remarks,
         };
-
-        let options = {
-          method: "get",
-          url: url,
-          params: params,
-          sucCallback: callback,
-          status: "0"
-        };
-        this.httpRequest(options);
-
-        function callback(tag, res) {
-          if (res.result == 0) {
-            _this.shjDeviceList = _this.tableDataTube(res.data.items);
-            _this.tableOptions.total = res.data.total;
-          } else {
-            _this.$message.error(res.description);
-          }
+        const res = await getOrderList(params);
+        if (res.result === 0) {
+          this.tableData = res.data.items.map(v => ({
+            ...v,
+            typeText: this.typeDict[v.type],
+            lyyMaterialName: +v.businessType === 61 ? '套餐充值' : v.lyyMaterialName
+          }));
+          this.tableOptions.total = res.data.total;
+        } else {
+          this.$message.error(res.description);
         }
-      },
-      tableDataTube(tableData) {
-        tableData.forEach(item => {
-          item.typeText = this.typeDict[item.type]
-        })
-        return tableData
       },
       showRefundModal(row) {
         this.isShowRefundModal = true;
@@ -612,12 +539,15 @@
           let totalFee = 0,
             positionsArray = [];
           this.multipleSelection.forEach(item => {
-            totalFee += +(item.amountPrice * item.quantity * 100).toFixed(0);
-
+            if (+item.pricingMode === 1) {
+              totalFee += +(item.amount).toFixed(2);
+            } else {
+              totalFee += +(item.amountPrice * item.quantity * 100).toFixed(0);
+            }
             let listItem = {
               channelNo: item.channelNo,
               refundCount: item.quantity,
-              refundAmount: (item.amountPrice * item.quantity * 100).toFixed(0),
+              refundAmount: +item.pricingMode === 1 ? item.amount.toFixed(0) : (item.amountPrice * item.quantity * 100).toFixed(0),
               lyyMainboardId: item.lyyMainboardId,
               lyyMainboardPositionId: item.lyyMainboardPositionId
             };
@@ -641,7 +571,7 @@
           this.httpRequest(options);
 
           function callback(tag, res) {
-            if (res.result == 0) {
+            if (res.result === 0) {
               _this.isShowRefundModal = false;
               _this.$message.success("退款成功");
               setTimeout(() => {
@@ -654,17 +584,21 @@
         }
       },
       handleSelectionChange(val) {
-        this.multipleSelection = val
-        this.computedRefundTotal()
+        this.multipleSelection = val;
+        this.computedRefundTotal();
       },
-      handleChangeQuantity(value, test) {
-        this.computedRefundTotal()
+      handleChangeQuantity() {
+        this.computedRefundTotal();
       },
       computedRefundTotal() {
-        let refundTotal = 0
+        let refundTotal = 0;
         this.multipleSelection.forEach(item => {
-          refundTotal += item.amountPrice * item.quantity
-        })
+          if (+item.pricingMode === 1) {
+            refundTotal += item.amount / 100
+          } else {
+            refundTotal += item.amountPrice * item.quantity
+          }
+        });
         this.refundDataAmountAll = refundTotal
       },
       getPaymentDetail(row) {
@@ -690,7 +624,7 @@
         this.httpRequest(options);
 
         function callback(tag, res) {
-          if (res.result == 0) {
+          if (res.result === 0) {
             _this.refundData = res.data;
             _this.refundData.lyyUserId = row.lyyUserId; //用户id
             _this.refundData.outTradeNo = row.outTradeNo; //订单编号
@@ -706,7 +640,7 @@
             });
             // 使用平台券全额退款
             if (_this.isUsePlatForm) {
-              _this.multipleSelection = _this.refundData.detailList
+              _this.multipleSelection = _this.refundData.detailList;
               _this.computedRefundTotal();
             }
           }
@@ -816,26 +750,11 @@
       .el-button {
         padding: 9px 15px 7px;
       }
-
-      .filter-panpel-left {
-        display: inline-block;
-      }
     }
+  }
 
-    .status-button-today {
-      margin-left: -6px;
-    }
-
-    .status-button {
-      background-color: #B6B6B6;
-      color: #fff;
-      border-color: #B6B6B6;
-
-      &.active {
-        background-color: #2F75F5;
-        color: #fff;
-        border-color: #2F75F5;
-      }
-    }
+  .delete-place-color {
+    color: #f00;
+    opacity: .3;
   }
 </style>
