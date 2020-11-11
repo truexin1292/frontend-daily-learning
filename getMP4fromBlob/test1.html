@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mp4转blob链接</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+</head>
+<body>
+<video id="sound" autoplay controls loop width="500px"></video>
+<br/>
+<video id="sound2" autoplay controls loop width="500px"></video>
+<script>
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://localhost:3001/video', true);
+  xhr.responseType = 'blob';
+  xhr.onload = function (e) {
+    if (this.status === 200) {
+      // 获取blob对象
+      let blob = this.response;
+      console.log(blob);
+      // 获取blob对象地址，并把值赋给容器
+      $("#sound").attr("src", URL.createObjectURL(blob));
+    }
+  };
+  xhr.send();
+</script>
+
+<script type="text/javascript">
+  //创建XMLHttpRequest对象
+  var xhr = new XMLHttpRequest();
+  //配置请求方式、请求地址以及是否同步
+  xhr.open('POST', '/index.php', true);
+  //设置请求结果类型为blob
+  xhr.responseType = 'blob';
+  //请求成功回调函数
+  xhr.onload = function (e) {
+    if (this.status === 200) {//请求成功
+      //获取blob对象
+      var blob = this.response;
+      //获取blob对象地址，并把值赋给容器
+      document.getElementById("video2").src = URL.createObjectURL(blob);
+    }
+  };
+  xhr.send();
+</script>
+</body>
+</html>

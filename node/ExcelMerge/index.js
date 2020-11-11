@@ -8,6 +8,21 @@ const fs = require('fs');
 // excel文件夹路径（把要合并的文件放在excel文件夹内）
 const _file = `${ __dirname }/excel/`;
 const _output = `${ __dirname }/result/`;
+
+const now = new Date();
+const date = `${ now.getFullYear() }-${ now.getMonth() + 1 }-${ now.getDate() }`;
+const inputDate = process.argv.slice(2)[0] && process.argv.slice(2)[0].split('=')[1];
+const dateStr = inputDate || date;
+
+// console.log(process.argv, 'process.argv');
+// 输入：node index.js date=2020-06
+// 输出：
+//  [
+//   '/Users/truexin/.nvm/versions/node/v10.19.0/bin/node',
+//   '/Users/truexin/truexin/frontend-daily-learning/node/ExcelMerge/index.js',
+//   'date=2020-06'
+//  ] 'process.argv'
+
 // 合并数据的结果集
 let dataList = [
   {
@@ -44,16 +59,14 @@ function init() {
     });
     // 写xlsx
     const buffer = xlsx.build(dataList);
-    const now = new Date();
-    const date = `${ now.getFullYear() }-${ now.getMonth() + 1 }-${ now.getDate() }`;
     fs.writeFile(
-      `${ _output }交易订单-${ date }.xlsx`,
+      `${ _output }交易订单-${ dateStr }.xlsx`,
       buffer,
       function (err) {
         if (err) {
           throw err;
         }
-        console.log('\x1B[33m%s\x1b[0m', `完成合并：${ _output }交易订单-${ date }.xlsx`);
+        console.log('\x1B[33m%s\x1b[0m', `完成合并：${ _output }交易订单-${ dateStr }.xlsx`);
       }
     )
   })

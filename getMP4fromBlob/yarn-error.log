@@ -1,0 +1,46 @@
+Arguments: 
+  /Users/truexin/.nvm/versions/node/v10.19.0/bin/node /usr/local/Cellar/yarn/1.21.1/libexec/bin/yarn.js add │
+
+PATH: 
+  /Users/truexin/truexin/flutter/flutter/bin:/Users/truexin/.nvm/versions/node/v10.19.0/bin:/usr/local/mongodb/bin:/usr/local/mongodb/bin:/Users/truexin/fengchaoli/devtool/apache-maven-3.5.2/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/usr/local/sbin:/usr/local/mysql/bin:/Users/truexin/Library/Android/sdk/tools:/Users/truexin/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  10.19.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  TypeError [ERR_UNESCAPED_CHARACTERS]: https://registry.npm.taobao.org/│: Request path contains unescaped characters
+      at new ClientRequest (_http_client.js:116:13)
+      at Object.request (https.js:289:10)
+      at Request.module.exports.Request.start (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:141227:32)
+      at Request.module.exports.Request.end (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:141986:10)
+      at end (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:141040:14)
+      at Immediate.<anonymous> (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:141054:7)
+      at runCallback (timers.js:705:18)
+      at tryOnImmediate (timers.js:676:5)
+      at processImmediate (timers.js:658:5)
+
+npm manifest: 
+  {
+    "name": "getmp4fromblob",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

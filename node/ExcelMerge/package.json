@@ -1,11 +1,12 @@
 {
-  "name": "excelMerge",
+  "name": "excel-merge",
   "version": "1.0.0",
   "description": "excel批量合成工具",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "yarn start"
+    "dev": "yarn start",
+    "delete": "cd excel && rm -rf *"
   },
   "author": "truexin",
   "license": "ISC",
