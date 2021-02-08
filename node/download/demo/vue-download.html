@@ -1,0 +1,44 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta
+    name="viewport"
+    content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no"
+  />
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+</head>
+<body>
+<div id='app'>
+  <a v-on:click="handleBatchDownload">批量下载</a>
+</div>
+
+<script src="">
+  new Vue({
+    el: '#app',
+    methods: {
+      handleBatchDownload: function () {
+        const data = [ '各类地址1', '各类地址2' ]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
+        const zip = new JSZip();
+        const cache = {};
+        const promises = [];
+        data.forEach(item => {
+          const promise = getFile(item).then(data => { // 下载文件, 并存成ArrayBuffer对象
+            const arr_name = item.split("/");
+            const file_name = arr_name[arr_name.length - 1]; // 获取文件名
+            zip.file(file_name, data, { binary: true }); // 逐个添加文件
+            cache[file_name] = data
+          });
+          promises.push(promise)
+        });
+
+        Promise.all(promises).then(() => {
+          zip.generateAsync({ type: "blob" }).then(content => { // 生成二进制流
+            FileSaver.saveAs(content, "打包下载.zip") // 利用file-saver保存文件
+          })
+        });
+      },
+    },
+  });
+</script>
+</body>
+</html>

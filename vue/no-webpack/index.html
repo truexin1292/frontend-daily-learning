@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue File</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <script src="https://unpkg.com/http-vue-loader"></script>
+  <style>
+    #app {
+      margin: 1em;
+      font-size: 1.5em;
+    }
+  </style>
+</head>
+<body>
+<div id="my-app">
+  <hello/>
+</div>
+<script>
+  // 成功1
+  new Vue({
+    el: "#my-app",
+    components: {
+      'hello': httpVueLoader('hello.vue')
+    }
+  });
+
+
+  // 失败1
+  // httpVueLoader.register(Vue, 'hello.vue');
+  // new Vue({
+  //   components: [
+  //     'hello'
+  //   ]
+  // });
+
+
+  // 失败2
+  // Vue.use(httpVueLoader);
+  //
+  // new Vue({
+  //   // components: {
+  //   //   'hello': 'url:hello.vue'
+  //   // },
+  //   components: [
+  //     'url:hello.vue'
+  //   ],
+  // });
+</script>
+</body>
+</html>

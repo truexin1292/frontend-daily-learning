@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--https://stackoverflow.com/questions/40091000/simulate-click-event-on-react-element-->
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Hello React!</title>
+  <script src="//www.w3cschool.cn/statics/assets/react/react.min.js"></script>
+  <script src="//www.w3cschool.cn/statics/assets/react/react-dom.min.js"></script>
+  <script src="//www.w3cschool.cn/statics/assets/react/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/babel">
+  class Example extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: 0,
+        childCount: 0
+      };
+    };
+
+    simulateClick = (e) => {
+      // e.click();
+      this.setState({
+        count: this.state.count++
+      });
+      console.log('count', this.state.count)
+    };
+
+    childClick = (e) => {
+      // e.click();
+      this.setState({
+        childCount: this.state.childCount++
+      });
+      console.log('childCount', this.state.childCount)
+    };
+
+    // 自动执行事件
+    // render() {
+    //   return <div className="UFIInputContainer" ref={ this.simulateClick } onClick={ () => console.log('clicked - 1') }>
+    //     hello truexin, count:{{count}} and childCount:{{childCount}}
+    //   </div>
+    // }
+
+    // 自动执行事件 + 冒泡
+    // render() {
+    //   console.log(this.state.count, this.state.childCount)
+    //   return <div className="UFIInputContainer" ref={ this.simulateClick } onClick={ () => console.log('clicked - 1') }>
+    //     hello truexin <p className="child" ref={ this.childClick } onClick={ () => console.log('clicked - 2') }>
+    //     I am a child of you!
+    //     , count:{ this.state.count } and childCount:{ this.state.childCount }
+    //   </p>
+    //   </div>
+    // };
+
+    // 不执行事件
+    // render() {
+    //   return <div className="UFIInputContainer" onClick={ () => console.log('clicked - 1') }>
+    //     hello truexin <p className="child" onClick={ () => console.log('clicked - 2') }>
+    //     I am a child of you!
+    //   </p>
+    //   </div>
+    // }
+
+    // 不执行事件
+    render() {
+      console.log(this.state.count, this.state.childCount)
+      return <div className="UFIInputContainer" onClick={ this.simulateClick }>
+        hello truexin <p className="child" onClick={ this.childClick }>
+        I am a child of you!
+        , count:{ this.state.count } and childCount:{ this.state.childCount }
+      </p>
+      </div>
+    }
+  }
+
+  ReactDOM.render(<Example/>, document.getElementById('example'));
+</script>
+
+<!-- // 以下chrome控制台里面直接执行可以手动间接触发react的元素的click事件
+<script>
+  const mouseClickEvents = [ 'mousedown', 'click', 'mouseup' ];
+
+  function simulateMouseClick(element) {
+    mouseClickEvents.forEach(mouseEventType =>
+      element.dispatchEvent(
+        new MouseEvent(mouseEventType, {
+          view: window,
+          bubbles: true,
+          cancelable: true,
+          buttons: 1
+        })
+      )
+    );
+  }
+
+  var element = document.querySelector('div[class="UFIInputContainer"]');
+  //var element = document.querySelector('.child');
+  simulateMouseClick(element);
+
+  // 只执行这个也行哦
+  var element = document.querySelector('.child').click()
+</script>
+-->
+</body>
+</html>

@@ -6,7 +6,9 @@
 	"scripts": {
 		"server": "node ws-server.js",
 		"dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --mode development",
-		"build": "cross-env NODE_ENV=production webpack --progress --hide-modules --mode production"
+		"build": "cross-env NODE_ENV=production webpack --progress --hide-modules --mode production",
+    "now": "node -e \"require('express')().use(require('express').static(__dirname, {index:'./no-webpack/index.html'})).listen(8181)\"",
+    "now1": "httpserver -p 8181"
 	},
 	"keywords": [],
 	"author": "",
@@ -35,6 +37,7 @@
 		"babel-core": "^6.26.3",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-stage-3": "^6.24.1",
+		"express": "^4.17.1",
 		"less": "^3.9.0",
 		"less-loader": "^4.1.0"
 	}
