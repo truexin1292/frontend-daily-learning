@@ -1,0 +1,115 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-02-23 13:49:01
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-02-23 15:23:56
+ * @FilePath: /frontend-daily-learning/html/不常见html技巧.html
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .height-800 {
+      height: 1800px;
+    }
+
+    .wrap {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .wrap ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .wrap ul li {
+      flex: 1;
+      text-align: center;
+    }
+
+    .wrap ul li img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 图片懒加载 -->
+  <!-- <div class="height-800"></div> -->
+  <img src="https://dss2.bdstatic.com/lfoZeXSm1A5BphGlnYG/skin/749.jpg?2" loading="lazy" alt="lazy" height="200" />
+
+  <section class="wrap">
+    <h1>lazy loading</h1>
+    <ul>
+      <li>
+        <img loading="lazy" src="http://lyy-public.oss-cn-shenzhen.aliyuncs.com/20201216180257069.jpg" />
+        <p>1576343625020465.jpg</p>
+      </li>
+      <li>
+        <img loading="eager" src="http://lyy-public.oss-cn-shenzhen.aliyuncs.com/20201216180257069.jpg" />
+        <p>1564213788702.jpg</p>
+      </li>
+      <li>
+        <img src="http://lyy-public.oss-cn-shenzhen.aliyuncs.com/20201216180257069.jpg" />
+        <p>1576772791897557.jpg</p>
+      </li>
+    </ul>
+  </section>
+
+  <br />
+
+  <pre class="language-markup">
+    <code>
+      1564213788702.jpg	200	jpeg	lazyLoading.html	26.0 KB	128 ms
+      1576772791897557.jpg	200	jpeg	lazyLoading.html	20.9 KB	88 ms
+      1576343625020465.jpg	200	jpeg	lazyLoading.html	24.8 KB	115 ms
+    </code>
+  </pre>
+
+  <!-- 输入提示 -->
+  <label for="country">请选择喜欢的国家:</label>
+  <input list="countries" name="country" id="country">
+  <datalist id="countries">
+    <option value="UK">
+    <option value="Germany">
+    <option value="USA">
+    <option value="Japan">
+    <option value="India">
+    <option value=“China”>
+  </datalist>
+
+  <br />
+
+  <!-- picture标签 -->
+  <picture>
+    <source media="(min-width:768px)" srcset="https://sb.leyaoyao.com/static/img/preview-gzh-02.a5cbd68d.png">
+    <source media="(min-width:495px)" srcset="https://sb.leyaoyao.com/static/img/preview-gzh-01.58d41fde.png">
+    <img src="https://dss2.bdstatic.com/lfoZeXSm1A5BphGlnYG/skin/749.jpg?2" style="width: 200px;" />
+  </picture>
+
+  <br />
+  <!-- base url -->
+
+  <head>
+    <base href="https://www.weibo.com/" target="_blank">
+  </head>
+
+  <body>
+    <a href="jackiechan">成龙</a>
+    <a href="kukoujialing">贾玲</a>
+  </body>
+</body>
+
+</html>

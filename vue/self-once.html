@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<script src="https://cdn.staticfile.org/vue/0.10.0/vue.min.js"></script>
+	<title id="title">{{title}}</title>
+	<style>
+		div {
+			padding: 20px;
+			border: solid 2px red;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="ask" @click="parentFn">
+		<!--vue不能控制body和html的标签-->
+		<div @click.self="box">
+			<a @click.stop.prevent="links">简单记录</a>
+		</div>
+
+	</div>
+	<script>
+		var vue = function (options) { new Vue(options) };
+		vue({
+			el: '#title',
+			data: {
+				title: 'Vue STOP&SELF方法使用'
+			}
+		});
+		var app = vue({
+			el: '#ask',
+			data: {
+			},
+			methods: {
+				box() {
+					alert('这是父级');
+				},
+				links() {
+					alert("这是子级");
+				},
+				parentFn() {
+					console.log('log:', '222');
+				},
+			}
+		});
+
+	</script>
+</body>
+
+</html>

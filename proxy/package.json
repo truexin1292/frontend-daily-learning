@@ -4,13 +4,14 @@
     "description": "",
     "main": "proxy.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "demo": "node demo.js"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "connect-timeout": "^1.9.0",
         "express": "^4.16.4",
-        "http-proxy-middleware": "^0.19.1"
+        "http-proxy-middleware": "^0.19.1",
+        "node-fetch": "^2.6.1"
     }
 }
