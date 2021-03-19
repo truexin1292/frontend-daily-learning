@@ -2,7 +2,4 @@
 .idea/
 node_modules
 vue/dist
-
-
-
 /node/ExcelMergeTool/node_modules/
