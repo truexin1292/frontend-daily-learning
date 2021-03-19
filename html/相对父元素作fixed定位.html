@@ -4,51 +4,60 @@
  * @Author: 邹新许
  * @Date: 2021-03-19 18:41:11
  * @LastEditors: 邹新许
- * @LastEditTime: 2021-03-19 18:41:14
+ * @LastEditTime: 2021-03-19 18:42:36
  * @FilePath: /frontend-daily-learning/html/相对父元素作fixed定位.html
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>子元素相对于父元素定位</title>
-    <style>
-        .assistor {
-        position: relative; /*关键点*/
-        display: block;
-        width: 500px;
-        height: 300px;
-        margin: 100px auto 0 auto;
-        background-color: #ddd;
-        }
-        .parent {
-        width: 500px;
-        height: 300px;
-        background-color: #888;
-        overflow: auto; /*关键点*/
-        }
-        .child {
-        position: absolute; /*关键点*/
-        width: 120px;
-        height: 120px;
-        margin: 100px 50px;
-        background-color: #ffff00;
-        }
-        .placeholder {
-        width: 1000px;
-        height: 1000px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>子元素相对于父元素定位</title>
+  <style>
+    .assistor {
+      position: relative;
+      /*关键点*/
+      display: block;
+      width: 500px;
+      height: 300px;
+      margin: 100px auto 0 auto;
+      background-color: #ddd;
+    }
+
+    .parent {
+      width: 500px;
+      height: 300px;
+      background-color: #888;
+      overflow: auto;
+      /*关键点*/
+    }
+
+    .child {
+      position: absolute;
+      /*关键点*/
+      width: 120px;
+      height: 120px;
+      margin: 100px 50px;
+      background-color: #ffff00;
+    }
+
+    .placeholder {
+      width: 1000px;
+      height: 1000px;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="assistor">
-        <div class="parent">
-          <p>我是子元素1</p>
-          <div class="child">我是子元素2</div>
-          <div class="placeholder"></div>
-        </div>
-      </div>
+  <div class="assistor">
+    <div class="parent">
+      <p>我是子元素1</p>
+      <div class="child">我是子元素2</div>
+      <div class="placeholder"></div>
+    </div>
+  </div>
 </body>
+
 </html>
