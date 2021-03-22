@@ -1,0 +1,50 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-03-22 09:39:59
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-03-22 10:10:46
+ * @FilePath: /frontend-daily-learning/html/disabled.html
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>disabled</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <style>
+        .parent {
+            width: 100vw;
+            height: 100vh;
+            background: #ccc;
+            overflow: hidden;
+        }
+
+        input {
+            /* color: #f00; */
+            /* opacity: 1; */
+        }
+        input[disabled] {
+            color: rgb(161, 161, 161);
+            opacity: 1;
+            color: #323233;
+            opacity: 1;
+            -webkit-text-fill-color: #323233;
+            -webkit-opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='parent'>
+        <input type="text" value="分享后付1" disabled/>
+        <input type="text" value="分享后付2" disabled="disabled"/>
+        <input type="text" disabled="disabled" value="分享后付3" />
+    </div>
+</body>
+
+</html>
