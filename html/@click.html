@@ -1,0 +1,65 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-03-25 11:13:44
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-03-25 11:43:02
+ * @FilePath: /frontend-daily-learning/html/@click.html
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 - </title>
+</head>
+
+<body>
+
+    <button onclick="add_data()">aaa</button>
+    <div id="app">
+        <p>{{ message }}</p>
+        <div @click="showModal">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus fugit enim laborum ratione animi
+            magnam, veritatis nemo provident cupiditate quasi. Doloribus cupiditate enim eos dolore, architecto officia
+            tempore inventore ullam!
+        </div>
+        <input type="text" @change="inputValue($event)">
+    </div>
+    <!-- Vue.js v2.6.9 -->
+    <!-- <script src="./js/vue.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script> -->
+    <!-- <script src="https://cdn.staticfile.org/vue/2.6.12/vue.min.js"></script> -->
+
+     <!-- 不可以使用事件，原来是版本问题 -->
+    <script src="https://cdn.staticfile.org/vue/0.10.0/vue.min.js"></script>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue.js!'
+            },
+            created: function () {
+                let _this = this;
+                window.add_data = _this.add_data;
+            },
+            methods: {
+                add_data: function () {
+                    alert(222);
+                },
+                showModal() {
+                    console.log('log:', '111');
+                },
+                inputValue(e) {
+                    console.log('e:', e);
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>
