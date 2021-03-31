@@ -1,0 +1,326 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-03-26 09:33:40
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-03-26 09:33:43
+ * @FilePath: /frontend-daily-learning/html/vant-list.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.suoluomei.com/common/js2.0/npm/vant@2.2/lib/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>品牌活动</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    [v-cloak] {
+      display: none !important;
+    }
+
+    /* top */
+    .ltop {
+      display: flex;
+      align-items: center;
+      font-size: .33rem;
+      font-weight: 500;
+      height: 0.83rem;
+      padding: 0 0.208rem;
+      border-bottom: .02rem solid #F0F0F0;
+      background: white;
+    }
+
+    .ltop img {
+      width: 0.1765rem;
+    }
+
+    .ltop span {
+      flex: 1;
+      text-align: center;
+    }
+
+    /* top end */
+    .info {
+      width: 90%;
+      margin-left: 5%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info_top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin: .3rem 0 .2rem 0;
+    }
+
+    .info_top_one {
+      color: #333333;
+      font-size: .32rem;
+      font-weight: bold;
+      width: 20%;
+    }
+
+    .activity {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: .2rem;
+    }
+
+    .activity_cont {
+      width: 47.5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      border-radius: .1rem;
+      overflow: hidden;
+      margin-top: .2rem;
+      box-shadow: 1px 3px 5px #DDDDDD;
+    }
+
+    .activity_cont_top {
+      width: 100%;
+      height: 3.02rem;
+      position: relative;
+    }
+
+    .activity_cont_top>img:nth-child(1) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .activity_bf {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .activity_cont_bottom {
+      width: 95%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .activity_cont_bottom>span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .activity_cont_bottom>span:nth-child(1) {
+      width: 90%;
+      margin-left: 5%;
+      font-size: .28rem;
+      color: #333333;
+      margin-top: .15rem;
+      margin-bottom: .15rem;
+    }
+
+    .activity_cont_bottom>span:nth-child(2) {
+      width: 90%;
+      margin-left: 5%;
+      font-size: .28rem;
+      color: #666666;
+      margin-bottom: .15rem;
+
+    }
+
+    .activity_cont_bottom>span:nth-child(3) {
+      width: 90%;
+      margin-left: 5%;
+      font-size: .2rem;
+      color: #666666;
+      margin-bottom: .15rem;
+    }
+
+    .sparea {
+      width: 95%;
+      height: 95%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2.5%;
+      margin-left: 2.5%;
+    }
+
+    .sparea>video {
+      width: 100%;
+    }
+
+    .guanbi {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: .8rem;
+    }
+
+    .van-list__finished-text {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div v-cloak id="Vue">
+    <!-- top -->
+    <div class="ltop">
+      <img onclick="javascript :history.back(-1);"
+        src="http://sucai.suoluomei.cn/sucai_zs/images/20200228170103-%E5%BD%A2%E7%8A%B612%402x.png" alt="">
+      <span>品牌活动</span>
+    </div>
+    <!-- top end -->
+    <!-- 品牌活动 -->
+    <div class="info">
+      <div class="info_top">
+        <span class="info_top_one">品牌活动</span>
+      </div>
+      <!-- <div class="activity"> -->
+      <van-list class="activity" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <div class="activity_cont" v-for="(item,index) in activitylist" :key="index">
+          <div class="activity_cont_top">
+            <img :src="item.img" alt="">
+            <img class="activity_bf" @click="play(item.post_source)"
+              src="https://sucai.suoluomei.cn/sucai_zs/images/20200523112232-bofanganniu.png" alt="">
+          </div>
+
+          <div class="activity_cont_bottom">
+            <span>{{item.post_title}}</span>
+            <span>分享嘉宾：{{item.post_author}}</span>
+            <span>{{item.published_time}}</span>
+          </div>
+        </div>
+      </van-list>
+    </div>
+    <!-- 播放视频 -->
+    <div class="sparea" v-if="videoshow">
+      <img class="guanbi" src="https://sucai.suoluomei.cn/sucai_zs/images/20200523114951-guanbicopy.png" alt=""
+        @click="end">
+      <video width="320" height="240" controls>
+        <source :src="videourl" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.suoluomei.com/common/js/jquery-2.1.4.min.js"></script>
+<script src="https://cdn.suoluomei.com/common/js2.0/vue/v2.5.16/vue.js"></script>
+<script src="https://cdn.suoluomei.com/common/js2.0/npm/vant@2.2/lib/vant.min.js"></script>
+<script>
+  var getUrl = "https://datitest.zealcdn.cn/public/index.php/"
+  new Vue({
+    el: "#Vue",
+    data: {
+      videoshow: false,
+      videourl: "",
+      activitylist: [
+
+      ],
+      loading: false,
+      finished: false,
+      page: 1
+    },
+    methods: {
+      play(url) {
+        this.videourl = url
+        this.videoshow = true
+
+      },
+      end() {
+        this.videoshow = false
+      },
+      // 请求公共方法
+      ajax(type, url, params, cb) {
+        $.ajax({
+          type: type,
+          url: url,
+          data: params,
+          dataType: "json",
+          // beforeSend: function (xhr) {
+          //   xhr.setRequestHeader("X-Custom-Header1", "Bar");
+          // },
+          success: function (response) {
+            cb(response)
+          }
+        });
+      },
+      getList() {
+        let that = this
+        that.ajax("post", getUrl + "user/Hufu/more_vido", {
+          page: that.page
+        }, function (res) {
+          that.loading = false;
+          console.log(res)
+          if (res != "") {
+            let mide = that.page + 1
+            that.page = mide
+            let arry = that.activitylist.concat(res) //前提是livehose是数组
+            that.activitylist = arry
+          }
+          else {
+            that.loading = false;
+            that.finished = true;
+          }
+          if (that.activitylist.length == 0) {
+            that.loading = false;
+            that.finished = true;
+          }
+        })
+      },
+      onLoad() {
+        this.getList()
+      },
+    },
+    created() {
+      //     let that = this
+      // $.ajax({
+      //     type: "get",	//请求方式
+      //     async: false,
+      //     url: "",
+      //     data: {},		//传值给后台
+      //     dataType: "json",
+      //     success: function (res) {
+      //         console.log(res)
+      //
+      //     },
+      // });
+    }
+  })
+</script>
+<script>
+    (function (win, doc) {
+      if (!win.addEventListener) return;
+      var html = document.documentElement;
+
+      function setFont() {
+        var cliWidth = html.clientWidth;
+        if (cliWidth > 750) {
+          cliWidth = 750;
+        }
+        html.style.fontSize = 100 * (cliWidth / 750) + 'px';
+      }
+      win.addEventListener('resize', setFont, false)
+      doc.addEventListener('DOMContentLoaded', setFont, false)
+    })(window, document);
+</script>
+
+</html>
