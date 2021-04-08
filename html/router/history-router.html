@@ -1,0 +1,63 @@
+<!-- 
+  **解决思路：**我们可以通过遍历页面上的所有 a 标签，阻止 a 标签的默认事件的同时，加上点击事件的回调函数，在回调函数内获取 a 标签的 href 属性值，再通过 pushState 去改变浏览器的 location.pathname 属性值。然后手动执行 popstate 事件的回调函数，去匹配相应的路由
+
+  这里注意，不能在浏览器直接打开静态文件，需要通过 web 服务，启动端口去浏览网址。 http-server -p 8002
+ -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History 模式</title>
+</head>
+
+<body>
+  <img src="https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHoic3tsrdmQLQORW5stxLbaUWiaVGM3F9TCVGaEmGu9JBicOvFKW4MfWuw1KPmSWNWuSE2iaFIicNfBkVg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="">
+  <div>
+    <ul>
+      <li><a href="/page1">page1</a></li>
+      <li><a href="/page2">page2</a></li>
+    </ul>
+    <div id="route-view"></div>
+  </div>
+  <script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', Load)
+    window.addEventListener('popstate', PopChange)
+    var routeView = null
+    function Load() {
+      routeView = document.getElementById('route-view')
+      // 默认执行一次 popstate 的回调函数，匹配一次页面组件
+      PopChange()
+      // 获取所有带 href 属性的 a 标签节点
+      var aList = document.querySelectorAll('a[href]')
+      // 遍历 a 标签节点数组，阻止默认事件，添加点击事件回调函数
+      aList.forEach(aNode => aNode.addEventListener('click', function (e) {
+        e.preventDefault() //阻止a标签的默认事件
+        var href = aNode.getAttribute('href')
+        //  手动修改浏览器的地址栏
+        history.pushState(null, '', href) // pushState(object,title,url)
+        // 通过 history.pushState 手动修改地址栏，
+        // popstate 是监听不到地址栏的变化，所以此处需要手动执行回调函数 PopChange
+        PopChange()
+      }))
+    }
+    function PopChange() {
+      console.log('location', location)
+      switch (location.pathname) {
+        case '/page1':
+          routeView.innerHTML = 'page1'
+          return
+        case '/page2':
+          routeView.innerHTML = 'page2'
+          return
+        default:
+          routeView.innerHTML = 'page1'
+          return
+      }
+    }
+  </script>
+</body>
+
+</html>

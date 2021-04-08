@@ -1,0 +1,34 @@
+<a href="#/">首页</a>
+<a href="#/wether">天气页</a>
+<a href="#/news">新闻也</a>
+<div id="div1"></div>
+<script>
+  function Router() {
+    this.curUrl = '';
+    this.routes = {};
+    this.refresh = function () {
+      this.curUrl = location.hash.slice(1) || '/';
+      this.routes[this.curUrl]();
+    };
+    this.init = function () {
+      window.addEventListener('hashchange', this.refresh.bind(this));
+      window.addEventListener('load', this.refresh.bind(this));
+    };
+    this.route = function (path, callback) {
+      this.routes[path] = callback || function () { }
+    }
+  };
+  var domDiv = document.querySelector('#div1');
+  var r = new Router();
+  r.init();
+  r.route('/', function () {
+    domDiv.textContent = '首页'
+  });
+  r.route('/news', function () {
+    domDiv.textContent = '新闻'
+  });
+  r.route('/wether', function () {
+    domDiv.textContent = '天气'
+  });
+
+</script>

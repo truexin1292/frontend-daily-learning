@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<title>Line Game - 1</title>
+<p>you are at <span id="span1">1</span> line</p>
+<a href="?x=2" onclick="go(1);return false">advance to 2</a> or 
+<a href="?x=0" onclick="go(-1);return false">back to 0</a>
+<script>
+  var currentPage = 1;
+  function go(num) {
+    currentPage = currentPage + num;
+    setState(currentPage);
+    history.pushState(currentPage, 'hahah', '?=' + currentPage);
+  };
+
+  var domSpan = document.querySelector('#span1');
+
+  function setState(currentPage) {
+
+    domSpan.textContent = currentPage;
+
+    document.title = 'line game' + currentPage;
+
+    document.links[0].href = '?x=' + (currentPage + 1);
+    document.links[0].textContent = 'advance to - ' + (currentPage + 1);
+
+    document.links[1].href = '?x=' + (currentPage - 1);
+    document.links[1].textContent = 'back to - ' + (currentPage - 1);
+  }
+
+
+</script>
