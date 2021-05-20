@@ -1,0 +1,105 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-05-17 16:12:07
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-05-17 16:18:37
+ * @FilePath: /frontend-daily-learning/html/drag-move.html
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <title>拖拽移动demo</title>
+  <script type="text/javascript" src="http://s0.ifengimg.com/static/js/jquery-1.7.2.min_c4de8813.js"></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="margin:0 auto; width: 500px; height: 300px; border: 1px solid #ff0000; position: relative;">
+    <div style="position: absolute;" class="dragable">
+      <img src="http://s0.ifengimg.com/2015/05/18/3c3b77e548648bb98b2bab65fe2170ee.jpg">
+    </div>
+
+  </div>
+  <script>
+    function DragMove() {
+      this.dragElements = null;
+      this.X = null;
+      this.Y = null;
+      this.moveX = null;
+      this.moveY = null;
+      this.moveTag = null;
+      this.dragParentWidth = null;
+      this.dragParentHeight = null;
+      this.dragParentLeft = null;
+      this.dragParentTop = null;
+      this.dragWidth = null;
+      this.dragHeight = null;
+    }
+    DragMove.prototype = {
+      init: function () {
+        this.dragElements = $(".dragable");
+        this.bind();
+      },
+      bind: function () {
+        var me = this;
+        me.dragElements.on("touchstart", function (e) {
+          e.preventDefault();
+          var tgt = me.getTarget(e);
+          me.moveTag = true;
+          me.dragWidth = tgt.width();
+          me.dragHeight = tgt.height();
+          me.dragParentWidth = tgt.offsetParent().width();
+          me.dragParentHeight = tgt.offsetParent().height();
+          me.dragParentLeft = tgt.offsetParent().offset().left;
+          me.dragParentTop = tgt.offsetParent().offset().top;
+        });
+        me.dragElements.on("touchmove", function (e) {
+          e.preventDefault();
+          if (me.moveTag) {
+            var tgt = me.getTarget(e);
+            me.moveX = e.pageX;
+            me.moveY = e.pageY;
+            me.X = me.moveX - me.dragParentLeft - me.dragWidth / 2;
+            me.Y = me.moveY - me.dragParentTop - me.dragHeight / 2;
+            if (me.X <= 0) me.X = 0;
+            if (me.X >= me.dragParentWidth - me.dragWidth) me.X = me.dragParentWidth - me.dragWidth;
+            if (me.Y <= 0) me.Y = 0;
+            if (me.Y >= me.dragParentHeight - me.dragHeight) me.Y = me.dragParentHeight - me.dragHeight;
+            tgt.css({
+              "left": me.X + "px",
+              "top": me.Y + "px"
+            });
+          }
+        });
+        me.dragElements.on("touchend", function (e) {
+          e.preventDefault();
+          me.moveTag = false;
+        });
+      },
+      getTarget: function (e) {
+        if (!$(e.target).hasClass("dragable")) {
+          return $(e.target).parent(".dragable");
+        } else {
+          return $(e.target);
+        }
+      }
+    };
+  </script>
+  <script>
+    $(function () {
+      var drag = new DragMove();
+      drag.init();
+    });
+  </script>
+</body>
+
+</html>

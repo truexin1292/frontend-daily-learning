@@ -23,6 +23,15 @@
     // window.addEventListener('hashchange', HashChange)
     window.addEventListener('popstate', HashChange)
 
+
+    window.addEventListener('pageshow', function (e) {
+      console.log('log:', 1);
+      if (e.persisted) {
+        console.log('log:', 2);
+      }
+    })
+
+
     /*
     hashchange是老API, 浏览器支持度高, 本来是用来监听hash变化的, 可以被利用来做客户端前进后退,
      但应该不是这个API的存在的主要目的.而popstate, 及相关api, pushState等属于HTML5新标准, 
@@ -42,6 +51,7 @@
       switch (location.hash) {
         case '#/page1':
           routeView.innerHTML = 'page1'
+          location.href = 'www.baidu.com';
           return
         case '#/page2':
           routeView.innerHTML = 'page2'
