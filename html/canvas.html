@@ -1,0 +1,77 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-05-20 18:28:02
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-05-20 19:37:39
+ * @FilePath: /frontend-daily-learning/html/canvas.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>canvas</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      overflow: hidden;
+    }
+  </style>
+
+  <!-- <script type="text/javascript" src="demo.js"></script> -->
+</head>
+
+<body>
+  <canvas id="mycanvas">
+    <span>你的浏览器不支持canvas</span>
+  </canvas>
+  <script>
+    window.onload = function () {
+      var mycanvas = document.getElementById('mycanvas')
+      console.log('log2:', window.innerWidth, window.innerHeight);
+      mycanvas.width = window.innerWidth
+      mycanvas.height = window.innerHeight
+
+      createcanvas();
+
+      drawImage();
+    }
+    function createcanvas() {
+      CANVAS = document.getElementById('mycanvas');
+      ctx = CANVAS.getContext('2d');
+      // 解决下载来的图片是黑色背景的问题
+      // ctx.fillStyle = '#ffffff'
+      // ctx.fillRect(0, 0, 200,200)
+    }
+
+    function drawImage() {
+      var img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, CANVAS.width, CANVAS.height);
+        // ctx.drawImage(img, 0, 0, 344, 229)
+
+        // ctx.save();
+
+        // 绘制文本
+        ctx.font = '18px Microsoft YaiHei'
+        ctx.fillStyle = 'black'
+        ctx.fillText('南京教育局', 20, 180)
+
+        // ctx.restore();
+
+        // 绘制文本
+        ctx.font = '14px Microsoft YaiHei'
+        ctx.fillStyle = 'blue'
+        ctx.fillText('2021年05月20日', 120, 200)
+      }
+      img.src = "./img/bg.png";
+    }
+  </script>
+</body>
+
+</html>
