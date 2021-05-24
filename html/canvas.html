@@ -4,7 +4,7 @@
  * @Author: 邹新许
  * @Date: 2021-05-20 18:28:02
  * @LastEditors: 邹新许
- * @LastEditTime: 2021-05-20 19:37:39
+ * @LastEditTime: 2021-05-22 10:07:33
  * @FilePath: /frontend-daily-learning/html/canvas.html
 -->
 <!DOCTYPE html>
@@ -21,6 +21,9 @@
     body {
       overflow: hidden;
     }
+    #mycanvas {
+      border: 1px solid #f00;
+    }
   </style>
 
   <!-- <script type="text/javascript" src="demo.js"></script> -->
@@ -33,41 +36,53 @@
   <script>
     window.onload = function () {
       var mycanvas = document.getElementById('mycanvas')
+      console.log('log1:', screen.width, screen.height);
       console.log('log2:', window.innerWidth, window.innerHeight);
-      mycanvas.width = window.innerWidth
-      mycanvas.height = window.innerHeight
+      mycanvas.width = window.innerWidth;
+      // mycanvas.height = window.innerHeight;
+      mycanvas.height = Math.ceil(window.innerWidth * 276 / 350);
+      // var h = screen.height - 40;
+      // var w = screen.width - 20;
+      // var c = document.getElementById("mycanvas");
+      // c.setAttribute('width', w);
+      // c.setAttribute('height', h);
+      console.log('log:', mycanvas.width, mycanvas.height);
 
-      createcanvas();
+      var dpr = 350 / 276;
+      // mycanvas.height = window.innerHeight
+      // mycanvas.width = res[0].width * dpr
+      // mycanvas.height = res[0].height * dpr
+      // CANVAS = document.getElementById('mycanvas');
+      ctx = mycanvas.getContext('2d');
+      ctx.scale(dpr, dpr)
+      // ctx.scale(2,2)
+      // ctx.scale(3, 3 * 276 / 350)
 
-      drawImage();
-    }
-    function createcanvas() {
-      CANVAS = document.getElementById('mycanvas');
-      ctx = CANVAS.getContext('2d');
       // 解决下载来的图片是黑色背景的问题
       // ctx.fillStyle = '#ffffff'
       // ctx.fillRect(0, 0, 200,200)
-    }
 
-    function drawImage() {
       var img = new Image();
       img.onload = function () {
-        ctx.drawImage(img, 0, 0, CANVAS.width, CANVAS.height);
-        // ctx.drawImage(img, 0, 0, 344, 229)
+        console.log('log:', mycanvas.width, mycanvas.height);
+        // ctx.drawImage(img, 0, 0);
+        // ctx.drawImage(img, 0, 0, 350, 276);
+        ctx.drawImage(img, 0, 0, mycanvas.width, mycanvas.height, 0, 0, mycanvas.width, mycanvas.height);
+        // ctx.drawImage(img, 0, 0, 350, 276,0, 0, 350, 276)
 
         // ctx.save();
 
         // 绘制文本
-        ctx.font = '18px Microsoft YaiHei'
-        ctx.fillStyle = 'black'
-        ctx.fillText('南京教育局', 20, 180)
+        ctx.font = '12px Microsoft YaiHei'
+        ctx.fillStyle = '#333'
+        ctx.fillText('南京教育局', 20, 50)
 
         // ctx.restore();
 
         // 绘制文本
-        ctx.font = '14px Microsoft YaiHei'
-        ctx.fillStyle = 'blue'
-        ctx.fillText('2021年05月20日', 120, 200)
+        ctx.font = '12px Microsoft YaiHei'
+        ctx.fillStyle = '#333'
+        ctx.fillText('2021年05月20日', 200, 220)
       }
       img.src = "./img/bg.png";
     }

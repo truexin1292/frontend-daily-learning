@@ -1,0 +1,50 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-05-22 09:41:22
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-05-22 09:49:03
+ * @FilePath: /frontend-daily-learning/html/canvas1.html
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<style>
+  #myCanvas {
+    border: 1px solid blue;
+  }
+</style>
+
+<head>
+  <title>Device Properties Example</title>
+
+  <!-- <script type="text/javascript" charset="utf-8" src="phonegap.js"></script> -->
+  <script type="text/javascript" charset="utf-8">
+
+    // Wait for PhoneGap to load
+    //
+    function onLoad() {
+      document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+      var h = screen.height - 40;
+      var w = screen.width - 20;
+      var c = document.getElementById("myCanvas");
+      c.setAttribute('width', w);
+      c.setAttribute('height', h);
+      var cxt = c.getContext("2d");
+      cxt.fillStyle = "#FF0000";
+      cxt.fillRect(0, 0, w - 1, h - 1);
+    }
+
+  </script>
+</head>
+
+<body onload="onLoad()">
+  <canvas id="myCanvas"></canvas>
+</body>
+
+</html>

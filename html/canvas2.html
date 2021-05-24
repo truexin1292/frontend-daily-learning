@@ -1,0 +1,80 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-05-22 09:45:50
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-05-22 09:52:40
+ * @FilePath: /frontend-daily-learning/html/canvas2.html
+-->
+<DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset=utf-8 />
+    <title>绘图示列</title>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <script type="text/javascript">
+      // $(function () {
+      //   // var canvas = $('#myCanvas');
+      //   var canvas = document.getElementById("myCanvas");
+      //   // canvas.attr("width", $(window).get(0).innerWidth)
+      //   // canvas.attr("height", $(window).get(0).innerHeight)
+      //   canvas.width = window.innerWidth;
+      //   canvas.height = window.innerHeight;
+      //   var context = canvas.get(0).getContext("2d");
+      //   context.fillStyle = "#666";
+      //   context.fillRect(0, 0, canvas.width(), canvas.height());
+      //   // $(window).resize(function () {
+      //   //   canvas.attr("width", $(window).get(0).innerWidth)
+      //   //   canvas.attr("height", $(window).get(0).innerHeight)
+      //   //   context.fillStyle = "#FF0000";
+      //   //   context.fillRect(0, 0, canvas.width(), canvas.height());
+      //   // });
+      // });
+      window.onload = function () {
+        // var canvas = $('#myCanvas');
+        var canvas = document.getElementById("myCanvas");
+        // canvas.attr("width", $(window).get(0).innerWidth)
+        // canvas.attr("height", $(window).get(0).innerHeight)
+        // canvas.width = window.innerWidth;
+        // canvas.height = window.innerHeight;
+        canvas.width = 400 * 3;
+        canvas.height = 700 * 3;
+        var context = canvas.getContext("2d");
+        context.fillStyle = "#666";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        // $(window).resize(function () {
+        //   canvas.attr("width", $(window).get(0).innerWidth)
+        //   canvas.attr("height", $(window).get(0).innerHeight)
+        //   context.fillStyle = "#FF0000";
+        //   context.fillRect(0, 0, canvas.width(), canvas.height());
+        // });
+      };
+    </script>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%
+      }
+
+      canvas {
+        display: block;
+        border: 1px solid yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="myCanvas">
+      您的浏览器版本目前不支持HTML5
+    </canvas>
+  </body>
+
+  </html>
