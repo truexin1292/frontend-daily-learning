@@ -1,0 +1,68 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-05-29 17:06:17
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-05-29 17:07:22
+ * @FilePath: /frontend-daily-learning/html/upload.html
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+</head>
+
+<body>
+  <!--mac 打开imessage发送信息窗口-->
+  <!--android 打开对应手机的发送信息窗口-->
+  <input type="text" type="file" />
+  <script>
+    var input = document.getElementById("file");   // input file
+    input.onchange = function () {
+      var file = this.files[0];
+      if (!!file) {
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = function () {
+          var binary = this.result;
+          upload(binary);
+        }
+      }
+    }
+
+    //文件上传
+    function upload(binary) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://xxxx/opload");
+      xhr.overrideMimeType("application/octet-stream");
+      //直接发送二进制数据
+      if (xhr.sendAsBinary) {
+        xhr.sendAsBinary(binary);
+      } else {
+        xhr.send(binary);
+      }
+
+      // 监听变化
+      xhr.onreadystatechange = function (e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            // 响应成功       
+          }
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

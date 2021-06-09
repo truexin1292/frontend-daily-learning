@@ -4,7 +4,7 @@
  * @Author: 邹新许
  * @Date: 2021-05-22 09:41:22
  * @LastEditors: 邹新许
- * @LastEditTime: 2021-05-22 09:49:03
+ * @LastEditTime: 2021-05-29 18:52:43
  * @FilePath: /frontend-daily-learning/html/canvas1.html
 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -33,6 +33,7 @@
       var h = screen.height - 40;
       var w = screen.width - 20;
       var c = document.getElementById("myCanvas");
+      console.log('log:',c);
       c.setAttribute('width', w);
       c.setAttribute('height', h);
       var cxt = c.getContext("2d");

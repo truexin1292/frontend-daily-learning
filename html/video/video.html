@@ -1,0 +1,37 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-05-22 09:45:50
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-05-30 19:04:43
+ * @FilePath: /frontend-daily-learning/html/video.html
+-->
+<!DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset=utf-8 />
+    <title>绘图示列</title>
+  </head>
+
+  <body>
+    <video src="http://oss.aidigifts.com/8327072C3F17DCD192734E0362208208.mp4" id="video" playsinline="true" wekit-playsinline="true"></video>
+    <button id="btn">点击</button>
+    <script>
+      var vid = document.getElementById('video');
+        var btn = document.getElementById('btn');
+
+        btn.addEventListener('click', function (e) {
+          if (vid.requestFullscreen) {
+            vid.requestFullscreen();
+          } else if (vid.mozRequestFullScreen) {
+            vid.mozRequestFullScreen();
+          } else if (vid.webkitRequestFullscreen) {
+            vid.webkitRequestFullscreen();
+          }
+        });
+    </script>
+  </body>
+
+  </html>
