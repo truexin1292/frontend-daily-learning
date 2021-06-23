@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "node-schedule": "^1.2.3",
-    "nodemailer": "^4.0.1",
+    "nodemailer": "^6.4.16",
     "screenshot-desktop": "^1.1.0"
   }
 }
