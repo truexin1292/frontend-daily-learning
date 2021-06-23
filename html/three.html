@@ -1,0 +1,52 @@
+<html lang="en">
+	<head>
+		<title>3D模型实时观看</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #fff;
+				color: black;
+				margin: 0px;
+				overflow: hidden;
+			}
+ 
+			#modelBorderContainer{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				width: 100%;
+				height: 100%;              
+			}
+			#modelBorder {
+				max-width: 512px;
+				width: 100%;
+				height: 50%;
+			}
+            canvas{
+                position: absolute;
+                top: 0%;
+                left: 0%;
+            }
+		</style>
+	</head>
+ 
+	
+ 
+	<body>
+		<div id="modelBorderContainer">
+			<div id="modelBorder"></div>
+		</div>
+		<script type="application/javascript">
+			var modelUrl = 'models/source/Blue And White Porcelain 12th century by Mark_Energy.glb'     //定义所使用模型路径
+		</script>
+		<script src="js/three.min.js?v=2.0.3"></script>
+		<script src="js/OrbitControls.js?v=2.0.3"></script>
+		<script src="js/GLTFLoader.js?v=2.0.3"></script>
+		<script src="js/WebGL.js?v=2.0.3"></script>
+		<script src="js/stats.min.js?v=2.0.3"></script>
+		<script src="js/3dmodel.js?v=2.0.3"></script>
+	</body>
+</html>

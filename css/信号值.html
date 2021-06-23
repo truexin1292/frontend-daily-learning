@@ -1,0 +1,125 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-06-15 14:56:56
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-06-17 17:07:46
+ * @FilePath: /frontend-daily-learning/css/信号值.html
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>信号值📶显示</title>
+  <style>
+    .box {
+      width: 300px;
+      height: 300px;
+      margin: 200px auto;
+      border: 1px solid #dcdcdc;
+    }
+
+    ul {
+      position: relative;
+      list-style: none;
+    }
+
+    li {
+      width: 3px;
+      position: absolute;
+      bottom: 0;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, .5);
+    }
+
+    ul li:nth-child(1) {
+      height: 5px;
+      left: 0px;
+    }
+
+    ul li:nth-child(2) {
+      height: 8px;
+      left: 5px;
+    }
+
+    ul li:nth-child(3) {
+      height: 11px;
+      left: 10px;
+    }
+
+    ul li:nth-child(4) {
+      height: 14px;
+      left: 15px;
+    }
+
+    /* ul li:nth-child(5) {
+      height: 30px;
+      left: 40px;
+    }
+
+    ul li:nth-child(6) {
+      height: 35px;
+      left: 50px;
+    } */
+  </style>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="box">
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <!-- <li></li> -->
+      <!-- <li></li> -->
+    </ul>
+  </div>
+  <script type="text/javascript">
+    // setInterval(function () {
+    //   var n = Math.random() * 100;
+    //   console.log(n);
+    //   $('li').css('background-color', 'rgba(0,0,0,.5)');
+    //   if (n < 16) {
+    //     $('ul li:lt(1)').css('background', 'limegreen');
+    //   } else if (16 < n && n < 32) {
+    //     $('ul li:lt(2)').css('background', 'limegreen');
+    //   } else if (32 < n && n < 48) {
+    //     $('ul li:lt(3)').css('background', 'limegreen');
+    //   } else if (48 < n && n < 64) {
+    //     $('ul li:lt(4)').css('background', 'limegreen');
+    //   } else if (64 < n && n < 80) {
+    //     $('ul li:lt(5)').css('background', 'limegreen');
+    //   } else {
+    //     $('ul li').css('background', 'limegreen');
+    //   }
+    // }, 1000)
+
+    var n = 25;
+
+    if (n < 25) {
+      $('ul li:lt(1)').css('background', 'limegreen');
+    } else if (25 <= n && n < 50) {
+      $('ul li:lt(2)').css('background', 'limegreen');
+    } else if (50 <= n && n < 75) {
+      $('ul li:lt(3)').css('background', 'limegreen');
+    } else {
+      $('ul li').css('background', 'limegreen');
+    }
+  </script>
+  <script>
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function (res) {
+      console.log('log:',res);
+    }
+    xhr.open();
+    xhr.send();
+  </script>
+</body>
+
+</html>
