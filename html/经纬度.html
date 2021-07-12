@@ -1,0 +1,101 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-07-07 16:41:20
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-07-07 16:47:27
+ * @FilePath: /frontend-daily-learning/html/经纬度.html
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <div id="getarea">获取地理位置</div>
+  <iframe id="geoPage" width=0 height=0 frameborder=0 style="display:none;" scrolling="no"
+    src="https://apis.map.qq.com/tools/geolocation?key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp">
+  </iframe>
+  <!--
+geolocation对象还有2个方法,
+1个是watchPosition(success,error,options);  重复获取地理位置
+1个是clearWatch()用来清除前一次获取的位置信息
+2个方法组合使用可以实现导航功能
+ 
+Demo请在IE10以上版本测试!
+-->
+  <script>
+    var loc = null;
+    window.addEventListener('message', function (event) {
+      // 接收位置信息
+      loc = event.data;
+      console.log('location', loc);
+
+    }, false);
+    setTimeout(function () {
+      if (!loc) {
+        console.log('定位超时')
+      }
+    }, 6000) // 6s为推荐值，业务调用方可根据自己的需求设置改时间，不建议太短
+
+    window.onload = function () {
+      var getarea = document.getElementById('getarea');
+      getarea.onclick = function () {
+        //判断浏览器是否支持对象
+        if (navigator.geolocation) {
+
+          //getCurrentPosition支持3个回调函数
+          //参数1的回调函数获取信息成功的函数
+          //返回coords.latitude纬度  coords.longitude经度  coords.altitude海拔  coords.accuracy位置精确度
+          //coords.altitudeAccuracy 位置海拔精确度   coords.heading  方向,正北开始计算   coords.speed  速度米/秒    coords.timestamp 响应的日期
+          //参数2的回调函数获取信息失败的函数
+          //code 错误代码 message是错误信息
+          //参数3的回调函数可以支持按照您的需求来设置一些参数
+          //enableHighAccuracy表示是否允许使用高精度
+          //timeout指定超时时间
+          //maximumAge是指缓存的时间
+
+          navigator.geolocation.getCurrentPosition(getsuccess, geterror, getoptions);
+
+        }
+        else {
+          console.log('浏览器不支持！');
+        }
+
+
+        function getsuccess(objarea) {
+          console.log('纬度是' + objarea.coords.latitude);
+          console.log('经度是' + objarea.coords.longitude);
+          console.log('海拔是' + objarea.coords.altitude);
+          console.log('位置精确度' + objarea.coords.accuracy);
+          console.log('海拔位置精确度' + objarea.coords.altitudeAccuracy);
+          console.log('方向' + objarea.coords.heading);
+          console.log('速度' + objarea.coords.speed);
+          console.log('响应时间' + objarea.coords.timestamp);
+        }
+
+        function geterror(objarea) {
+          console.log('错误代码' + objarea.code);
+          console.log('错误信息' + objarea.message);
+        }
+
+        function getoptions(objarea) {
+          objarea.timeout = 1000;
+        }
+
+
+      }
+    }
+
+  </script>
+
+
+
+</body>
+
+</html>

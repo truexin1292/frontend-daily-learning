@@ -1,0 +1,175 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-07-12 09:49:45
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-07-12 11:53:51
+ * @FilePath: /frontend-daily-learning/html/美团一分购.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>美团一分购</title>
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+  <script src=" http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .bg {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('./img/mt-bg.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .main-bg {
+      position: absolute;
+      width: calc(100vw - .5rem);
+      height: calc(100vh - 5.5rem);
+      background-image: url('./img/mt-bg-inner.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      top: .5rem;
+      left: .5rem;
+    }
+
+    .pay-box {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60vw;
+      text-align: center;
+    }
+
+    .pay-btn {
+      width: 60vw;
+    }
+
+    .pay-click-icon {
+      position: absolute;
+      bottom: -.85rem;
+      right: .3rem;
+      height: 1.8rem;
+    }
+
+    .pay-direct {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 2rem;
+      color: rgba(15, 134, 234, 1);
+      font-size: 1rem;
+      border: 2px solid rgba(15, 134, 234, 1);
+      padding: .1rem .8rem;
+    }
+
+    .pay-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 99;
+      background: rgba(0, 0, 0, .8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: none;
+    }
+
+    .mask-main {
+      text-align: center;
+    }
+
+    .tips-title {
+      margin: 1rem auto;
+      text-align: center;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .pay-tips {
+      width: 80vw;
+    }
+
+    .confirm-btn {
+      display: inline-block;
+      margin: 1rem auto;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 2rem;
+      color: #fff;
+      font-size: 1rem;
+      border: 2px solid #fff;
+      padding: .2rem 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    /* 这里我们利用了一个自执行函数 */
+    (function () {
+      change();
+      function change() {
+        /* 这里的html字体大小利用了一个简单书序公式（十字相乘），当我们默认设置以屏幕320px位基准此时的字体大小为14px(320    20px),那么浏览器窗口大小改变的时候新的html的fontSize（clientWidth  新的值）就是clientWidth*20/320 */
+        document.documentElement.style.fontSize = document.documentElement.clientWidth * 14 / 320 + 'px';
+      }
+      /* 监听窗口大小发生改变时 */
+      window.addEventListener('resize', change, false);
+    })();
+  </script>
+  <div class="bg">
+    <div class="main-bg">
+      <div class="pay-box">
+        <img src="./img/pay-btn.png" class="pay-btn" id="openMaskBtn" />
+        <img src="./img/click.png" class="pay-click-icon" />
+      </div>
+    </div>
+    <p class="pay-direct" id="confirmDirectBtn">土豪驾到 直接支付</p>
+  </div>
+  <div class="pay-mask" id="payMask">
+    <div class="mask-main">
+      <p class="tips-title">温馨提示</p>
+      <img src="./img/pay-tips.png" class="pay-tips">
+      <span class="confirm-btn" id="confirmBtn">我知道了</span>
+    </div>
+  </div>
+</body>
+<script>
+  $(function () {
+    $('#openMaskBtn').click(function () {
+      console.log('log:', '美团提示弹窗');
+      $('#payMask').css({
+        "display": "flex"
+      })
+    })
+    $('#confirmDirectBtn').click(function () {
+      console.log('log:', '直接支付');
+    })
+    $('#confirmBtn').click(function () {
+      console.log('log:', '美团支付');
+      $('#payMask').css({
+        "display": "none"
+      })
+    })
+  })
+</script>
+
+</html>
