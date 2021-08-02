@@ -4,7 +4,7 @@
  * @Author: 邹新许
  * @Date: 2021-07-12 09:49:45
  * @LastEditors: 邹新许
- * @LastEditTime: 2021-07-12 11:53:51
+ * @LastEditTime: 2021-07-12 13:36:54
  * @FilePath: /frontend-daily-learning/html/美团一分购.html
 -->
 <!DOCTYPE html>
@@ -154,6 +154,35 @@
 </body>
 <script>
   $(function () {
+     // 判断是否满足活动要求
+    $.ajax({
+      url: "/mobile/activity/meituan",
+      type: "POST",
+      dateType: "json",
+      data: {
+        machineId: '${machineId}',
+        // latitude: latitude,
+        // longitude: longitude
+      },
+      success: function (data) {
+        // alert("成功");
+      }
+    });
+
+    // 跳转到美团支付
+    $.ajax({
+      url: "/mobile/activity/meituan/pay",
+      type: "POST",
+      dateType: "json",
+      data: {
+        machineId: '${machineId}',
+        // latitude: latitude,
+        // longitude: longitude
+      },
+      success: function (data) {
+        // alert("成功");
+      }
+    });
     $('#openMaskBtn').click(function () {
       console.log('log:', '美团提示弹窗');
       $('#payMask').css({
