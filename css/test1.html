@@ -1,0 +1,65 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-09-06 23:57:29
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-09-13 23:36:37
+ * @FilePath: /frontend-daily-learning/css/test1.html
+-->
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <style type="text/css">
+    body {
+      background-color: #FFFFFF;
+    }
+
+    .out {
+      overflow: hidden;
+      height: 21px;
+      margin-top: 50px;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="out" id="roll">
+    <div class="item">111111111</div>
+    <div class="item">222222222</div>
+    <div class="item">333333333</div>
+    <div class="item">44444444444</div>
+    <div class="item">555555555</div>
+    <div class="item">66666666</div>
+    <div class="item">777777777777</div>
+    <div class="item">888888888888</div>
+  </div>
+
+  <script>
+    var speed = 100;
+
+    var area = document.getElementById("roll");
+    area.innerHTML += area.innerHTML;
+    function scroll() {
+      if (area.scrollTop >= area.scrollHeight / 2) {
+        area.scrollTop = 0;
+      } else {
+        area.scrollTop++;
+      }
+    }
+
+    setInterval(scroll, speed);
+
+    // var list = document.getElementsByClassName('item')
+    // list.map(v=>{
+    //   v.addE
+    // })
+  </script>
+</body>
+
+</html>

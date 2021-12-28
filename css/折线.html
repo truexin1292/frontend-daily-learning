@@ -1,0 +1,52 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-08-16 22:42:22
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-08-16 22:44:30
+ * @FilePath: /frontend-daily-learning/css/折线.html
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas绘制线条入门示例</title>
+</head>
+
+<body>
+
+  <!-- 添加canvas标签，并加上红色边框以便于在页面上查看 -->
+  <canvas id="myCanvas" width="400px" height="300px">
+    您的浏览器不支持canvas标签。
+  </canvas>
+
+  <script type="text/javascript">
+    //获取Canvas对象(画布)
+    var canvas = document.getElementById("myCanvas");
+    //简单地检测当前浏览器是否支持Canvas对象，以免在一些不支持html5的浏览器中提示语法错误
+    if (canvas.getContext) {
+      //获取对应的CanvasRenderingContext2D对象(画笔)
+      var ctx = canvas.getContext("2d");
+
+      //注意，Canvas的坐标系是：Canvas画布的左上角为原点(0,0)，向右为横坐标，向下为纵坐标，单位是像素(px)。
+
+      //开始一个新的绘制路径
+      ctx.beginPath();
+      //定义直线的起点坐标为(10,10)
+      ctx.moveTo(10, 30);
+      //定义直线的终点坐标为(50,10)
+      ctx.lineTo(50, 30);
+      
+      ctx.lineTo(80, 20);
+      ctx.lineTo(190, 20);
+      //沿着坐标点顺序的路径绘制直线
+      ctx.stroke();
+      //关闭当前的绘制路径
+      ctx.closePath();
+    }
+  </script>
+</body>
+
+</html>

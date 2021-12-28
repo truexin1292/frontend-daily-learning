@@ -1,0 +1,133 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2021-09-06 23:48:19
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2021-09-06 23:48:20
+ * @FilePath: /frontend-daily-learning/css/scroll.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .transdata1 {
+  background: url("../../../static/img/transdata_bg.png") no-repeat center/100%
+    100%;
+  height: 237px;
+  padding: 36px 28px 16px 20px;
+  box-sizing: border-box;
+  transform: translateY(-12px);
+}
+.tody-table-header2 {
+  overflow: hidden;
+}
+
+.tody-table-header2 li {
+  height: 24px;
+  width: 82px;
+  line-height: 24px;
+  list-style: none;
+  float: left;
+  font-size: 13px;
+  margin-right: 48px;
+  font-family: MicrosoftYaHei;
+  color: rgba(127, 250, 255, 1);
+  text-align: center;
+  background: url("../../../static/img/thead_bg.png") no-repeat center/100%;
+  background-size: 100% 100%;
+}
+.tody-table-header2 li:last-child {
+  margin-right: 0;
+}
+#detetion-box2 {
+  margin-top: 13px;
+  height: 150px;
+  overflow: hidden;
+}
+#detetion-box2 ul {
+  overflow: hidden;
+  border-bottom: 1px solid #0e579c;
+}
+#detetion-box2 li {
+  width: 82px;
+  height: 24px;
+  line-height: 24px;
+  float: left;
+  margin-right: 48px;
+  font-size: 12px;
+  color: #fff;
+}
+#detetion-box2 ul li:last-child {
+  margin-right: 0;
+}
+
+  </style>
+</head>
+<body>
+  <div class="transdata1">
+    <ul class="tody-table-header2">
+      <li>商品</li>
+      <li>数量（kg）</li>
+      <li>单价（元）</li>
+      <li>金额（元）</li>
+    </ul>
+    <div id="detetion-box2">
+      <div id="detetion-con1">
+        <ul v-for="(item,index) in todayDetetion2" :key="index">
+          <li>{{item.name}}</li>
+          <li>{{item.amount}}kg</li>
+          <li>{{item.price}}元/kg</li>
+          <li style="color:rgba(0,255,204,1);">{{item.money}}元</li>
+        </ul>
+      </div>
+      <div id="detetion-con2"></div>
+    </div>
+  </div>
+
+</body>
+<script>
+  getData() {
+      var _this = this;
+      this.$axios
+        .get("请求的url")
+        .then(res => {
+          this.todayDetetion2 = res.data.data;
+          this.$nextTick(() => {
+            this.ScrollUp2();
+          });
+        })
+        .catch(err => { });
+    },
+    ScrollUp2() {
+      var box = document.getElementById("detetion-box2");
+      var con1 = document.getElementById("detetion-con1");
+      var con2 = document.getElementById("detetion-con2");
+      this.speed = 50;
+      if (con1.offsetHeight >= box.offsetHeight) {
+        con2.innerHTML = con1.innerHTML;
+        var timer1 = setInterval(scrol, this.speed);
+        function scrol() {
+          /*判断滚动内容是否已经滚完，滚完了则滚动的值重新设置到0，否则就每个30默秒向上滚动1px */
+          if (box.scrollTop >= con1.scrollHeight) {
+            box.scrollTop = 0;
+          } else {
+            box.scrollTop++;
+          }
+          /*判断滚动的距离刚好为一条公告的高度时停掉定时器，隔1s之后重新启动计时器即可实现公告滚动停留效果 */
+          if (box.scrollTop % 25 == 0) {
+            clearInterval(timer1);
+            setTimeout(() => {
+              timer1 = setInterval(scrol, 30);
+            }, 2000);
+          }
+        }
+      }
+    }
+
+</script>
+</html>

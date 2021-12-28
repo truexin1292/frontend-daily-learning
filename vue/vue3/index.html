@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue3</title>
+  <style>
+    .inner {
+      display: none;
+    }
+
+    .show {
+      display: block;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div class="inner" :class="classDiv">{{ msg1 }}</div>
+  </div>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script>
+    // mvvm设计模式 m model 数据 v view 视图 vm 数据视图连接层
+    // render => template => data 的顺序
+    const app = Vue.createApp({
+      // model数据
+      data() {
+        return {
+          msg1: 'data的数据',
+          msg2: 'template的数据',
+          msg3: 'render的数据',
+          classDiv: '',
+        }
+      },
+      // view视图
+      template: '<div>{{msg2}}</div>',
+      render() {
+        return Vue.h('div', [this.msg3]);
+      },
+      mounted() {
+        this.classDiv = 'show'
+      },
+    });
+
+    // viewModel连接层
+    const vm = app.mount('#root');
+    console.log('vm:', vm);
+
+  </script>
+</body>
+
+</html>

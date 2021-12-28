@@ -1,0 +1,1 @@
+(()=>{"use strict";document.getElementById("app"),new function(){const e=document.createElement("div");e.innerHTML="I am header!",app.appendChild(e)},new function(){const e=document.createElement("div");e.innerHTML="I am content!",app.appendChild(e)},new function(){const e=document.createElement("div");e.innerHTML="I am footer!",app.appendChild(e)}})();
