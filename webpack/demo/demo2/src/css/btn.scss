@@ -1,0 +1,5 @@
+.btn-div {
+  &:nth-child(odd) {
+    background-color: green;
+  }
+}
