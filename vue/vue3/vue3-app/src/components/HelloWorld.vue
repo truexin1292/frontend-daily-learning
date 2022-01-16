@@ -58,6 +58,22 @@ export default {
       p.textContent = `change from ${oldVal} to ${val}`;
     });
 
+    fetch('/api/get/users')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('log:', data);
+      });
+    const obj = { name: '1' };
+    fetch('/api/set/user', {
+      method: 'POST',
+      headers: {},
+      body: `data=${JSON.stringify(obj)}`,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('log:', data);
+      });
+
     return {
       // data,
       counter,
