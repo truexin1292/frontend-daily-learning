@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body ng-app="myapp">
+  <div ng-controller="myctrl" ng-init="age=12;count1=2">
+    <div>
+      <h2>价格计算器(自动)</h2>
+      数量：<input type="number" ng-model="count1">
+      价格：<input type="number" ng-model="price1">
+      <p>总计：{{count1 * price1}}</p>
+    </div>
+    <div>
+      <h2>价格计算器(手动)</h2>
+      数量：<input type="number" ng-model="count2">
+      价格：<input type="number" ng-model="price2">
+      <button ng-click="gettotalprice()">计算</button>
+      <p>总计：{{totalprice}}</p>
+    </div>
+    <h3>人员信息列表</h3>
+    <ul>
+      <li ng-repeat="person in persons">
+        偶数行：{{$even}},奇数行{{$odd}},中间的：{{$middle}},
+        最后一个：{{$last}},第一个：{{$first}},第{{$index + 1}}个，
+        {{person.name}}----{{person.age}}
+      </li>
+    </ul>
+    <!--当使用ng-bind的时候表达式不再生效-->
+    <p ng-bind="count2">{{'asdfdsfds'}}</p>
+    <p>{{count2}}</p>
+    <button ng-click="switch()">切换</button>
+    <p ng-show="islike">我喜欢贾静雯</p>
+    <p ng-hide="islike">贾静雯喜欢我</p>
+  </div>
+  <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.5/angular.min.js"></script>
+  <script type='text/javascript'>
+    //创建模块对象
+    angular.module('myapp', [])
+      .controller('myctrl', ['$scope', function ($scope) {
+        $scope.count1 = 1;
+        $scope.price1 = 20;
+        $scope.count2 = 1;
+        $scope.price2 = 10;
+        $scope.totalprice = $scope.count2 * $scope.price2;
+        $scope.gettotalprice = function () {
+          $scope.totalprice = this.price2 *
+            this.count2;
+        };
+        $scope.persons = [{
+            name: 'kobe',
+            age: 39
+          },
+          {
+            name: 'anverson',
+            age: 41
+          },
+          {
+            name: 'weide',
+            age: 38
+          },
+          {
+            name: 'tim',
+            age: 40
+          },
+          {
+            name: 'curry',
+            age: 29
+          }
+        ];
+        $scope.islike = true;
+        $scope.switch = function () {
+          $scope.islike = !$scope.islike;
+        }
+      }])
+  </script>
+</body>
+
+</html>

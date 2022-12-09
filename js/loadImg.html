@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function loadImages(n) {
+    //   // const imgs = [
+    //   //   'https://sponsors.vuejs.org/images/vuemastery.png',
+    //   //   'https://sponsors.vuejs.org/images/vueschool.png',
+    //   //   'https://sponsors.vuejs.org/images/vehikl.png',
+    //   //   'https://sponsors.vuejs.org/images/passionate_people.png',
+    //   //   'https://sponsors.vuejs.org/images/storyblok.png',
+    //   //   'https://sponsors.vuejs.org/images/ionic.png?v2',
+    //   //   'https://sponsors.vuejs.org/images/chrome_frameworks_fund.png',
+    //   //   'https://sponsors.vuejs.org/images/illa_cloud.svg',
+    //   // ];
+
+    //   imgs.forEach(v => {
+    //     const img = new Image();
+    //     img.src = v;
+    //     img.onload = function () {
+    //       console.log('图片加载完成了');
+    //     }
+    //     img.onerror = function (err) {
+
+    //     }
+    //   });
+    // }
+    // loadImages(8);
+    const urls = [
+      'https://www.kkkk1000.com/images/getImgData/getImgDatadata.jpg',
+      'https://www.kkkk1000.com/images/getImgData/gray.gif',
+      'https://www.kkkk1000.com/images/getImgData/Particle.gif',
+      'https://www.kkkk1000.com/images/getImgData/arithmetic.png',
+      'https://www.kkkk1000.com/images/getImgData/error',
+      'https://www.kkkk1000.com/images/getImgData/arithmetic2.gif',
+      'https://www.kkkk1000.com/images/getImgData/getImgDataError.jpg',
+      'https://www.kkkk1000.com/images/getImgData/arithmetic.gif',
+      'https://www.kkkk1000.com/images/wxQrCode2.png'
+    ];
+
+    function loadImages(urls = []) {
+      urls.forEach(v => {
+        const img = new Image();
+        img.src = v;
+        img.onload = function () {
+          console.log('图片加载完成了');
+        }
+        img.onerror = function (err) {
+          console.log('图片加载错误了');
+        }
+      });
+    }
+
+    loadImages(urls)
+  </script>
+</body>
+
+</html>

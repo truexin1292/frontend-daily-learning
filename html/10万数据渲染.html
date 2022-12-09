@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10万数据渲染</title>
+    <style>
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const allCount = 100000;
+    const item = {
+        id: 1,
+        src: 'https://sasset.leyaoyao.com/front-merchant/businessCenter/static/a7d6b304498df4d5a233.png',
+        title: '头像'
+    };
+
+    const list = new Array(allCount).fill(item);
+
+    const body = document.querySelector('body');
+
+    // 方法1：直接渲染
+    // function render() { // 渲染列表: 4000ms
+    //     list.forEach(v => {
+    //         let div = document.createElement('div');
+    //         let img = document.createElement('img');
+    //         let span = document.createElement('span');
+    //         img.setAttribute('src', v.src);
+    //         span.innerHTML = v.title;
+    //         div.append(img);
+    //         div.append(span);
+    //         body.append(div);
+    //     });
+    // }
+    //
+    // console.time('渲染列表');
+    // render();
+    // setTimeout(function () {
+    //     console.timeEnd('渲染列表'); // 200ms
+    // });
+
+
+    // 方法2: 分页+setTimeout  // 渲染列表: 1ms
+    // function render() {
+    //     let page = 0;
+    //     let limit = 200;
+    //     let totalPage = Math.ceil(allCount / limit);
+    //     if (page > totalPage) {
+    //         return;
+    //     }
+    //     setTimeout(function () {
+    //         for (let i = page * limit; i <= page * limit + limit; i++) {
+    //             let div = document.createElement('div');
+    //             let img = document.createElement('img');
+    //             let span = document.createElement('span');
+    //             img.setAttribute('src', list[i].src);
+    //             span.innerHTML = list[i].title;
+    //             div.append(img);
+    //             div.append(span);
+    //             body.append(div);
+    //         }
+    //         render(page + 1);
+    //     }, 0);
+    // }
+    //
+    // console.time('渲染列表');
+    // render();
+    // setTimeout(function () {
+    // console.timeEnd('渲染列表'); // 200ms
+    // });
+
+    // 方法3：requestAnimationFrame 减少重排 1ms
+    // function render() {
+    //     let page = 0;
+    //     let limit = 200;
+    //     let totalPage = Math.ceil(allCount / limit);
+    //     if (page > totalPage) {
+    //         return;
+    //     }
+    //     window.requestAnimationFrame(function () {
+    //         for (let i = page * limit; i <= page * limit + limit; i++) {
+    //             let div = document.createElement('div');
+    //             let img = document.createElement('img');
+    //             let span = document.createElement('span');
+    //             img.setAttribute('src', list[i].src);
+    //             span.innerHTML = list[i].title;
+    //             div.append(img);
+    //             div.append(span);
+    //             body.append(div);
+    //         }
+    //         render(page + 1);
+    //     });
+    // }
+    //
+    // console.time('渲染列表');
+    // render();
+    // setTimeout(function () {
+    //     console.timeEnd('渲染列表'); // 250ms
+    // });
+
+    // 方法4：创建文档碎片 -  减少dom插入操作 ：createDocumentFragment() 是dom节点，不是主dom树的一部分
+    function render() {
+        let page = 0;
+        let limit = 200;
+        let totalPage = Math.ceil(allCount / limit);
+        if (page > totalPage) {
+            return;
+        }
+        requestAnimationFrame(() => {
+            let dom = document.createDocumentFragment();
+            for (let i = page * limit; i <= page * limit + limit; i++) {
+                let div = document.createElement('div');
+                div.innerHTML = `<img src="${list[i].src}"/><span>${list[i].title}</span>`;
+                dom.appendChild(div);
+            }
+            body.appendChild(dom);
+            render(page + 1);
+        });
+    }
+
+    console.time('渲染列表');
+    render();
+    setTimeout(function () {
+        console.timeEnd('渲染列表'); // 200ms
+    });
+
+</script>
+</body>
+</html>

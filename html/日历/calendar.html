@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日历</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #data {
+      width: 280px;
+      border: 1px solid #000;
+      margin: 20px auto;
+    }
+
+    #data>p {
+      display: flex;
+    }
+
+    #data>h5 {
+      text-align: center;
+    }
+
+    #data>p>span {
+      padding: 0 10px;
+    }
+
+    #prev,
+    #next {
+      cursor: pointer;
+    }
+
+    #nian {
+      flex: 1;
+      text-align: center;
+    }
+
+    #title {
+      overflow: hidden;
+      list-style: none;
+      background: #ccc;
+    }
+
+    #title>li {
+      float: left;
+      width: 40px;
+      height: 26px;
+      line-height: 26px;
+      text-align: center;
+    }
+
+    #date {
+      overflow: hidden;
+      list-style: none;
+    }
+
+    #date>li {
+      float: left;
+      width: 34px;
+      height: 34px;
+      margin: 1px 1px;
+      border: 2px solid yellowgreen;
+      line-height: 34px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #date>.hover:hover {
+      /* 添加 class=hover, 当鼠标houver时,显示border颜色 */
+      border: 2px solid red;
+    }
+
+    .active {
+      /* 添加 class=active, 当前年月日下的 当日为选中状态 */
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="data">
+    <p>
+      <span id="prev">上月</span>
+      <span id="nian">2022</span>
+      <span id="next">下月</span>
+      <!-- 3.切换月份 -->
+    </p>
+
+    <h5 id="yue">五月</h5>
+    <!-- 1.年份&月份 -->
+
+    <ul id="title">
+      <!-- 周几title -->
+      <li>日</li>
+      <li>一</li>
+      <li>二</li>
+      <li>三</li>
+      <li>四</li>
+      <li>五</li>
+      <li>六</li>
+    </ul>
+    <ul id="date"></ul>
+    <!-- 2.插入日历数据 -->
+  </div>
+</body>
+<script>
+  let date = new Date(); //设定一个全局变量
+
+  // 3. 上月下月切换
+  document.getElementById('prev').onclick = function () {
+    //tip: 当月份达到1月时, -1就是上年的12月
+    date.setMonth(date.getMonth() - 1);
+    add();
+  }
+  document.getElementById('next').onclick = function () {
+    //tip: 当月份达到12时, +1就是次年的一月
+    date.setMonth(date.getMonth() + 1);
+    add();
+  }
+
+  add();
+
+  function add() {
+    let nowYear = date.getFullYear();
+    let nowMonth = date.getMonth();
+    let nowDate = date.getDate();
+
+    // 1. 设置年份 & 月份
+    document.getElementById('nian').innerHTML = nowYear;
+    let arr = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+    document.getElementById('yue').innerHTML = arr[nowMonth];
+
+    //该年月的第一天周几(从0开始)
+    let zhou = new Date(nowYear, nowMonth, 1).getDay();
+
+    //获取该月共有几天 （通过这种方式可以得到每个月份的天数，也不用区分闰年了，很方便）
+    let totalDay = new Date(nowYear, nowMonth, 0).getDate();
+
+    let html = '';
+    //在当月第一天的前面添加空白<li>
+    //注意周次一致性: zhou的日期格式(0-6); html页面格式(日-六)
+    for (var i = 0; i < zhou; i++) {
+      html += '<li></li>'
+    } //设置的 年月日 
+    let settingTime = new Date(nowYear, nowMonth, nowDate).toLocaleDateString();
+    //现在的 年月日 
+    let realTime = new Date().toLocaleDateString();
+    //现在的 日 
+    let realDate = new Date().getDate();
+    for (var i = 1; i <= totalDay; i++) {
+      //如果现在的年月日 等于 设定的年月日
+      if (realTime == settingTime) {
+        //那么就设定现在的日为tody字符
+        if (realDate == i) {
+          html += `<li class="active">tody</li>`;
+        } else {
+          html += `<li class="hover">${i}</li>`;
+        };
+      } else {
+        html += `<li class="hover">${i}</li>`;
+      };
+    };
+    document.getElementById('date').innerHTML = html;
+    // 2. 将 < li > 日历数据插入到 < ul > 中
+
+  }
+</script>
+
+</html>

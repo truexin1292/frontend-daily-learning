@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>如何使数组产生empty</title>
+</head>
+
+<body>
+  <script>
+
+    // const arr = new Array(4)
+
+    // arr[0] // undefined
+    // Array.from(arr) // 返回一个数组[undefined, undefined, undefined, undefined]
+    // arr.map((item) => item) // 遍历的那项为空时，返回empty
+    // arr.forEach((item) => item) // 遍历的那项为空时，返回empty
+    // arr.some((item) => item === undefined) // 遍历时会跳过为empty的项，如果数组为空则返回false
+    // arr.every((item) => item === undefined) // 遍历时会跳过为empty的项，如果数组为空则返回true
+    // arr.reduce((a, b) => a + b) // 数组为空时报错，报错信息为reduce操作的数组不能为空
+    // arr.find((item) => item === undefined) // 能正常遍历，并返回找到的值undefined
+    // arr.findIndex((item) => { // 能正常遍历，并返回找到的值的index
+    // return item === undefined
+    // })
+    // arr.filter((item) => item === undefined)// 遍历时会跳过为empty的项
+    // arr.join() // 返回一个',,,'的字符串
+    // arr.includes() // 不传参数时为true，经过测试断定默认值为undefined
+    // arr.indexOf() // 返回-1，经过测试断定默认值为undefined，但是它不对空数组判断
+    // arr.sort() // 能正常排序，为empty的元素会被排序到最后
+    // arr.fill(1) // 数组内所有项都会变成1
+    // pop, push, shift, unshift的操作都是正常进行
+
+    // 方法1：length大于原数组
+    var arr1 = [1, 2, 3];
+    arr1.length = 4;
+
+    console.log('方法1:', arr1); // [1, 2, 3, empty]
+    // 方法2：new Array(2)
+    var arr2 = new Array(2);
+    console.log('方法2:', arr2); // [empty × 2]
+  </script>
+</body>
+
+</html>

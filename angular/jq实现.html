@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <input type="text" id="name">
+  <p>您输入的内容是：<span id="contentspan"></span></p>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function () { //document.ready文档加载完毕(页面的结构) 原生：window.onload:整个页面加载完毕，包括图片。。。
+      $('#name').keyup(function () {
+        var name = this.value;
+        $('#contentspan').html(name);
+      })
+    })
+  </script>
+</body>
+
+</html>

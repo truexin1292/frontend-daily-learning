@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    label span {
+      display: inline-block;
+      width: 60px;
+    }
+  </style>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+  <form>
+    <label for="useranme">
+      <span>用户名：</span>
+      <input type="text" ng-model="username">
+    </label>
+    <label for="password">
+      <span>密码：</span>
+      <input type="password" ng-model="password">
+    </label>
+    <label for="validCode">
+      <span>验证码：</span>
+      <input type="text" ng-model="validCode">
+    </label>
+    <button ng-click="myForm()">提交</button>
+  </form>
+  <p>您输入的内容是：
+    <span ng-if="username">用户名：{{username}}，</span>
+    <span ng-if="password">密码：{{password}}，</span>
+    <span ng-if="validCode">验证码：{{validCode}}</span>
+  </p>
+
+  <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.5/angular.min.js"></script>
+  <script>
+    const app = angular.module("myApp", []);
+    app.controller("myCtrl", function ($scope) {
+      $scope.myForm = function () {
+        const {
+          username,
+          password,
+          validCode
+        } = $scope;
+        console.log('username:', username);
+        console.log('password:', password);
+        console.log('validCode:', validCode);
+        console.log('log:', '提交表单');
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v-model</title>
+</head>
+
+<body>
+  <input type="text" v-model="msg" class="input" placeholder="请输入名字">
+  显示值：<p class="showName"></p>
+  <script>
+    const input = document.querySelector('.input');
+    const showName = document.querySelector('.showName');
+
+    let obj = {};
+    let value = '';
+    Object.defineProperty(obj, 'username', {
+      get() {
+        console.log('取值:', value);
+        return value;
+      },
+      set(val) {
+        console.log('设置值:', val);
+        value = val;
+        showName.innerHTML = val;
+      },
+    })
+
+    input.addEventListener('keyup', function () {
+      let val = event.target.value;
+      obj.username = val;
+    });
+  </script>
+</body>
+
+</html>

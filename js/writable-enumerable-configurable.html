@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>writable enumerable configurable value</title>
+</head>
+<body>
+<script>
+    // https://blog.csdn.net/weixin_44730897/article/details/116461110
+    // https://www.jianshu.com/p/d0237525e01f
+    // https://blog.csdn.net/BWater_monster/article/details/124140824
+
+    // 1.在使用Object.defineProperty()、Object.defineProperties() 或 Object.create()
+    // 函数的情况下添加数据属性，writable、enumerable和configurable默认值为false。
+
+    // 2.使用对象直接量创建的属性，writable、enumerable和configurable特性默认为true。
+
+    // {
+    //     value: undefined,
+    //     writable: true,
+    //     enumerable: true,
+    //     configurable: true,
+    //     get: undefined,
+    //     set: undefined
+    // }
+
+    var obj = {
+        name: 'alex',
+        age: 23,
+        gender: 'male',
+    };
+    Object.defineProperty(obj, 'class', {
+        value: 2,
+        writable: true, // 默认false
+        enumerable: true, // 默认false
+        configurable: true, // 默认false
+    });
+
+    Object.defineProperties(obj, {
+        'class': {
+            value: 2,
+            writable: true, // 默认false
+            enumerable: true, // 默认false
+            configurable: true, // 默认false
+        },
+        'school': {
+            value: 'num1',
+            writable: true, // 默认false
+            enumerable: true, // 默认false
+            configurable: true, // 默认false
+        }
+    });
+
+    var obj2 = Object.create({name: 'alex', age: 24}, {gender: {value: 'male'}});
+    // var obj2 = Object.assign({}, {name: 'alex', age: 24}); // 修改覆盖目标对象，返回目标对象
+    // var obj2 = Object.assign({}, {name: 'alex', age: 24},{age:45,gender:'female'}); // 修改覆盖目标对象，返回目标对象
+
+    //异常会打断后续拷贝任务
+    const target = Object.defineProperty({}, "foo", {
+        value: 1,
+        writable: false
+    }); // target 的 foo 属性是个只读属性。
+
+    Object.assign(target, {bar: 2}, {foo2: 3, foo: 3, foo3: 3}, {baz: 4});
+    // TypeError: "foo" is read-only
+    // 注意这个异常是在拷贝第二个源对象的第二个属性时发生的。
+
+    console.log(target.bar);  // 2，说明第一个源对象拷贝成功了。
+    console.log(target.foo2); // 3，说明第二个源对象的第一个属性也拷贝成功了。
+    console.log(target.foo);  // 1，只读属性不能被覆盖，所以第二个源对象的第二个属性拷贝失败了。
+    console.log(target.foo3); // undefined，异常之后 assign 方法就退出了，第三个属性是不会被拷贝到的。
+    console.log(target.baz);  // undefined，第三个源对象更是不会被拷贝到的。
+
+
+    // 题目：对象字面量创建对象 与 Object.create(null) 创建对象有什么区别
+    // 1、对象字面量创建对象 ，new Object()  和  { }  效果是一样
+
+    // 2. 通过Object.create(null)创建的对象是非常纯净的，原型链的属性和方法都不会携带。
+    // 这就非常适合数组对象开发的时候，从对象中取值，提高循环效率。
+
+    var obj3 = Object.create(null);
+    console.log(obj3);   // 打印可以发现，obj 没有__proto__ 属性
+
+    // 3. 如果需要使用到对象的继承属性和方法，那就使用 obj = {}  或 obj = new Object() 这种方式
+</script>
+</body>
+</html>

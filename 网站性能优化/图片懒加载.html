@@ -1,0 +1,52 @@
+<html>
+
+<head>
+  <style>
+    img {
+      width: 400px;
+      height: 400px;
+      display: block;
+      margin-bottom: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="./img/load.gif" data-src="./img/img1.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img2.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img3.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img4.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img5.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img6.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img7.png" alt="" />
+  <img src="./img/load.gif" data-src="./img/img8.png" alt="" />
+</body>
+<script>
+  let imgs = document.getElementsByTagName('img');
+  let len = imgs.length;
+  let load = './img/load.gif';
+
+  lazyLoad();
+
+  window.onscroll = lazyLoad;
+
+  function lazyLoad() {
+    // 注意兼容性：
+    // let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    // let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    // 滚动条距离文档顶部的高度
+    let scrollTop = window.pageYOffset;
+    // 视图窗口可见高度 
+    let screenHeight = window.innerHeight;
+    for (let i = 0; i < len; i++) {
+      // 图片距离文档顶部的高度 < 滚动距离 + 视图高度
+      if (imgs[i].offsetTop < scrollTop + screenHeight) {
+        if (imgs[i].getAttribute('src') === load) {
+          imgs[i].src = imgs[i].getAttribute('data-src');
+        }
+      }
+    }
+  }
+</script>
+
+<!-- </html> -->

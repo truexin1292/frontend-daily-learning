@@ -1,0 +1,82 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2022-12-03 16:02:56
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2022-12-03 17:28:28
+ * @FilePath: /frontend-daily-learning/手写/promise.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手写promise</title>
+</head>
+
+<body>
+  <script>
+    function MyPromise(excutor) {
+      var self = this;
+      self.satus = 'pending';
+      self.reason = null;
+      self.value = null;
+      self.onfulfilledCallbacks = [];
+      self.onrejectedCallbacks = [];
+
+      function resolve(data) {
+        if (self.satus === 'pending') {
+          self.value = data;
+          self.satus = 'fulfilled';
+          console.log('log:', data);
+          self.onfulfilledCallbacks.forEach(function (item) {
+            item(data);
+          })
+        }
+      }
+
+      function reject(reason) {
+        if (self.satus === 'pending') {
+          self.reason = reason;
+          self.satus = 'rejected';
+          self.onrejectedCallbacks.forEach(function (item) {
+            item(data);
+          })
+        }
+      }
+
+      try {
+        excutor(resolve, reject);
+      } catch (err) {
+        reject(err);
+      }
+    }
+
+    MyPromise.prototype.then = function (onfulfilled, onrejected) {
+      onfulfilled = typeof onfulfilled == "function" ? onfulfilled : this.resolve(this.value);
+      onrejected = typeof onrejected == "function" ? onrejected : function () {
+        return new Error(this.reason)
+      };
+      if (this.satus === 'pending') {
+        this.onfulfilledCallbacks.push(onfulfilled);
+        this.onrejectedCallbacks.push(onrejected);
+      }
+    }
+
+    var promise = new MyPromise(function (resolve, reject) {
+      console.log('log:', '11111');
+      setTimeout(function () {
+        resolve(123);
+      }, 2000);
+    });
+
+    promise.then(function () {
+      console.log('log:', '2222222');
+    });
+  </script>
+</body>
+
+</html>

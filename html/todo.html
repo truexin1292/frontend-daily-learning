@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todo list</title>
+</head>
+<style>
+    ul {
+        list-style: none;
+    }
+
+    li {
+        position: relative;
+        border-bottom: 1px solid #dcdcdc;
+        line-height: 40px;
+        width: 400px;
+    }
+
+    .delete-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+    }
+
+    .delete-icon:hover {
+        transform: scale(2);
+    }
+
+    .p {
+        color: red;
+    }
+</style>
+<body>
+
+<span>请输入todo项</span>
+<input type="text" class="input" oninput="value=value.replace(/\s+/g,'')">
+<p class="p"></p>
+
+<ul class="ul"></ul>
+
+<script>
+    let ulDom = document.querySelector('.ul');
+    let input = document.querySelector('.input');
+    let pDom = document.querySelector('.p');
+
+    let list = [];
+    let index = 0;
+
+    input.addEventListener('keydown', function (e) {
+        const inputTxt = input.value;
+        if (e.keyCode === 13 && inputTxt) {
+            const deleteIcon = '<span class="delete-icon">X</span>';
+            let liDom = document.createElement('li');
+            liDom.innerHTML = inputTxt + deleteIcon;
+            liDom.setAttribute('index', inputTxt);
+            index = index + 1;
+            list.push(inputTxt);
+            ulDom.append(liDom);
+            input.value = '';
+            pDom.innerHTML = '';
+        }
+    });
+
+    input.addEventListener('keyup', function () {
+        filterFn();
+    });
+
+    ulDom.addEventListener('click', function (e) {
+        let tagName = e.target.tagName;
+        if (tagName.toLowerCase() === 'span') {
+            ulDom.removeChild(e.target.parentNode);
+            const index = e.target.parentNode.getAttribute('index');
+            list = list.filter(v => v !== index);
+            filterFn();
+        }
+    });
+
+    function filterFn() {
+        const inputTxt = input.value;
+        pDom.innerHTML = '';
+        list.forEach(v => {
+            if (v === inputTxt) {
+                pDom.innerHTML = '匹配到:' + inputTxt;
+            }
+        });
+    }
+</script>
+</body>
+</html>

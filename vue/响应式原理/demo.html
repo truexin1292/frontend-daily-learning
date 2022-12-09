@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue-响应式原理实现</title>
+</head>
+
+<body>
+  view1:<div class="box-1"></div>
+  view2:<div class="box-2"></div>
+  <!--面试官问：vue实现响应式的原理=》 通过发布订阅和数据劫持实现 -->
+  <script>
+    // 订阅器模型 
+    const Dep = {
+      // 容器
+      classList: {},
+      // 添加订阅
+      listen: function (key, fn) {
+        // if (!this.classList[key]) {
+        //   this.classList[key] = [];
+        // } else {
+        //   this.classList[key].push(fn);
+        // }
+        // 短路模式
+        (this.classList[key] || (this.classList[key] = [])).push(fn);
+      },
+      // 发布 
+      trigger: function () {
+        let key = Array.prototype.shift.call(arguments),
+          fns = this.classList[key];
+        if (!fns || fns.length === 0) {
+          return false;
+        }
+        for (let i = 0, fn; fn = fns[i++];) {
+          fn.apply(this, arguments);
+        }
+        // 等价于
+        // for (let i = 0; i < fns.length; i++) {
+        //   fns[i].apply(this, arguments);
+        // }
+
+        // init初始化语句（指令），在整个循环开始前执行
+        // cond条件（逻辑表达式），表示循环继续的条件
+        // inc自增语句（指令），在每次循环体结束以后执行
+      }
+    };
+
+    let dataHi = function ({
+      data,
+      tag,
+      dataKey,
+      selector
+    }) {
+      let value = '',
+        el = document.querySelector(selector);
+      Object.defineProperty(data, dataKey, {
+        get: function () {
+          console.log(`${dataKey}取值:`, value);
+          return value;
+        },
+        set: function (val) {
+          console.log(`${dataKey}设值:`, val);
+          value = val;
+          // 后发布
+          Dep.trigger(tag, val);
+        },
+      });
+      // 先订阅
+      Dep.listen(tag, function (text) {
+        el.innerHTML = text;
+      });
+    };
+
+    const obj = {};
+
+    dataHi({
+      data: obj,
+      tag: 'view-1',
+      dataKey: 'one',
+      selector: '.box-1'
+    });
+
+    dataHi({
+      data: obj,
+      tag: 'view-2',
+      dataKey: 'two',
+      selector: '.box-2'
+    });
+
+    // 1.初始化赋值 一次
+    obj.one = '这是视图1'
+    obj.two = '这是视图2'
+
+    // 2.劫持数据，更新者负责重新渲染 N次
+
+    // 响应式
+    // 1.数据联动（双休绑定）
+    // 2.需要捕获到修改
+
+  </script>
+</body>
+
+</html>

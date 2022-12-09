@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lazyLoad</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      margin-bottom: 400px;
+      width: 250px;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- https://blog.csdn.net/qq_44947815/article/details/125286969 -->
+  <img src="img/load.gif" data-url="img/img1.png">
+  <img src="img/load.gif" data-url="img/img2.png">
+  <img src="img/load.gif" data-url="img/img3.png">
+  <img src="img/load.gif" data-url="img/img4.png">
+  <img src="img/load.gif" data-url="img/img5.png">
+  <img src="img/load.gif" data-url="img/img6.png">
+  <img src="img/load.gif" data-url="img/img7.png">
+  <img src="img/load.gif" data-url="img/img8.png">
+
+  <script>
+    // 方法1：
+    let imgs = document.getElementsByTagName('img');
+
+    // 开始执行
+    scrollFn();
+    // 监听滚动事件
+    window.onscroll = scrollFn;
+
+    function scrollFn() {
+      let clietH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+
+      Array.from(imgs).forEach(item => {
+        let eleTop = item.offsetTop;
+        let count = scrollTop + clietH - eleTop;
+        // 可设置为>100 查看懒加载效果
+        if (count > 0) {
+          //从data-url中取出真实的图片地址赋值给scr
+          item.setAttribute('src', item.getAttribute('data-url'))
+        }
+      })
+    }
+  </script>
+
+<script>
+    // 方法2： 
+    let imgs = document.getElementsByTagName('img');
+
+    // 开始执行
+    scrollFn();
+    // 监听滚动事件
+    window.onscroll = scrollFn;
+
+    function scrollFn() {
+      let clietH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+
+      Array.from(imgs).forEach(item => {
+        let ele = item.getBoundingClientRect();
+        // 可以设置为ele.top+200 查看懒加载效果
+        if (ele.top > 0 && ele.top < clietH) {
+          //从data-url中取出真实的图片地址赋值给scr 
+          item.setAttribute('src', item.getAttribute('data-url'));
+        }
+      })
+    }
+  </script>
+
+  <script>
+    // 方法3：
+    let imgs = document.getElementsByTagName('img');
+    // 观察器实例
+    let io = new IntersectionObserver(entires => {
+      entires.forEach(item => {
+        // 原图片元素
+        let img = item.target;
+        if (item.intersectionRatio > 0 && item.intersectionRatio <= 1) {
+          img.setAttribute('src', img.getAttribute('data-url'));
+        }
+      })
+    }) 
+    // 给每一个图片设置观察器 
+    Array.from(imgs).forEach(element => {
+      io.observe(element);
+    });
+  </script>
+</body>
+
+</html>

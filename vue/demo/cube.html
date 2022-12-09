@@ -1,0 +1,64 @@
+<!--最简单模板-html里面使用vue-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app" :class="isPass?'':'red'">
+    <span>输入表格布局数字：</span>
+    <input v-model.trim="msg" />
+    <table v-if="isPass">
+      <tr v-for="(row,rowIndex) in new Array(+msg)">
+        <td v-for="(column,columnIndex) in new Array(+msg)">{{rowIndex+1}}</td>
+      </tr>
+    </table>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      msg: '',
+      isPass: true,
+    },
+    watch: {
+      msg(val) {
+        if (+val < 0 || +val > 10) {
+          this.isPass = false;
+        } else {
+          this.isPass = true;
+        }
+      }
+    },
+  })
+
+</script>
+<style>
+  #app {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  .red {
+    background-color: red;
+  }
+
+  table {
+    margin: auto;
+    border-collapse: collapse;
+  }
+
+  td {
+    border: 1px solid #dcdcdc;
+    width: 80px;
+    text-align: center;
+  }
+
+</style>
+
+</html>

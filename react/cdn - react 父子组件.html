@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 玩转vue的时候，直接引入只需要引入一个文件就可以使用了。 -->
+<!-- 但是玩转react时候，需要引入引入三个文件。 -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<!-- https://blog.csdn.net/qq_39593914/article/details/123783514 -->
+
+<body>
+  <!-- react的容器 -->
+  <div id="app"></div>
+</body>
+
+</html>
+
+<script type="text/babel">
+  //OH的右边的内容就是JSX的语法
+    //（script type="text/babel" 需要这么写，不然就会报错，需要告诉babel需要转哪些，只需要在script标签写type="text/babel"就可以了）
+    class ChildComponent extends React.Component {
+      render() {
+        return (
+          <div>
+            我是类式组件
+          </div>
+        )
+      }
+    };
+
+    let oH = <div>
+        hello react!
+    </div>;
+
+    const my_id = 'aTGuiGu';
+    const my_data = 'Hello React';
+
+    const VDOM = ( /* 此处不需要写引号,应为不是字符串 */
+      <h3 className="red" id={my_id.toLocaleLowerCase()}>
+        <span style={{color:'red'}}>{my_data}</span>
+        {oH}
+        <ChildComponent/>
+      </h3>
+    )
+    // ReactDOM.render(要渲染什么内容，渲染到哪里)
+    //只有用了这个才会创建虚拟DOM，先创建再更新
+    // ReactDOM.render(<ChildComponent />, document.querySelector("#app"));
+    ReactDOM.render(VDOM, document.querySelector("#app"));
+</script>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+
+</html>
+<script>
+  let oH= `<h1>hello react</h1>`
+    document.querySelector('#app').innerHTML = oH;
+</script> -->
+
+
+<!-- 用不用JSX语法的区别：
+1、可以看到声明的OH中，源生写法需要用引号引住，不能换行，如果用模板字符串，也可以换行了。
+2、其实你看到不管用Jsx语法还是不用Jsx语法，都是两行代码解决，但Jsx语法可以配合react使用，Jsx语法无法配合源生js使用，会识别不出html标签。但两者写代码的性能是不一样的。react写法可以识别哪些是静态的，哪些是动态的。可以一定程度提高代码的性能。 -->

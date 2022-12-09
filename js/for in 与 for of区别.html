@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for in 与 for of区别</title>
+</head>
+<body>
+<script>
+    // https://juejin.cn/post/6916058482231754765
+    // https://juejin.cn/post/7104444342684614664
+    // 遍历对象：for...in可以，for...of 不可以 , 可以使用Object.keys/values/entries 再与for of搭配使用
+    // 遍历Map Set: for..of 可以，for..in 不可以
+    // 遍历 generator：for...of 可以，for...in 不可以
+    // 遍历 数组：for...of 可以，for...in 可以
+
+    // for...in可以用在可枚举的数据(enumerable), array、object、string
+    // for...of用于可迭代的数据(iterator), array,map,set,string
+
+    var arr = [1, 2, 3];
+    arr.a = 123;
+    arr.b = 123;
+    Array.prototype.a = 123;
+    Array.prototype.d = function () {
+        console.log(1);
+    };
+
+    for (let key in arr) {
+        // 数组对象都支持，遍历数组的索引key，原型属性和方法也会遍历。
+        // 注意：
+        // 1.索引为字符串类型，不支持直接进行运算操作
+        // 2.不一定按照索引顺序返回
+
+        // for in 如果用来遍历数组，那么它就能够“跳过空位”，[1,empty,2,3]，这种情况下,只会遍历出有值的index  -> 0 2 3
+        // null不是空位，空位就是没有值，null是一个特殊的对象，
+        // 想看空位的数组，可以使用new Array(N)来生成一个有空位的数组，控制台打印的是 [empty x 3]，可以自己操作看下
+
+        console.log(key); // 0 1 2 a b d
+        if (arr.hasOwnProperty(key)) {
+            console.log('own:', key); // 0 1 2 a b
+        }
+    }
+    for (let value of arr) {
+        // 支持数组，类数组，不支持对象，遍历数组的值value，本身属性和方法以及原型属性和方法不会遍历
+        console.log(value); // 1 2 3
+    }
+
+    for (let key of Object.keys({name: 'alex', age: 23, gender: 'male'})) {
+        // 支持数组，类数组，不支持对象，遍历数组的值value，本身属性和方法以及原型属性和方法不会遍历
+        console.log(key); // name age gender
+    }
+    for (let key of Object.values({name: 'alex', age: 23, gender: 'male'})) {
+        // 支持数组，类数组，不支持对象，遍历数组的值value，本身属性和方法以及原型属性和方法不会遍历
+        console.log(key); // alex 23 male
+    }
+    for (let [key, value] of Object.entries({name: 'alex', age: 23, gender: 'male'})) {
+        // 支持数组，类数组，不支持对象，遍历数组的值value，本身属性和方法以及原型属性和方法不会遍历
+        console.log(key + ':' + value); // name:alex age:23 gender:male
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!--
+ * @Project: 
+ * @Remark: 
+ * @Author: 邹新许
+ * @Date: 2022-12-03 17:18:14
+ * @LastEditors: 邹新许
+ * @LastEditTime: 2022-12-03 18:15:12
+ * @FilePath: /frontend-daily-learning/手写/new.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手写new</title>
+</head>
+
+<body>
+  <script>
+    // https://www.runoob.com/w3cnote/js-call-apply-bind.html
+    // 微妙的差距！
+
+    // 从上面四个结果不难看出:
+
+    // call 、bind 、 apply 这三个函数的第一个参数都是 this 的指向对象，第二个参数差别就来了：
+
+    // call 的参数是直接放进去的，第二第三第 n 个参数全都用逗号分隔，直接放到后面 obj.myFun.call(db,'成都', ... ,'string' )。
+
+    // apply 的所有参数都必须放在一个数组里面传进去 obj.myFun.apply(db,['成都', ..., 'string' ])。
+
+    // bind 除了返回是函数以外，它 的参数和 call 一样。
+
+    // 当然，三者的参数不限定是 string 类型，允许是各种类型，包括函数 、 object 等等！
+
+    // 自己总结：call bind 散参数， apply参数在数组里，bind返回函数需要再调用
+
+    function MyNew(Func, ...args) {
+      let obj = {};
+      obj.__proto__ == Func.prototype;
+      // 1、2 相当于 =》 let obj = Object.create(Func.prototype);
+      let result = Func.call(obj, ...args);
+      // 3 相当于 =》let result = Func.apply(obj, args);
+      // 3 相当于 =》let result = Func.bind(obj, ...args)();
+      return result instanceof Object ? result : obj;
+      // 4 相当于 =》return typeof result === 'object' ? result : obj;
+    }
+
+    function Fun() {
+      this.name = 'alex';
+    }
+    let obj = MyNew(Fun);
+    console.log('log:', obj);
+
+    function Fun1() {
+      this.name = 'alex';
+    }
+    let obj1 = new Fun1(Fun);
+    console.log('log1:', obj1);
+  </script>
+</body>
+
+</html>

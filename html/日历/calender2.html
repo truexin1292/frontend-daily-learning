@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>日历</title>
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    ol,
+    ul,
+    li {
+      list-style: none;
+    }
+
+    :root {
+      /* 定义变量 --变量名 通过var得到变量值 
+			(1)  定义到根元素  => 页面中都就可以使用
+            (2)  定义到父元素  => 子元素可以使用*/
+      --line-height: 40px;
+    }
+
+    .calendar {
+      width: 300px;
+      margin: 50px auto;
+      background-color: aliceblue;
+      padding: 10px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      line-height: 40px;
+    }
+
+    .calendar-title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      line-height: 40px;
+    }
+
+    .calendar .calendar-list {
+      display: flex;
+      flex-wrap: wrap;
+      text-align: center;
+      font-size: 14px;
+      line-height: var(--line-height);
+    }
+
+    .calendar .calendar-list li {
+      flex: 1;
+      flex-basis: -webkit-calc(100% / 7);
+      border: 1px solid transparent;
+      box-sizing: border-box;
+      color: black;
+    }
+
+    .calendar-list li:hover {
+      border-color: dodgerblue;
+    }
+
+    .calendar .calendar-list .today {
+      background-color: pink;
+    }
+
+    .calendar .calendar-list .prevMonth,
+    .calendar .calendar-list .nextMonth {
+      color: #666;
+    }
+
+    .calendar .calendar-list .thisMonth {
+      color: black;
+      font-weight: 500;
+    }
+
+    .calendar-prev,
+    .calendar-next {
+      cursor: pointer;
+    }
+
+    .calendar-date {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calendar">
+    <div class="calendar-header">
+      <div class="calendar-prev"> &lt; 上个月</div>
+      <div class="calendar-date"></div>
+      <div class="calendar-next">下个月 &gt; </div>
+    </div>
+    <ul class="calendar-title">
+      <li>一</li>
+      <li>二</li>
+      <li>三</li>
+      <li>四</li>
+      <li>五</li>
+      <li>六</li>
+      <li>日</li>
+    </ul>
+    <ul class="calendar-list"></ul>
+  </div>
+</body>
+<script type="text/javascript">
+  var calendarDate = document.getElementsByClassName("calendar-date")[0]; //年份月份
+  var calendarPrev = document.getElementsByClassName("calendar-prev")[0]; //上个月切换
+  var calendarNext = document.getElementsByClassName("calendar-next")[0]; //下个月
+  var calendarList = document.getElementsByClassName("calendar-list")[0]; //日历主体
+  var date = new Date(); //获取当前时间 - 是一个全局变量
+
+  //日历生成函数封装
+  function createCalendar() {
+    //获取当前的年份和月份并将年月内容显示到指定的div中(日期展示)
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    calendarDate.textContent = year + "年" + month + "月";
+    // calendarDate.innerHTML = year + "年" + month + "月";
+
+    //日历生成 - 相关数据获取
+    var week = getFirstDayWeek(date); //date找全局
+    week = week === 0 ? 7 : week; //如果获取到的week为0说明是周日
+    var lastMonthDays = getLastMonthDays(date);
+    var thisMonthDays = getThisMonthDays(date);
+    console.log(
+      "本月第一天为周:",
+      week,
+      "上个月天数为:",
+      lastMonthDays,
+      "本月天数为:",
+      thisMonthDays
+    );
+    //date:切换后的日期对象
+    //now:今天的日期对象
+    //如果切换后的date是今年 今月 今日 => 特殊样式
+    var now = new Date();
+    var nowYear = now.getFullYear();
+    var nowMonth = now.getMonth() + 1;
+    var today = now.getDate();
+    var html = "";
+    //日历生成 - 上个月模块生成
+    //初始值i = 上个月天数-(当前月在第一行空余位置)+1 => 递增直至上个月最后一天
+    for (var i = lastMonthDays - (week - 1) + 1; i <= lastMonthDays; i++) {
+      //上个月有可能是当前月的上个月也可能是下个月的上个月(当前月)
+      if (year == nowYear && month - 1 == nowMonth && i == today) {
+        html += `<li class="prevMonth today">${i}</li>`;
+      } else {
+        html += `<li class="prevMonth">${i}</li>`;
+      }
+    }
+    //日历生成 - 本月模块生成
+    for (var i = 1; i <= thisMonthDays; i++) {
+      if (year == nowYear && month == nowMonth && i == today) {
+        html += `<li class="thisMonth today">${i}</li>`;
+        //轮到今天时多添加一个class
+      } else {
+        html += `<li class="thisMonth">${i}</li>`;
+      }
+    }
+    //日历生成 - 下个月模块生成
+    //下个月从1开始,显示到本月的终止天数为:42-(上个月所占天数)-本月天数
+    for (var i = 1; i <= 42 - (week - 1) - thisMonthDays; i++) {
+      //下个月有可能是当前月的下个月也可能是上个月的上个月(当前月)
+      if (year == nowYear && month + 1 == nowMonth && i == today) {
+        html += `<li class="nextMonth today">${i}</li>`;
+      } else {
+        html += `<li class="nextMonth">${i}</li>`;
+      }
+    }
+    //日历生成 - 显示到日历列表元素中
+    calendarList.innerHTML = html;
+  }
+  //调用函数生成本月的日历页
+  createCalendar();
+  //点击切换到上个月
+  calendarPrev.onclick = function () {
+    date.setDate(1); //将时间设置为本月第一天,date会受到影响但不会影响日历生成
+    date.setMonth(date.getMonth() - 1); //切到上个月
+    //如果没有将时间设为第一天直接切换月份可能会因为每月时间不同产生错误
+    createCalendar();
+  };
+  //点击切换到下个月
+  calendarNext.onclick = function () {
+    date.setDate(1); //将时间设置为本月第一天,date会受到影响但不会影响日历生成
+    date.setMonth(date.getMonth() + 1); //切到下个月
+    createCalendar();
+  };
+  //获取某个月第一个是星期几的函数(0-6)
+  function getFirstDayWeek(date) {
+    date = new Date(date); //先获取当前日期
+    date.setDate(1); //将天数设置为本月的第一天(设置当前时间为本月第一天)
+    return date.getDay(); //获取第一天的星期(0-6)
+  }
+  //获取上个月天数的函数
+  function getLastMonthDays(date) {
+    date = new Date(date);
+    date.setDate(0); //设置日期为本月第0天即换算到上个月最后一天
+    return date.getDate(); //获取设置后的日期日份即为上个月天数
+  }
+  //获取本月天数的函数
+  function getThisMonthDays(date) {
+    date = new Date(date);
+    date.setDate(1); //设置当前时间为本月第一天
+    date.setMonth(date.getMonth() + 1); //设置本月到下个月
+    date.setDate(0); //设置时间为下个月第0天即本月最后一天
+    return date.getDate(); //得到本月的天数
+  }
+</script>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cdn - vue 父子组件</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.13/vue.js"></script>
+</head>
+<!-- https://blog.csdn.net/qq_39593914/article/details/124075032 -->
+<body>
+  <div id="root">
+    <h1>{{msg}}</h1>
+    <Student></Student>
+    <button-counter></button-counter>
+  </div>
+  <script>
+    Vue.config.productionTip = false;
+
+    const Student = Vue.extend({ // 简写 const Student = {template: `<span>Student组件</span>`};
+      name: 'Student',
+      template: `<span>Student组件</span>`
+    });
+
+    // 全局定义组件
+    // 定义一个名为 button-counter 的新组件
+    Vue.component('button-counter', {
+      data: function () {
+        return {
+          count: 0
+        }
+      },
+      template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+
+    // const vm = new Vue({
+    //   components: {
+    //     Student
+    //   },
+    //   data() {
+    //     return {
+    //       msg: 'hello vue'
+    //     }
+    //   },
+    //   template: `<div>
+    //       <h1>{{msg}}</h1>
+    //       <Student></Student>
+    //       <button-counter></button-counter>
+    //     </div>`
+    // });
+    // vm.$mount('#root');
+
+    const vm = new Vue({
+      el: '#root',
+      components: {
+        Student,
+      },
+      data() {
+        return {
+          msg: 'hello vue'
+        }
+      }
+    });
+
+  </script>
+</body>
+
+</html>
